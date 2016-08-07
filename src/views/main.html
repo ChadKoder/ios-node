@@ -1,0 +1,37 @@
+<md-content>
+	 <div>
+         <!--<md-button ng-click="vm.showCameraRoll()">Show Camera Roll - camera1</md-button>
+		 <md-button ng-click="vm.showCameraRoll1()">Show Camera Roll - imagePicker1</md-button>
+		 
+		 <md-button ng-click="vm.test()">Test click</md-button>-->
+		 
+		 <md-list flex>
+			<md-list-item ng-click="vm.showCameraRoll()">Select Images</md-list-item>
+		 </md-list>
+		 
+		 
+		 Total Images:{{vm.images.length}}<div ng-show="!vm.images">0</div>
+		 image---->
+		 
+		 <img src='./res/icon.png' />
+         <div ng-repeat="image in vm.images">
+			Card
+			<md-card>
+				<img data-ng-src="data:image/png;base64,{{image}}" class="md-card-image" alt="image caption" />
+				<md-card-content>
+					<h2>Card headline</h2>
+					<p>Card content</p>
+				</md-card-content>
+				<md-card-footer>
+					Card footer
+				</md-card-footer>
+			</md-card>
+		</div>
+
+
+		<!--<H2>Please Login:</H2>
+		User: <input ng-model="vm.username"></input>
+		Password: <input type="password" ng-model="vm.password"></input>
+		<md-button class="md-raised" style="background-color: #00A5B5;" ng-click="vm.login()">Login</md-button> -->
+	</div>
+</md-content>
