@@ -1,8 +1,10 @@
 //js/controllers/MainCtrl.js
 angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdToast',
 	function ($window, $http, $mdToast) {
+	var port = ':8888';
 	var vm = this;
-
+	vm.ipAddress = 'http://192.168.1.109';
+	
 	vm.submit = function (){
 		var formData = new FormData();
 		formData.enctype = "multipart/form-data";
@@ -11,7 +13,7 @@ angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdT
 			formData.append('file', obj.lfFile);
 		});
 
-		$http.post('http://192.168.1.109:8888', formData, {
+		$http.post(vm.ipAddress + port, formData, {
 			transformRequest: angular.identity,
 			headers: { 'Content-Type': undefined }
 		}).then(function(result) {

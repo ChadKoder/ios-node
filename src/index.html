@@ -18,15 +18,18 @@
 		<div ng-controller="MainCtrl as vm">
 		<div id="errorMsg"></div>
 			<md-content flex>
-				<div class="overlayColor" ng-show="vm.inProgress"></div>
 				<md-toolbar class="md-whiteframe-z1">
 					<div class="md-toolbar-tools" layout="row">
 						<h3>Photo Dash</h3>
 						<span flex></span>
 					</div>
 				</md-toolbar>
-				<lf-ng-md-file-input lf-files='vm.files' multiple preview> lf-caption="Select Files/Videos"</lf-ng-md-file-input>
-				<md-button class="md-raised" ng-click="vm.submit()">Upload Album</md-button>
+				<md-input-container>
+					<label>IP Address:</label>
+					<input type="text" ng-model="vm.ipAddress" required md-maxlength="45">
+				</md-input-container>
+				<lf-ng-md-file-input lf-files='vm.files' multiple preview lf-browse-label="Select Photos"></lf-ng-md-file-input>
+				<md-button class="md-raised" ng-click="vm.submit()">Upload Photos</md-button>
 				
 			</md-content>
         </div>
