@@ -7,9 +7,17 @@ angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdT
 	vm.username = '';
 	vm.password = '';
 	
+	vm.showErrorToast = function (err) {
+		vm.showSimpleToast('error: ' + err);
+	};
+	
+	vm.showSuccessToast = function (msg) {
+		vm.showSimpleToast(msg);
+	};
+	
 	vm.submit = function (){
 		if (!vm.username || !vm.password) {
-			alert('username and password are required.');
+			vm.showErrorToast('username and password are required.');
 			return;
 		}
 		
@@ -27,19 +35,11 @@ angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdT
 			transformRequest: angular.identity,
 			headers: { 'Content-Type': undefined }
 		}).then(function(result) {
-			alert('success...');
+			vm.showSuccessToast('Album upload successful!');
 		}, function (err) {
 			//alert('HttpStatus ---> ' + err.status);
-			alert('error: ' + JSON.stringify(err));
+			vm.showErrorToast('error: ' + JSON.stringify(err));
 		});
-	};
-	
-	vm.success = function(){
-		alert('upload successful');
-	};
-
-	vm.failure = function() {
-		alert('upload failed');
 	};
 	
 	vm.showSimpleToast = function (msg){

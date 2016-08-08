@@ -1,7 +1,7 @@
-function HttpHandler (router, responseService) {
+function HttpHandler (router, responseHandler) {
 	return {
 		handleGetRequest: function (res, req, contentType){
-			responseService.write405MethodNotAllowed(res);
+			responseHandler.write405MethodNotAllowed(res);
 			return;
 		},
 		handlePostRequest: function (res, req){
@@ -10,11 +10,11 @@ function HttpHandler (router, responseService) {
 		},
 		
 		handlePutRequest: function(res, req, contentType){
-			responseService.write405MethodNotAllowed(res);
+			responseHandler.write405MethodNotAllowed(res);
 			return;
 		},
 		handleDeleteRequest: function(res, req, contentType){
-			responseService.write405MethodNotAllowed(res);
+			responseHandler.write405MethodNotAllowed(res);
 			return;
 		}
 	};

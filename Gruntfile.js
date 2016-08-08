@@ -154,7 +154,7 @@ module.exports = function(grunt) {
 				'no-write': false,
 				'force': true
 			},
-			all: ['../output/_PublishedWebsites/PhotoSaver/', './www', 'web/js']
+			all: ['./www']
 		},
 		pkg: pkg,
 		build: build,
