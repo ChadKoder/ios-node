@@ -102,7 +102,7 @@ module.exports = function(grunt) {
 	function createBannerTemplate(name) {
         return '/*\n' +
             ' * ' + name + ' v <%=pkg.version%> (build <%=build%>)\n' +
-            ' * Copyright (c) <%=grunt.template.today("yyyy")%>\n' +
+            ' * <%=grunt.template.today("yyyy")%>\n' +
             ' * Author: <%=pkg.author %> \n' +
             ' */\n\n';
     };
@@ -281,13 +281,7 @@ module.exports = function(grunt) {
 							cwd: 'src',
 							src: ['index.html'],
 							dest: './photo-dash/www/'
-						},						 
-						/*{
-							expand: true,
-							cwd: 'web/views',
-							src: ['*.html'],
-							dest: './photo-dash/www/views/'
-						},*/
+						},
 						{
 							expand: true,
 							cwd: 'src',
@@ -306,18 +300,6 @@ module.exports = function(grunt) {
 							src: ['app.js'],
 							dest: './photo-dash/www/js/'
 						},
-					/*	{
-							expand: true,
-							cwd: 'src/js/functions',
-							src: ['app.js'],
-							dest: './photo-dash/www/js/'
-						},
-						{
-							expand: true,
-							cwd: 'src/js/controllers',
-							src: ['*.js'],
-							dest: './photo-dash/www/js/controllers/'
-						},*/
 						{
 							expand: true,
 							cwd: 'src/js',
@@ -336,37 +318,18 @@ module.exports = function(grunt) {
 							src: ['requirements.js', 'controllers.js'],
 							dest: './photo-dash/www/js/'
 						},
-						/*{
-							expand: true,
-							cwd: 'src/js',
-							src: ['cordova.js'],
-							dest: './photo-dash/www/'
-						},*/
 						{
 							expand: true,
 							cwd: 'src/views',
 							src: ['*.html'],
 							dest: './photo-dash/www/views/'
 						},
-						/*{
-							expand: true,
-							cwd: 'src',
-							src: ['*.json'],
-							dest: './photo-dash/www/'
-						},*/
-						/*{
-							expand: true,
-							cwd: 'src/views',
-							src: ['user-configurations.html', 'login.html'],
-							dest: './web/views'
-						}
-						,
 						{
 							expand: true,
-							cwd: 'src/js',
-							src: ['*.js'],
-							dest: './web/js'
-						}*/
+							cwd: 'src',
+							src: ['users.json'],
+							dest: './server/'
+						}
                     ]
                 }
 		}
