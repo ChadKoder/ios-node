@@ -12,6 +12,9 @@ angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdT
 		angular.forEach(vm.files, function (obj) {
 			formData.append('file', obj.lfFile);
 		});
+		
+		var encodedAuth = btoa('Chad:pass');
+		$http.defaults.headers.common.Authorization = 'Basic ' + encodedAuth;
 
 		$http.post(vm.ipAddress + port, formData, {
 			transformRequest: angular.identity,
@@ -19,6 +22,7 @@ angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdT
 		}).then(function(result) {
 			alert('success...');
 		}, function (err) {
+			//alert('HttpStatus ---> ' + err.status);
 			alert('error: ' + JSON.stringify(err));
 		});
 	};
