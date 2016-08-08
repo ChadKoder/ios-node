@@ -6,9 +6,10 @@ angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdT
 	vm.ipAddress = 'http://192.168.1.109';
 	vm.username = '';
 	vm.password = '';
+    vm.inProgress = false;
 	
 	vm.showErrorToast = function (err) {
-		vm.showSimpleToast('error: ' + err);
+		vm.showSimpleToast(err);
 	};
 	
 	vm.showSuccessToast = function (msg) {
@@ -30,15 +31,29 @@ angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdT
 		});
 		
 		$http.defaults.headers.common.Authorization = 'Basic ' + encodedAuth;
-
+        vm.inProgress = true;
 		$http.post(vm.ipAddress + port, formData, {
 			transformRequest: angular.identity,
 			headers: { 'Content-Type': undefined }
 		}).then(function(result) {
+            vm.inProgress = false;
 			vm.showSuccessToast('Album upload successful!');
 		}, function (err) {
-			//alert('HttpStatus ---> ' + err.status);
-			vm.showErrorToast('error: ' + JSON.stringify(err));
+            var errorStatus = err.status.toString().trim();
+            vm.inProgress = false;
+			switch (errorStatus) {
+				case '401':
+					vm.showErrorToast('username/password validate failed.');
+					vm.username = '';
+					vm.password = '';
+                    break;
+				case '-1':
+					vm.showErrorToast('Server is not available.');
+                    break;
+				default:
+					vm.showErrorToast('Unknown error.');
+                    break;
+			}
 		});
 	};
 	
