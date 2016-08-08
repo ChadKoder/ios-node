@@ -1,67 +1,71 @@
 var formidable = require('formidable'),
-    http = require('http'),
-    util = require('util'),
-    fs   = require('fs.extra');
+	os = require('os'),
+	http = require('http'),
+	util = require('util'),
+	fs = require('fs.extra'),
+	users = require('./users.json'),
+	path = require('path');
+	
+	var ResponseHandler = require('./js/responseHandler.js');
+	var Authentication = require('./js/authentication.js');
+	var Router = require('./js/router.js');
+	
+	var authentication = new Authentication(users);
+	var responseHandler = new ResponseHandler();
+	var FileHandler = require('./js/fileHandler.js');
+	var fileHandler = new FileHandler(formidable, fs, path, os, responseHandler);
+	var router = new Router(responseHandler, Buffer, fileHandler, authentication, fs);
+	var httpHandler = require('./js/httpHandler')(router, responseHandler);
+	
+	const PORT = 8888;
+	var minutes = 1;
+	var interval = minutes * 60 * 1000;
+	var serverAdd = 'http://localhost:' + PORT;
 
-/*
-***TODO***
-DELETE TEMP FILES IN /temp/ folder!
-*/
- 
-http.createServer(function(req, res) {
-
-  /* Process the form uploads */
-  if (req.url == '/' && req.method.toLowerCase() == 'post') {
-	console.log('POST RECEIVED...');
-    var form = new formidable.IncomingForm();
-    form.parse(req, function(err, fields, files) {
-		//console.log('fields : ' + JSON.stringify(fields));
-		console.log('total files: ' + files.length);
-		res.writeHead(200, {'content-type': 'text/plain'});
-		res.write('received upload:\n\n');
-		res.end(util.inspect({fields: fields, files: files}));
-    });
- 
-    form.on('progress', function(bytesReceived, bytesExpected) {
-        var percent_complete = (bytesReceived / bytesExpected) * 100;
-       // console.log(percent_complete.toFixed(2));
-    });
- 
-    form.on('error', function(err) {
-		console.log('ERROR: ' + JSON.stringify(err));
-    });
- 
-    form.on('end', function(fields, files) {
-		var ctr = 1;
-		for (var i = 0; i < this.openedFiles.length; i++){
-			var temp_path = this.openedFiles[i].path;
-			var date = new Date();
-			var month = date.getMonth();
-			var day = date.getDate();
-			var fileName = month + '_' + day + '_' + (date.getUTCMilliseconds() + 10000) + '_' + ctr + '_' + '.jpeg';
-			console.log('fileName: ' + fileName);
-			var newLocation = './photos/';
-	 
-			fs.copy(temp_path, newLocation + fileName, function(err) {  
-				if (err) {
-					console.error(err);
-				} else {
-					console.log("success!")
-				}
-			});
-
-			ctr++;
+	var deleteTempFiles = function (){
+		console.log('checking for uploads...');
+		var files = fs.readdirSync(os.tmpdir());
+		var filesToDelete = [];
+		
+		for (var i = 0; i < files.length; i++){
+			var uploadString = files[i].substring(0, 7);
+			
+			if (uploadString === 'upload_'){
+				filesToDelete.push(files[i]);
+			}
 		}
+		
+		if (filesToDelete.length === 0){
+			console.log('No Uploads Found...........');
+			return;
+		}
+		
+		for (var d = 0; d < filesToDelete.length; d++){
+			var deleteMe = path.join(os.tmpdir(), filesToDelete[d]);
+			console.log('deleting file===> ' + deleteMe);
+			fs.unlinkSync(deleteMe);
+		}
+};
 
+http.createServer(function(req, res) {
+	
+	setInterval(deleteTempFiles, interval);
+	
+	switch (req.method){
+		case 'GET':
+			httpHandler.handleGetRequest(res, req, contentType);
+			break;
+		case 'POST':
+			httpHandler.handlePostRequest(res, req);
+			break;
+		case 'PUT':
+			httpHandler.handlePutRequest(res, req, contentType);
+			break;
+		case 'DELETE':
+			httpHandler.handleDeleteRequest(res, req, contentType);
+			break;
+		default:
+	}
+}).listen(PORT);
 
-        
-    });
- 
-    return;
-  }
- 
-  /* Display the file upload form. */
-  res.writeHead(200, {'content-type': 'text/html'});
-  res.end();
- 
-}).listen(8888);
+console.log('Server running at --> ' + serverAdd + '/\nCTRL+C to shutdown');
