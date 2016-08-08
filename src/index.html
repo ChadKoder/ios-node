@@ -28,9 +28,16 @@
 					<label>IP Address:</label>
 					<input type="text" ng-model="vm.ipAddress" required md-maxlength="45">
 				</md-input-container>
-				<lf-ng-md-file-input lf-files='vm.files' multiple preview lf-browse-label="Select Photos"></lf-ng-md-file-input>
+				 <md-input-container>
+					<label>User Name:</label>
+					<input ng-model="vm.username"/>
+				</md-input-container>
+				<md-input-container>
+					<label>Password:</label>
+					<input type="password" ng-model="vm.password"/>
+				</md-input-container>
 				<md-button class="md-raised" ng-click="vm.submit()">Upload Photos</md-button>
-				
+				<lf-ng-md-file-input lf-files='vm.files' multiple preview lf-browse-label="Select Photos"></lf-ng-md-file-input>
 			</md-content>
         </div>
 		<script src="./js/requirements.js" type="text/javascript"></script> 
