@@ -4,8 +4,16 @@ angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdT
 	var port = ':8888';
 	var vm = this;
 	vm.ipAddress = 'http://192.168.1.109';
+	vm.username = '';
+	vm.password = '';
 	
 	vm.submit = function (){
+		if (!vm.username || !vm.password) {
+			alert('username and password are required.');
+			return;
+		}
+		
+		var encodedAuth = btoa(vm.username + ':' + vm.password);
 		var formData = new FormData();
 		formData.enctype = "multipart/form-data";
 
@@ -13,7 +21,6 @@ angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdT
 			formData.append('file', obj.lfFile);
 		});
 		
-		var encodedAuth = btoa('Chad:pass');
 		$http.defaults.headers.common.Authorization = 'Basic ' + encodedAuth;
 
 		$http.post(vm.ipAddress + port, formData, {
