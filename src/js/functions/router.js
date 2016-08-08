@@ -21,6 +21,7 @@ function Router(responseHandler, Buffer, fileHandler, authentication, fileSystem
 						}
 					}
 				} else {
+					console.log('unauthorized user...');
 					responseHandler.write401Unauthorized(res);
 					return;
 				}
