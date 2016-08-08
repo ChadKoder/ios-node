@@ -1,11 +1,11 @@
-function HttpHandler (path, currentWorkingDir, router, responseService) {
+function HttpHandler (router, responseService) {
 	return {
 		handleGetRequest: function (res, req, contentType){
 			responseService.write405MethodNotAllowed(res);
 			return;
 		},
-		handlePostRequest: function (res, req, contentType){
-			router.post(res, req, contentType);
+		handlePostRequest: function (res, req){
+			router.post(res, req);
 			return;
 		},
 		

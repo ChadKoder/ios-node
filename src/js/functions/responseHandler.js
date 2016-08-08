@@ -1,4 +1,4 @@
-function ResponseService() {
+function ResponseHandler() {
 	return {
 		write200Success: function (res, file, fileName, contentType){ 
 			 	if (file){
@@ -51,4 +51,4 @@ function ResponseService() {
 	};
 }
 
-module.exports = ResponseService;
+module.exports = ResponseHandler;
