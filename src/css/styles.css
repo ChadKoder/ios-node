@@ -17,3 +17,17 @@
   line-height: 30px;
   color: white;
 }
+
+@font-face {
+font-family: 'CaptureIt';
+src: url('../fonts/Capture_it.ttf'); /* IE9 Compat Modes */
+/*src: url('../fonts/DurantBold.eot?#iefix') format('embedded-opentype'),*/ /* IE6-IE8 */
+    /* url('../fonts/DurantBold.otf') format('opentype'),  Legacy iOS */
+     /* url('../fonts/DurantBold.svg#Durant-Bold') format('svg'), Legacy iOS */
+     url('../fonts/Capture_it.ttf')  format('truetype'), /* Safari, Android, iOS */
+font-weight: bold;
+}
+
+body {
+	font-family: CaptureIt;
+}

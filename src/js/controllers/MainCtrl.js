@@ -15,6 +15,11 @@ angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdT
 	vm.showSuccessToast = function (msg) {
 		vm.showSimpleToast(msg);
 	};
+    
+    vm.showPreview = function () {
+        var elButton = document.getElementById('lfNgMdFileInputBtn');
+        elButton.setAttribute('preview','');
+    };
 	
 	vm.submit = function (){
 		if (!vm.username || !vm.password) {
