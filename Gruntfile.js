@@ -266,6 +266,12 @@ module.exports = function(grunt) {
                         },
 						{
                             expand: true,
+                            cwd: 'src/fonts',
+                            src: ['Capture_it.ttf', 'Capture_it_2.ttf'],
+                            dest: './photo-dash/www/fonts/'
+                        },
+						{
+                            expand: true,
                             cwd: 'src/css',
                             src: ['styles.css'],
                             dest: './photo-dash/www/css/'
@@ -291,8 +297,14 @@ module.exports = function(grunt) {
 						{
 							expand: true,
 							cwd: 'src/res',
-							src: ['icon.png'],
+							src: ['icon-transfer.png'],
 							dest: './photo-dash/www/res/'
+						},
+						{
+							expand: true,
+							cwd: 'src/res/screen/ios',
+							src: ['Default_2x_iphone.png'],
+							dest: './photo-dash/www/res/screen/ios'
 						},
 						{
 							expand: true,
