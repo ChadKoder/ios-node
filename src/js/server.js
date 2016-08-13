@@ -18,7 +18,7 @@
 	var httpHandler = require('./js/httpHandler')(router, responseHandler);
 	
 	const PORT = 8888;
-	const MINUTES = 5;
+	const MINUTES = 50;
 	var interval = MINUTES * 60 * 1000;
 	var serverAdd = 'http://localhost:' + PORT;
 

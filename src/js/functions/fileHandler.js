@@ -8,13 +8,15 @@ function FileHandler(formidable, fileSystem, path, os, responseHandler) {
 				res.end();
 			});
 		 
-			/*	form.on('progress', function(bytesReceived, bytesExpected) {
+				form.on('progress', function(bytesReceived, bytesExpected) {
 				var percent_complete = (bytesReceived / bytesExpected) * 100;
-			   // console.log(percent_complete.toFixed(2));
-			});*/
+			    console.log(percent_complete.toFixed(2));
+			});
 		 
 			form.on('error', function(err) {
-				console.log('ERROR: ' + JSON.stringify(err));
+				console.log('ERROR!!!!!!!!!');
+				responseHandler.write500InternalError(res, 'An error has occurred during upload');
+				return;
 			});
 		 
 			form.on('end', function(fields, files) {

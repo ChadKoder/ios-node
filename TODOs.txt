@@ -1,0 +1,3 @@
+Current Issues to fix:
+ - Flicker of change of buttons - video/image
+ - must keep screen active while selecting large files.

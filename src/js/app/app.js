@@ -23,6 +23,7 @@ app.config(function ($routeProvider, $locationProvider) {
 		 
 		 function onDeviceReady() {
 			 $rootScope.deviceReady = true;
+             cordova.plugins.backgroundMode.enable();
                                                        
              if (!$rootScope.$$phase) {
                 $rootScope.$apply();
