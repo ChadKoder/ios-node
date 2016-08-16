@@ -1,3 +1,4 @@
 Current Issues to fix:
- - Flicker of change of buttons - video/image
- - must keep screen active while selecting large files.
+ - Flickering on change ng-show - video/image
+ - Failure with video over 7 1/2 minutes long... tested 7 1/2 with success. Tested 11+ with failure at random points... prob issue
+ 	on SERVER side
