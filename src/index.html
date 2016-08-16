@@ -14,10 +14,9 @@
 			<link rel="stylesheet" href="./css/lf-ng-md-file-input.css">
 			<title>Photo Dash</title>
 	</head>
-	<body ng-app="photoSaverApp">
-		<div ng-controller="MainCtrl as vm">
-		<div id="errorMsg"></div>
-			<md-content flex>
+	<body ng-app="photoSaverApp" style="background-color: #BDBDBD;">
+		<div ng-controller="MainCtrl as vm"> 
+			<md-content style="background-color: #BDBDBD;" flex>
 				<md-toolbar flex style="background-color: #4d4d4d;" class="md-whiteframe-z1">
 					<div class="md-toolbar-tools" layout="row">
                         <span flex></span>
@@ -25,34 +24,45 @@
 						<span flex></span>
 					</div>
 				</md-toolbar>
-				<md-input-container>
-					<label>IP Address</label>
-					<input type="text" ng-model="vm.ipAddress" required md-maxlength="45">
-				</md-input-container>
-				 <md-input-container>
-					<label>User Name</label>
-					<input ng-model="vm.username"/>
-				</md-input-container>
-				<md-input-container>
-					<label>Password</label>
-					<input type="password" ng-model="vm.password"/>
-				</md-input-container>
-				<md-button class="btnSubmit" ng-disabled="vm.inProgress || vm.files.length <= 0" class="md-raised" ng-click="vm.submit()">Upload Album</md-button>
-                <md-button class="btnPreview" ng-disabled="vm.inProgress || vm.files.length <= 0" class="md-raised" ng-click="vm.showPreview()">Preview Album</md-button>
-                <md-button ng-click="vm.toggleSelectedMedia()" ng-model="vm.selectedMedia">Toggle media selection</md-button>
-                
-            <!--      <lf-ng-md-file-input id="lfNgMdFileInputBtn" ng-disabled="!vm.username || !vm.password" preview accept="{{vm.selectedMedia}}/*" lf-files='vm.files' filecount lf-browse-label="{{vm.mediaSelectText}}"></lf-ng-md-file-input> -->
-                
-             <div ng-cloak>
-                    <div ng-show="vm.selectedMedia === 'image'">
-				        <lf-ng-md-file-input ng-disabled="!vm.username || !vm.password" id='lfNgMdFileInputBtn' preview multiple accept="image/*" lf-files='vm.files' filecount lf-browse-label="Select Photos"></lf-ng-md-file-input>
-                    </div>
-                    <div ng-show="vm.selectedMedia === 'video'">
-                        <lf-ng-md-file-input ng-disabled="!vm.username || !vm.password" id='lfNgMdFileInputBtn' preview accept="video/*" lf-files='vm.files' filecount lf-browse-label="Select Video"></lf-ng-md-file-input>
-                    </div>
-                </div>
+
+				<md-card style="background-color: #9E9E9E">
+					<label><h3>Server Info:</h3></label>
+					<md-input-container>
+						<label>IP Address</label>
+						<input type="text" ng-model="vm.ipAddress" required md-maxlength="45">
+					</md-input-container>
+					 <md-input-container>
+						<label>User Name</label>
+						<input ng-model="vm.username"/>
+					</md-input-container>
+					<md-input-container>
+						<label>Password</label>
+						<input type="password" ng-model="vm.password"/>
+					</md-input-container>
+				</md-card>
+				<br />
+				<md-card style="background-color: #9E9E9E">
+					<label><h3>Selection Criteria</h3></label>
+					<label>Media Type:</label>
+					<md-radio-group class="md-primary" layout="row" class="radioButton" ng-model="vm.selectedMedia">
+						<md-radio-button value="image">Photos</md-radio-button>
+						<md-radio-button value="video">Video</md-radio-button>
+					</md-radio-group>
+					<br />
+
+					<md-button class="btnSubmit" ng-disabled="vm.inProgress || vm.files.length <= 0" class="md-raised md-primary" ng-click="vm.submit()">Upload Album</md-button>
+					<div ng-cloak>
+						 <div ng-show="vm.selectedMedia === 'image'">
+							 <lf-ng-md-file-input ng-disabled="!vm.username || !vm.password" id='lfNgMdFileInputBtn' preview multiple progress accept="image/*" lf-files='vm.files' filecount lf-browse-label="Select Photos"></lf-ng-md-file-input>
+						 </div>
+						<div ng-show="vm.selectedMedia === 'video'">
+							<lf-ng-md-file-input ng-disabled="!vm.username || !vm.password" id='lfNgMdFileInputBtn' progress preview accept="video/*" lf-files='vm.files' filecount lf-browse-label="Select Video"></lf-ng-md-file-input>
+						</div>
+				   </div>
+			   </md-card>
+				
 			</md-content>
-        </div>
+		</div>
 		<script src="./js/requirements.js" type="text/javascript"></script> 
 		<script src="./cordova.js" type="text/javascript"></script>        
 		<script src="./js/controllers.js" type="text/javascript"></script>        
