@@ -39,7 +39,8 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-karma": "^0.12.2",
     "grunt-sync": "^0.5.2",
-    "lf-ng-md-file-input": "git+https://github.com/ChadKoder/angular-material-fileinput.git#optional-placeholder",
+    "lf-ng-md-file-input": "git+https://github.com/ChadKoder/angular-material-fileinput.git#optionals",
+    "mongodb": "^2.1.18",
     "watchify": "^3.7.0"
   }
 }
