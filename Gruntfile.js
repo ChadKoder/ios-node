@@ -144,7 +144,7 @@ module.exports = function(grunt) {
         }
 
         //Push remaining web/js files that may not have been caught.
-        jshintFiles.push('!www/js/angular-ui.js');
+        //jshintFiles.push('!www/js/angular-ui.js');
     })();	
 	 
 	grunt.initConfig({
@@ -153,7 +153,7 @@ module.exports = function(grunt) {
 				'no-write': false,
 				'force': true
 			},
-			all: ['./www']
+			all: ['./www', './photo-dash/config.xml', './photo-dash/www']
 		},
 		pkg: pkg,
 		build: build,
@@ -340,6 +340,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-sync');
 	
 	grunt.registerTask('default', ['clean', 'concat', 'uglify', 'sync']);
-	grunt.registerTask('test', ['clean', 'concat', 'uglify', 'sync', 'karma']);
+	grunt.registerTask('test', ['clean', 'concat', 'uglify', 'sync',  'karma']);
 	
 };
