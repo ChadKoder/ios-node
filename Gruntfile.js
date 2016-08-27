@@ -248,19 +248,19 @@ module.exports = function(grunt) {
                         {
                             expand: true,
                             cwd: 'node_modules/angular-material',
-                            src: ['angular-material.css', 'angular-material.min.css'],
+                            src: ['angular-material.min.css'],
                             dest: './www/css/'
                         },
 						{
                             expand: true,
                             cwd: 'node_modules/angular-loading-bar/build',
-                            src: ['loading-bar.css'],
+                            src: ['loading-bar.min.css'],
                             dest: './photo-dash/www/css/'
                         },
 						{
                             expand: true,
                             cwd: 'node_modules/lf-ng-md-file-input/dist',
-                            src: ['lf-ng-md-file-input.css'],
+                            src: ['lf-ng-md-file-input.min.css'],
                             dest: './photo-dash/www/css/'
                         },
 						{
@@ -278,7 +278,7 @@ module.exports = function(grunt) {
                         {
                             expand: true,
                             cwd: 'node_modules/angular-material',
-                            src: ['angular-material.css', 'angular-material.min.css'],
+                            src: ['angular-material.min.css'],
                             dest: './photo-dash/www/css/'
                         },
 						{
@@ -314,7 +314,7 @@ module.exports = function(grunt) {
 						{
 							expand: true,
 							cwd: 'www/js',
-							src: ['requirements.js', 'controllers.js'],
+							src: ['requirements.min.js', 'controllers.min.js'],
 							dest: './photo-dash/www/js/'
 						},
 						{
