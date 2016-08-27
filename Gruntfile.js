@@ -36,7 +36,6 @@ module.exports = function(grunt) {
 						'node_modules/angular-mocks/angular-mocks.js',
 						'node_modules/angular-loading-bar/build/loading-bar.js',
 						'node_modules/lf-ng-md-file-input/dist/lf-ng-md-file-input.js',
-						'www/js/functions.js',
 						'unitTests/unitTestData.js',
 						'unitTests/unitTestMocks.js',
 						'src/js/app/app.js',
@@ -314,18 +313,6 @@ module.exports = function(grunt) {
 						},
 						{
 							expand: true,
-							cwd: 'src/js',
-							src: ['server.js'],
-							dest: './server/'
-						},
-						{
-							expand: true,
-							cwd: 'src/js/functions',
-							src: ['*.js'],
-							dest: './server/js/'
-						},
-						{
-							expand: true,
 							cwd: 'www/js',
 							src: ['requirements.js', 'controllers.js'],
 							dest: './photo-dash/www/js/'
@@ -335,12 +322,6 @@ module.exports = function(grunt) {
 							cwd: 'src/views',
 							src: ['*.html'],
 							dest: './photo-dash/www/views/'
-						},
-						{
-							expand: true,
-							cwd: 'src',
-							src: ['users.json'],
-							dest: './server/'
 						}
                     ]
                 }

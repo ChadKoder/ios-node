@@ -3,17 +3,17 @@
     <head>
         <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com/  data: gap: https://ssl.gstatic.com 'unsafe-eval';
             style-src 'self' https://fonts.googleapis.com/ 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com/; media-src *; connect-src 'self' http://192.168.1.109:8888/">
-            <meta name="format-detection" content="telephone=no">
-                <meta name="msapplication-tap-highlight" content="no">
-                    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-                        
-                        <link rel="stylesheet" href="./css/angular-material.min.css" type="text/css">
-                            <link rel="stylesheet" href="./css/loading-bar.css" type="text/css">
-                                <link rel="stylesheet" href="./css/styles.css" type="text/css">
-                                    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-                                        <link rel="stylesheet" href="./css/lf-ng-md-file-input.css">
-                                            <title>Photo Dash</title>
-                                            </head>
+		<meta name="format-detection" content="telephone=no">
+		<meta name="msapplication-tap-highlight" content="no">
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+		<link rel="stylesheet" href="./css/angular-material.min.css" type="text/css">
+		<link rel="stylesheet" href="./css/loading-bar.css" type="text/css">
+		<link rel="stylesheet" href="./css/styles.css" type="text/css">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="./css/lf-ng-md-file-input.css">
+		<title>Photo Dash</title>
+	</head>
     <body ng-app="photoSaverApp" style="background-color: #BDBDBD;">
         <div ng-controller="MainCtrl as vm">
             <md-content style="background-color: #BDBDBD;" flex>
@@ -24,45 +24,64 @@
                         <span flex></span>
                     </div>
                 </md-toolbar>
-                <md-button ng-click="vm.toggleServerSettings()">{{vm.editSettingsText}} Server Settings</md-button>
-                <md-card ng-hide="vm.serverSettings" style="background-color: #9E9E9E">
-                    <label><h3>Server Info:</h3></label>
-                    <md-input-container>
-                        <label>IP Address</label>
-                        <input type="text" ng-model="vm.ipAddress" required md-maxlength="45">
-                            </md-input-container>
-                    <md-input-container>
-                        <label>User Name</label>
-                        <input ng-model="vm.username"/>
-                    </md-input-container>
-                    <md-input-container>
-                        <label>Password</label>
-                        <input type="password" ng-model="vm.password"/>
-                    </md-input-container>
-                    
-                    <md-button class="md-raised md-primary" ng-click="vm.saveSettings()">save</md-button>
-                </md-card>
-                <br />
-                <md-card style="background-color: #9E9E9E">
-                    <label><h3>Selection Criteria</h3></label>
-                    <label>Media Type:</label>
-                    <md-radio-group class="md-primary" layout="row" class="radioButton" ng-model="vm.selectedMedia">
-                        <md-radio-button value="image">Photos</md-radio-button>
-                        <md-radio-button value="video">Video</md-radio-button>
-                    </md-radio-group>
-                    <br />
-                    
-                    <md-button class="btnSubmit" ng-disabled="vm.inProgress || vm.files.length <= 0" class="md-raised md-primary" ng-click="vm.submit()">Upload Album</md-button>
-                    <div ng-cloak>
-                        <div ng-show="vm.selectedMedia === 'image'">
-                            <lf-ng-md-file-input ng-disabled="!vm.username || !vm.password" id='lfNgMdFileInputBtn' preview multiple progress accept="image/*" lf-files='vm.files' filecount lf-browse-label="Select Photos"></lf-ng-md-file-input>
-                        </div>
-                        <div ng-show="vm.selectedMedia === 'video'">
-                            <lf-ng-md-file-input ng-disabled="!vm.username || !vm.password" id='lfNgMdFileInputBtn' progress preview accept="video/*" lf-files='vm.files' filecount lf-browse-label="Select Video"></lf-ng-md-file-input>
-                        </div>
-                    </div>
-                </md-card>
-                
+				
+				<md-input-container>
+					<label>Device Name</label>
+					<input required type="text" ng-model="vm.deviceName"/>
+				</md-input-container>
+				
+					<div ng-hide="!vm.deviceName">
+						
+					<md-button ng-click="vm.toggleServerSettings()">{{vm.editSettingsText}} Server Settings</md-button>
+					<md-button ng-click="vm.getSettingsFromServer()">GET SETTINGS FROM SERVER</md-button>
+					
+					<md-button ng-click="vm.deleteSettings()">DELETE SETTINGS</md-button>
+					<md-card ng-hide="vm.serverSettings" style="background-color: #9E9E9E">
+						<label><h3>Server Info:</h3></label>
+						<md-input-container>
+							<label>IP Address</label>
+							<input type="text" ng-model="vm.ipAddress" required md-maxlength="45">
+								</md-input-container>
+						<md-input-container>
+							<label>User Name</label>
+							<input ng-model="vm.username"/>
+						</md-input-container>
+						<md-input-container>
+							<label>Password</label>
+							<input type="password" ng-model="vm.password"/>
+						</md-input-container>
+						<md-input-container>
+							<label>PC Upload Location</label>
+							<input type="text" ng-model="vm.uploadDir"/>
+						</md-input-container>
+						<md-input-container>
+							<label>Album Name</label>
+							<input type="text" ng-model="vm.albumName"/>
+						</md-input-container>
+						
+						<md-button class="md-raised md-primary" ng-click="vm.saveSettings()">save</md-button>
+					</md-card>
+					<br />
+					<md-card style="background-color: #9E9E9E">
+						<label>Media Type:</label>
+						<md-radio-group class="md-primary" layout="row" class="radioButton" ng-model="vm.selectedMedia">
+							<md-radio-button value="image">Photos</md-radio-button>
+							<md-radio-button value="video">Video</md-radio-button>
+						</md-radio-group>
+						<br />
+						
+						<md-button class="btnSubmit" ng-disabled="vm.inProgress || vm.files.length <= 0" class="md-raised md-primary" ng-click="vm.submit()">Upload Album</md-button>
+						<div ng-cloak>
+							<div ng-show="vm.selectedMedia === 'image'">
+								<lf-ng-md-file-input ng-disabled="!vm.username || !vm.password" id='lfNgMdFileInputBtn' preview multiple progress accept="image/*" lf-files='vm.files' filecount lf-browse-label="Select Photos"></lf-ng-md-file-input>
+							</div>
+							<div ng-show="vm.selectedMedia === 'video'">
+								<lf-ng-md-file-input ng-disabled="!vm.username || !vm.password" id='lfNgMdFileInputBtn' progress preview accept="video/*" lf-files='vm.files' filecount lf-browse-label="Select Video"></lf-ng-md-file-input>
+							</div>
+						</div>
+					</md-card>
+					
+				</div>
             </md-content>
         </div>
         <script src="./js/requirements.js" type="text/javascript"></script> 

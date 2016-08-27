@@ -1,3 +1,0 @@
-describe('httpHandler', function(){
-	 
-});

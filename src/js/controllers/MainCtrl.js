@@ -6,10 +6,12 @@ angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdT
 	vm.ipAddress = '';
 	vm.username = '';
 	vm.password = '';
+	vm.uploadDir = '';
 	vm.inProgress = false;
 	vm.selectedMedia = 'image';
 	vm.serverSettings = false;
 	vm.editSettingsText = 'Hide';
+	
 
 	vm.mediaSelectText = 'Selecting Photos';
 
@@ -31,6 +33,15 @@ angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdT
 
 	vm.getSettings = function (){
 		var localStorage = window.localStorage;
+		vm.deviceName = localStorage.getItem('deviceName');
+		
+		if (!vm.deviceName){
+			alert('Enter a device name to continue...');
+			return;
+		}		
+		
+		vm.uploadDir = localStorage.getItem('uploadDir');
+		vm.albumName = localStorage.getItem('albumName');
 		vm.ipAddress = localStorage.getItem('ipAddress');
 		var cred = localStorage.getItem('credentials');
 		var credString = atob(cred);
@@ -59,14 +70,50 @@ angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdT
 		var elButton = document.getElementById('lfNgMdFileInputBtn');
 		elButton.setAttribute('preview','');
 	};
+	
+	vm.deleteSettings = function () {
+		$http.delete(vm.ipAddress + port + '/settings').then(function (res) {
+			alert('successfully cleared your settings.');
+		}, function (err){
+			alert('error deleting settings: ' + err);
+		});
+	};
+	
+	vm.getSettingsFromServer = function() {
+		$http.get(vm.ipAddress + port + '/settings').then(function (res) {
+			alert(JSON.stringify(res));
+		}, function (err){
+			alert('error: ' + err);
+		});
+		
+	};
 
 	vm.saveSettings = function (){
+		
 		vm.inProgress = true;
 		var credentials = btoa(vm.username + ':' + vm.password);
 		var localStorage = window.localStorage;
-		localStorage.setItem('ipAddress', vm.ipAddress);
-		localStorage.setItem('credentials', credentials);
-		alert('settings saved!');
+		var settings = {
+			ipAddress: vm.ipAddress,
+			deviceName: vm.deviceName,
+			credentials: credentials,
+			uploadDir: vm.uploadDir,
+			albumName: vm.albumName
+		}
+		
+		$http.post(vm.ipAddress + port + '/settings', JSON.stringify(settings))
+			.then(function(result) {
+				localStorage.setItem('ipAddress', vm.ipAddress);
+				localStorage.setItem('credentials', credentials);
+				localStorage.setItem('uploadDir', vm.uploadDir);
+				localStorage.setItem('deviceName', vm.deviceName);
+				localStorage.setItem('albumName', vm.albumName);
+				alert('settings saved to server and to device');
+				vm.inProgress = false;
+			}, function (err) {
+				vm.inProgress = false;
+				alert('error: ' + err);
+			});
 	};
 
 	vm.submit = function (){
