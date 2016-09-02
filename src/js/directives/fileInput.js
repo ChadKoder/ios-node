@@ -31,8 +31,13 @@ angular.module('photoSaverApp', []).directive('testDirective', ['$timeout',
     angular.module('dash-client').directive('fileInput', function () {
        return {
            restrict: 'E',
-           template: '<md-button class="md-primary md-raised file-input-container" ng-click="vm.openDialog($event, this)"> Select {{vm.selectedMedia}}<input multiple accept="image/*" type="file" class="file-input"></input></md-button>'
-           //template: '<div> What the fuck directive you bitch!</div>'
+           template: '<md-button class="md-primary md-raised file-input-container" ng-click="vm.openDialog($event, this)"> Select {{vm.selectedMedia}}<input multiple accept="image/*" type="file" class="file-input"></input></md-button>',
+		   replace: true,
+		   require:'ngModel',
+		   link: function (element, attrs, ctrl) {
+			   //var fileInput = angular.element(element[0].
+			   alert('jhretrrrtr');
+		   }
        
        }
     });
