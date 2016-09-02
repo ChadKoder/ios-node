@@ -35,7 +35,6 @@ module.exports = function(grunt) {
 						'node_modules/angular-material/angular-material.js',
 						'node_modules/angular-mocks/angular-mocks.js',
 						'node_modules/angular-loading-bar/build/loading-bar.js',
-						'node_modules/lf-ng-md-file-input/dist/lf-ng-md-file-input.js',
 						'unitTests/unitTestData.js',
 						'unitTests/unitTestMocks.js',
 						'src/js/app/app.js',
@@ -66,8 +65,7 @@ module.exports = function(grunt) {
         'node_modules/angular-resource/angular-resource.js',
 		'node_modules/angular-messages/angular-messages.js',
 		'node_modules/angular-material/angular-material.js',
-		'node_modules/angular-loading-bar/build/loading-bar.js',
-		'node_modules/lf-ng-md-file-input/dist/lf-ng-md-file-input.js',
+		'node_modules/angular-loading-bar/build/loading-bar.js'
 	],
 	concatConfig = {
 		requirements: {
@@ -259,12 +257,6 @@ module.exports = function(grunt) {
                         },
 						{
                             expand: true,
-                            cwd: 'node_modules/lf-ng-md-file-input/dist',
-                            src: ['lf-ng-md-file-input.min.css'],
-                            dest: './photo-dash/www/css/'
-                        },
-						{
-                            expand: true,
                             cwd: 'src/fonts',
                             src: ['Capture_it.ttf', 'Capture_it_2.ttf'],
                             dest: './photo-dash/www/fonts/'
@@ -314,7 +306,7 @@ module.exports = function(grunt) {
 						{
 							expand: true,
 							cwd: 'www/js',
-							src: ['requirements.min.js', 'controllers.min.js'],
+							src: ['requirements.js', 'controllers.js', 'directives.js'],
 							dest: './photo-dash/www/js/'
 						},
 						{

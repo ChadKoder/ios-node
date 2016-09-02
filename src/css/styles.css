@@ -35,3 +35,14 @@ body {
 .md-button[disabled] {
     background-color: #E0E0E0;
 }
+.file-input-container{
+    width: 95%;
+}
+
+.file-input {
+  opacity: 0;
+  display: block;
+ position: absolute;
+   top: 0;
+  left: 0;
+}

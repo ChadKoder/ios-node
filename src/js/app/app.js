@@ -1,5 +1,5 @@
 
-var app = angular.module('photoSaverApp', ['ngMaterial', 'ngRoute', 'MainCtrl', 'angular-loading-bar', 'lfNgMdFileInput']);
+var app = angular.module('photoSaverApp', ['ngMaterial', 'ngRoute', 'dash-client', 'angular-loading-bar']);
 app.config(function ($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode({
 		enabled: true,

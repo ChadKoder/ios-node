@@ -1,6 +1,6 @@
 //js/controllers/MainCtrl.js
-angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdToast', '$sce', '$scope',
-	function ($window, $http, $mdToast, $sce, $scope) {
+angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$mdToast', '$scope',
+	function ($window, $http, $mdToast, $scope) {
 	var port = ':8888';
 	var vm = this;
 	vm.ipAddress = '';
@@ -11,7 +11,31 @@ angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdT
 	vm.selectedMedia = 'image';
 	vm.serverSettings = false;
 	vm.editSettingsText = 'Hide';
+	     
 	
+	vm.openDialog = function (e, el){
+		if(e){
+			$timeout(function(){
+				e.preventDefault();
+				e.stopPropagation();
+				var elInput = e.target.children[2];
+				if (elInput !== undefined){
+					elInput.click();
+				}
+			}, 0);
+		}
+	};
+	
+	vm.setDeviceName = function () {
+		vm.deviceName = cordova.plugins.deviceName.name;
+		vm.refresh();
+	};
+	
+	document.addEventListener("deviceready", vm.setDeviceName, false);
+	
+	vm.editSettings = function () {
+		alert('settings...');
+	};
 
 	vm.mediaSelectText = 'Selecting Photos';
 
@@ -33,12 +57,12 @@ angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdT
 
 	vm.getSettings = function (){
 		var localStorage = window.localStorage;
-		vm.deviceName = localStorage.getItem('deviceName');
+		//vm.deviceName = localStorage.getItem('deviceName');
 		
-		if (!vm.deviceName){
+		/*if (!vm.deviceName){
 			alert('Enter a device name to continue...');
 			return;
-		}		
+		}		*/
 		
 		vm.uploadDir = localStorage.getItem('uploadDir');
 		vm.albumName = localStorage.getItem('albumName');
@@ -106,7 +130,7 @@ angular.module('MainCtrl', []).controller('MainCtrl', ['$window', '$http', '$mdT
 				localStorage.setItem('ipAddress', vm.ipAddress);
 				localStorage.setItem('credentials', credentials);
 				localStorage.setItem('uploadDir', vm.uploadDir);
-				localStorage.setItem('deviceName', vm.deviceName);
+				//localStorage.setItem('deviceName', vm.deviceName);
 				localStorage.setItem('albumName', vm.albumName);
 				alert('settings saved to server and to device');
 				vm.inProgress = false;
