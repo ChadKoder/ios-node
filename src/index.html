@@ -11,11 +11,10 @@
 		<link rel="stylesheet" href="./css/loading-bar.min.css" type="text/css">
 		<link rel="stylesheet" href="./css/styles.css" type="text/css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<!--	<link rel="stylesheet" href="./css/lf-ng-md-file-input.css">-->
 		<title>Photo Dash</title>
 	</head>
-    <body ng-app="photoSaverApp" style="background-color: #BDBDBD;">
-        <div ng-controller="MainCtrl as vm">
+    <body ng-app="photoSaverApp" style="background-color: #BDBDBD;" flex>
+        <div ng-controller="MainCtrl as vm" flex>
             <md-content style="background-color: #BDBDBD;" flex>
                 <md-toolbar flex style="background-color: #4d4d4d;" class="md-whiteframe-z1">
                     <div class="md-toolbar-tools" layout="row">
@@ -25,20 +24,10 @@
 						  <md-button class="material-icons md-18 md-icon-button" style="background-color: #4d4d4d;" aria-label="Settings">
 								<md-icon ng-click="vm.toggleServerSettings()" class="material-icons md-18">settings</md-icon>
 						  </md-button>
-						<!--<md-button style="background-color: #4d4d4d;" ng-click="vm.toggleServerSettings()"><i class="material-icons md-18">settings</i></md-button> -->
-                    </div>
+					</div>
                 </md-toolbar> 
 				<label>Device Name: {{vm.deviceName}}</label> 
-				<!--<md-button ng-click="vm.openDialog($event, this)">
-					Select Photos [test]
-					<input multiple accept="image/*" type="file" class="file-input"></input>
-				 
-				<br />
-				<!--<md-button ng-click="vm.toggleServerSettings()">{{vm.editSettingsText}} Server Settings</md-button>-->
-				<!--<md-button ng-click="vm.getSettingsFromServer()">GET SETTINGS FROM SERVER</md-button> -->
-				
-				<!-- <md-button ng-click="vm.deleteSettings()">DELETE SETTINGS</md-button> -->
-				<md-card ng-hide="vm.serverSettings" style="background-color: #9E9E9E">
+				<md-card ng-hide="vm.serverSettings" style="background-color: #9E9E9E;" flex>
 					<label><h3>Server Info:</h3></label>
 					<md-input-container>
 						<label>IP Address</label>
@@ -64,24 +53,21 @@
 					<md-button class="md-raised md-primary" ng-click="vm.saveSettings()">save</md-button>
 				</md-card>
 				<br />
-				<md-card ng-hide="!vm.serverSettings" style="background-color: #9E9E9E">
+				<md-card ng-hide="!vm.serverSettings" style="background-color: #9E9E9E; padding-bottom: 290px;" flex>
 					<label>Media Type:</label>
 					<md-radio-group class="md-primary" layout="row" class="radioButton" ng-model="vm.selectedMedia">
-						<md-radio-button value="image">Photos</md-radio-button>
-						<md-radio-button value="video">Video</md-radio-button>
+						<md-radio-button value="image" aria-label="image">Photos</md-radio-button>
+						<md-radio-button value="video" aria-label="video">Video</md-radio-button>
 					</md-radio-group>
 					<br />
-					
+					<div>Total Selected: {{ vm.files.length }}</div>
 					<md-button ng-disabled="vm.inProgress || vm.files.length <= 0" class="md-raised md-primary" ng-click="vm.submit()">Upload Album</md-button>
-                    <file-input accept="{{vm.selectedMedia}}/*">Select {{ vm.selectedMedia }}</file-input>
-					<!--<div ng-cloak>
-						<div ng-show="vm.selectedMedia === 'image'">
-							<lf-ng-md-file-input ng-disabled="!vm.username || !vm.password" id='lfNgMdFileInputBtn' preview multiple progress accept="image/*" lf-files='vm.files' filecount lf-browse-label="Select Photos"></lf-ng-md-file-input>
-						</div>
-						<div ng-show="vm.selectedMedia === 'video'">
-							<lf-ng-md-file-input ng-disabled="!vm.username || !vm.password" id='lfNgMdFileInputBtn' progress preview accept="video/*" lf-files='vm.files' filecount lf-browse-label="Select Video"></lf-ng-md-file-input>
-						</div>
-					</div>-->
+                    <div ng-show="vm.selectedMedia === 'image'">
+                        <file-input selected-files="vm.files" accept="image/*" disptext="Select Photos"></file-input>
+                    </div>
+                    <div ng-show="vm.selectedMedia === 'video'">
+                        <file-input selected-files="vm.files" accept="video/*" disptext="Select Video"></file-input>
+                    </div>
 				</md-card>
 					
             </md-content>

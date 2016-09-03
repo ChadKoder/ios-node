@@ -13,10 +13,9 @@ body {
 }
 
 .lowercase {
-    text-transform: lowercase;
+    text-transform: none;
 }
-
-
+ 
 /*
  Allow angular.js to be loaded in body, hiding cloaked elements until
  templates compile.  The !important is important given that there may be
@@ -39,10 +38,25 @@ body {
     width: 95%;
 }
 
-.file-input {
+.fileInput {
   opacity: 0;
-  display: block;
+  display: inline-block;
  position: absolute;
    top: 0;
   left: 0;
+  /*background-repeat: no-repeat no-repeat;
+  pointer-events: none;
+  margin: 5px auto auto;*/
+  
+  /*margin: 5px auto auto;
+  padding: 0;
+  display: inline-block;
+  background-repeat: no-repeat no-repeat;
+  pointer-events: none;*/
 }
+
+
+
+
+
+

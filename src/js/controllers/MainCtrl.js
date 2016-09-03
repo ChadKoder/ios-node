@@ -1,6 +1,6 @@
 //js/controllers/MainCtrl.js
-angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$mdToast', '$scope',
-	function ($window, $http, $mdToast, $scope) {
+angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$mdToast', '$scope', '$timeout',
+	function ($window, $http, $mdToast, $scope, $timeout) {
 	var port = ':8888';
 	var vm = this;
 	vm.ipAddress = '';
@@ -11,7 +11,7 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
 	vm.selectedMedia = 'image';
 	vm.serverSettings = false;
 	vm.editSettingsText = 'Hide';
-	     
+	 
 	
 	vm.openDialog = function (e, el){
 		if(e){
@@ -25,7 +25,7 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
 			}, 0);
 		}
 	};
-	
+    
 	vm.setDeviceName = function () {
 		vm.deviceName = cordova.plugins.deviceName.name;
 		vm.refresh();
@@ -36,9 +36,13 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
 	vm.editSettings = function () {
 		alert('settings...');
 	};
-
-	vm.mediaSelectText = 'Selecting Photos';
-
+    
+    vm.viewImage = function () {
+        alert('controller viewimage!');
+    };
+    
+    vm.mediaSelectText = 'Select ' + vm.selectedMedia;
+    
 	vm.toggleServerSettings = function (){
 		if (vm.serverSettings){
 			vm.serverSettings = false;
@@ -48,6 +52,8 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
 			vm.serverSettings = true;
 		}
 	};
+    
+    
 
 	vm.refresh = function () {
 		if (!$scope.$$phase) {
