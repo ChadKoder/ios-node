@@ -9,29 +9,11 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
 	vm.uploadDir = '';
 	vm.inProgress = false;
 	vm.selectedMedia = 'image';
+    vm.showSettings = false;
 	vm.serverSettings = false;
 	vm.editSettingsText = 'Hide';
-	 
-	
-	vm.openDialog = function (e, el){
-		if(e){
-			$timeout(function(){
-				e.preventDefault();
-				e.stopPropagation();
-				var elInput = e.target.children[2];
-				if (elInput !== undefined){
-					elInput.click();
-				}
-			}, 0);
-		}
-	};
-    
-	vm.setDeviceName = function () {
-		vm.deviceName = cordova.plugins.deviceName.name;
-		vm.refresh();
-	};
-	
-	document.addEventListener("deviceready", vm.setDeviceName, false);
+    vm.buttonText = 'Select Photos';
+    vm.accept = 'image';
 	
 	vm.editSettings = function () {
 		alert('settings...');
@@ -44,22 +26,19 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
     vm.mediaSelectText = 'Select ' + vm.selectedMedia;
     
 	vm.toggleServerSettings = function (){
-		if (vm.serverSettings){
-			vm.serverSettings = false;
-			vm.editSettingsText = 'Hide';
+		if (vm.showSettings){
+			vm.showSettings = false;
 		} else {
-			vm.editSettingsText = 'Edit';
-			vm.serverSettings = true;
+			vm.showSettings = true;
 		}
-	};
-    
-    
+	};   
 
 	vm.refresh = function () {
 		if (!$scope.$$phase) {
 			$scope.$apply();
 		}
 	};
+    
 
 	vm.getSettings = function (){
 		var localStorage = window.localStorage;
@@ -94,11 +73,6 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
 
 	vm.showSuccessToast = function (msg) {
 		vm.showSimpleToast(msg);
-	};
-
-	vm.showPreview = function () {
-		var elButton = document.getElementById('lfNgMdFileInputBtn');
-		elButton.setAttribute('preview','');
 	};
 	
 	vm.deleteSettings = function () {
@@ -156,9 +130,13 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
 	var formData = new FormData();
 	formData.enctype = "multipart/form-data";
 
-	angular.forEach(vm.files, function (obj) {
-		formData.append('file', obj.lfFile);
+	angular.forEach(vm.photos, function (obj) {
+		formData.append('file', obj.file);
 	});
+    
+    angular.forEach(vm.videos, function (obj) {
+        formData.append('file', obj.file);
+    });
 
 	$http.defaults.headers.common.Authorization = 'Basic ' + encodedAuth;
 	vm.inProgress = true;

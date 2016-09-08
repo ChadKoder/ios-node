@@ -14,20 +14,27 @@
 		<title>Photo Dash</title>
 	</head>
     <body ng-app="photoSaverApp" style="background-color: #BDBDBD;" flex>
-        <div ng-controller="MainCtrl as vm" flex>
-            <md-content style="background-color: #BDBDBD;" flex>
-                <md-toolbar flex style="background-color: #4d4d4d;" class="md-whiteframe-z1">
-                    <div class="md-toolbar-tools" layout="row">
-                        <span flex></span>
-                        <h3>Photo Dash</h3>
-                        <span flex></span>
-						  <md-button class="material-icons md-18 md-icon-button" style="background-color: #4d4d4d;" aria-label="Settings">
-								<md-icon ng-click="vm.toggleServerSettings()" class="material-icons md-18">settings</md-icon>
-						  </md-button>
-					</div>
-                </md-toolbar> 
-				<label>Device Name: {{vm.deviceName}}</label> 
-				<md-card ng-hide="vm.serverSettings" style="background-color: #9E9E9E;" flex>
+        <div ng-controller="MainCtrl as vm" layout="column" layout-fill style="background-color: #4d4d4d;">
+           <md-toolbar style="background-color: #4d4d4d;">
+               <div class="md-toolbar-tools">
+               <div style="width: 25px; height: 25px;">
+               <md-icon md-ink-ripple style="position: relative; background-color: #4d4d4d; font-size: 32px;" ng-click="vm.toggleServerSettings()" class="material-icons">settings</md-icon>
+               </div>
+                    <span flex></span>
+                    <h3>Photo Dash</h3>
+                    <span flex></span>
+                    <div layout="column" layout-align="center end">
+                        <div>
+                            <md-icon md-ink-ripple class="material-icons" style="position: relative; font-size: 32px;" ng-disabled="vm.photos.length <= 0 || vm.videos.length <= 0">file_upload</md-icon>
+                        </div>
+                    </div>
+				</div>
+              
+            </md-toolbar>
+			   
+		   <md-content style="background-color: #BDBDBD;" flex>
+               
+				<md-card ng-show="vm.showSettings" style="background-color: #9E9E9E;" flex>
 					<label><h3>Server Info:</h3></label>
 					<md-input-container>
 						<label>IP Address</label>
@@ -52,23 +59,14 @@
 					
 					<md-button class="md-raised md-primary" ng-click="vm.saveSettings()">save</md-button>
 				</md-card>
+                
+				<div flex ng-hide="!vm.serverSettings" flex>
+				
 				<br />
-				<md-card ng-hide="!vm.serverSettings" style="background-color: #9E9E9E; padding-bottom: 290px;" flex>
-					<label>Media Type:</label>
-					<md-radio-group class="md-primary" layout="row" class="radioButton" ng-model="vm.selectedMedia">
-						<md-radio-button value="image" aria-label="image">Photos</md-radio-button>
-						<md-radio-button value="video" aria-label="video">Video</md-radio-button>
-					</md-radio-group>
-					<br />
-					<div>Total Selected: {{ vm.files.length }}</div>
-					<md-button ng-disabled="vm.inProgress || vm.files.length <= 0" class="md-raised md-primary" ng-click="vm.submit()">Upload Album</md-button>
-                    <div ng-show="vm.selectedMedia === 'image'">
-                        <file-input selected-files="vm.files" accept="image/*" disptext="Select Photos"></file-input>
-                    </div>
-                    <div ng-show="vm.selectedMedia === 'video'">
-                        <file-input selected-files="vm.files" accept="video/*" disptext="Select Video"></file-input>
-                    </div>
-				</md-card>
+				
+                <file-input selected-photos="vm.photos" selected-videos="vm.videos"></file-input>
+                  
+				</div>
 					
             </md-content>
         </div>

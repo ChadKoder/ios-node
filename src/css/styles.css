@@ -54,6 +54,30 @@ body {
   background-repeat: no-repeat no-repeat;
   pointer-events: none;*/
 }
+/*
+.server-settings {
+    border: 1px solid red;
+    margin: 0 !important;
+    position: relative;
+    top: 44px;
+    z-index: 9999;
+    -webkit-transition: height .3s ease-in-out;
+    transition: all .3s ease-in-out;
+    height: 0;
+    opacity: 0;
+}
+.server-settings.active {
+    height: 49px;
+    opacity: 1;
+}
+
+*/
+
+
+
+
+
+
 
 
 
