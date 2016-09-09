@@ -7,7 +7,7 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
 	vm.username = '';
 	vm.password = '';
 	vm.uploadDir = '';
-	vm.inProgress = false;
+	//vm.inProgress = false;
 	vm.selectedMedia = 'image';
     vm.showSettings = false;
 	vm.serverSettings = false;
@@ -18,13 +18,13 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
 	vm.editSettings = function () {
 		alert('settings...');
 	};
-    
-    vm.viewImage = function () {
-        alert('controller viewimage!');
-    };
-    
-    vm.mediaSelectText = 'Select ' + vm.selectedMedia;
-    
+
+	vm.viewImage = function () {
+		alert('controller viewimage!');
+	};
+
+	vm.mediaSelectText = 'Select ' + vm.selectedMedia;
+
 	vm.toggleServerSettings = function (){
 		if (vm.showSettings){
 			vm.showSettings = false;
@@ -93,8 +93,7 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
 	};
 
 	vm.saveSettings = function (){
-		
-		vm.inProgress = true;
+		//vm.inProgress = true;
 		var credentials = btoa(vm.username + ':' + vm.password);
 		var localStorage = window.localStorage;
 		var settings = {
@@ -113,11 +112,11 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
 				//localStorage.setItem('deviceName', vm.deviceName);
 				localStorage.setItem('albumName', vm.albumName);
 				alert('settings saved to server and to device');
-				vm.inProgress = false;
+			//	vm.inProgress = false;
 			}, function (err) {
-				vm.inProgress = false;
+				//vm.inProgress = false;
 				alert('error: ' + err);
-			});
+		});
 	};
 
 	vm.submit = function (){

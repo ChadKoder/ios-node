@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com/  data: gap: https://ssl.gstatic.com 'unsafe-eval';
-            style-src 'self' https://fonts.googleapis.com/ 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com/; media-src *; connect-src 'self' http://192.168.1.109:8888/">
+	<head>
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com/  data: gap: https://ssl.gstatic.com 'unsafe-eval';
+			style-src 'self' https://fonts.googleapis.com/ 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com/; media-src *; connect-src 'self' http://192.168.1.109:8888/">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="msapplication-tap-highlight" content="no">
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
@@ -13,27 +13,25 @@
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<title>Photo Dash</title>
 	</head>
-    <body ng-app="photoSaverApp" style="background-color: #BDBDBD;" flex>
-        <div ng-controller="MainCtrl as vm" layout="column" layout-fill style="background-color: #4d4d4d;">
-           <md-toolbar style="background-color: #4d4d4d;">
-               <div class="md-toolbar-tools">
-               <div style="width: 25px; height: 25px;">
-               <md-icon md-ink-ripple style="position: relative; background-color: #4d4d4d; font-size: 32px;" ng-click="vm.toggleServerSettings()" class="material-icons">settings</md-icon>
-               </div>
-                    <span flex></span>
-                    <h3>Photo Dash</h3>
-                    <span flex></span>
-                    <div layout="column" layout-align="center end">
-                        <div>
-                            <md-icon md-ink-ripple class="material-icons" style="position: relative; font-size: 32px;" ng-disabled="vm.photos.length <= 0 || vm.videos.length <= 0">file_upload</md-icon>
-                        </div>
-                    </div>
+	<body ng-app="photoSaverApp" style="background-color: #BDBDBD;" flex>
+		<div ng-controller="MainCtrl as vm" layout="column" layout-fill style="background-color: #4d4d4d;">
+			<md-toolbar style="background-color: #4d4d4d;">
+				<div class="md-toolbar-tools">
+					<div style="width: 25px; height: 25px;">
+						<md-icon md-ink-ripple style="position: relative; background-color: #4d4d4d; font-size: 32px;" ng-click="vm.toggleServerSettings()" class="material-icons">settings</md-icon>
+					</div>
+					<span flex></span>
+					<h3>Photo Dash</h3>
+					<span flex></span>
+					<div layout="column" layout-align="center end">
+						<div>
+							<md-icon md-ink-ripple class="material-icons" style="position: relative; font-size: 32px;" ng-show="vm.photos.length >= 0 || vm.videos.length >= 0">file_upload</md-icon>
+						</div>
+					</div>
 				</div>
-              
-            </md-toolbar>
-			   
-		   <md-content style="background-color: #BDBDBD;" flex>
-               
+			</md-toolbar>
+			
+			<md-content style="background-color: #BDBDBD;" flex>
 				<md-card ng-show="vm.showSettings" style="background-color: #9E9E9E;" flex>
 					<label><h3>Server Info:</h3></label>
 					<md-input-container>
@@ -59,21 +57,21 @@
 					
 					<md-button class="md-raised md-primary" ng-click="vm.saveSettings()">save</md-button>
 				</md-card>
-                
+				
 				<div flex ng-hide="!vm.serverSettings" flex>
 				
 				<br />
 				
-                <file-input selected-photos="vm.photos" selected-videos="vm.videos"></file-input>
-                  
+				<file-input selected-photos="vm.photos" selected-videos="vm.videos"></file-input>
+				
 				</div>
 					
-            </md-content>
-        </div>
-        <script src="./js/requirements.js" type="text/javascript"></script> 
-        <script src="./cordova.js" type="text/javascript"></script>        
-        <script src="./js/controllers.js" type="text/javascript"></script>        
+			</md-content>
+		</div>
+		<script src="./js/requirements.js" type="text/javascript"></script> 
+		<script src="./cordova.js" type="text/javascript"></script>        
+		<script src="./js/controllers.js" type="text/javascript"></script>        
 		<script src="./js/directives.js" type="text/javascript"></script>      
-        <script src="./js/app.js" type="text/javascript"></script>
-    </body>
+		<script src="./js/app.js" type="text/javascript"></script>
+	</body>
 </html>
