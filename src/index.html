@@ -13,19 +13,20 @@
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<title>Photo Dash</title>
 	</head>
-	<body ng-app="photoSaverApp" style="background-color: #BDBDBD;" flex>
-		<div ng-controller="MainCtrl as vm" layout="column" layout-fill style="background-color: #4d4d4d;">
+	<body ng-app="photoSaverApp" flex>
+		<div ng-controller="MainCtrl as vm" layout="column" layout-fill>
+			
 			<md-toolbar style="background-color: #4d4d4d;">
 				<div class="md-toolbar-tools">
-					<div style="width: 25px; height: 25px;">
-						<md-icon md-ink-ripple style="position: relative; background-color: #4d4d4d; font-size: 32px;" ng-click="vm.toggleServerSettings()" class="material-icons">settings</md-icon>
+					<div>
+						<md-icon class="material-icons toolbar-icon" md-ink-ripple ng-click="vm.toggleServerSettings()">settings</md-icon>
 					</div>
 					<span flex></span>
 					<h3>Photo Dash</h3>
 					<span flex></span>
 					<div layout="column" layout-align="center end">
 						<div>
-							<md-icon md-ink-ripple class="material-icons" style="position: relative; font-size: 32px;" ng-show="vm.photos.length >= 0 || vm.videos.length >= 0">file_upload</md-icon>
+							<md-icon class="material-icons toolbar-icon" md-ink-ripple ng-show="vm.photos.length >= 0 || vm.videos.length >= 0">file_upload</md-icon>
 						</div>
 					</div>
 				</div>

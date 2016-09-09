@@ -1,86 +1,80 @@
 @font-face {
-font-family: 'CaptureIt';
-src: url('../fonts/Capture_it.ttf'); 
-     url('../fonts/Capture_it.ttf')  format('truetype'), /* Safari, Android, iOS */
-font-weight: bold;
+	font-family: 'CaptureIt';
+	src: url('../fonts/Capture_it.ttf'); 
+	 url('../fonts/Capture_it.ttf')  format('truetype'), /* Safari, Android, iOS */
+	font-weight: bold;
 }
 
 body {
-    text-transform: none;
+	background-color: #BDBDBD;
+	text-transform: none;
 	font-family: CaptureIt;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+}
+.full-width-label {
+	width: 100%;
 }
 
-.lowercase {
-    text-transform: none;
-}
- 
-/*
- Allow angular.js to be loaded in body, hiding cloaked elements until
- templates compile.  The !important is important given that there may be
- other selectors that are more specific or come later and might alter display.
- */
-[ng\:cloak], [ng-cloak], .ng-cloak {
-    display: none !important;
-} 
-.md-button {
-   background: -webkit-linear-gradient(-90deg, #448aFF, #2962FF);
+.dash-toolbar {
+	background-color: #4d4d4d;
 }
 
+.album {
+	background-color: #9E9E9E;
+}
+
+.toolbar-icon {
+	position: relative;
+	background-color: #4d4d4d; 
+	font-size: 32px;
+}
+.image-display {
+	width: 65px;
+	height: auto; 
+	padding: 0 10px 0 10px;
+}
+
+.fullscreen-container {
+	z-index: 9999;
+	top: 0px;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	background-color: #9E9E9E;
+}
+.fullscreen-image {
+	width: 90%;
+	height: auto;
+}
+/*.md-button {
+background: -webkit-linear-gradient(-90deg, #448aFF, #2962FF);
+}*/
+
+.label-button {
+	position: relative; 
+	width: 47%; 
+	background: -webkit-linear-gradient(top, #545454, #929292);
+	border-radius: 5px; 
+	font-size: 18pt; 
+	text-align: center; 
+	color: white;
+}
 .md-button:not([disabled]):hover {
-    background-color: #1E88E5;
+	background-color: #1E88E5;
 }
 .md-button[disabled] {
-    background-color: #E0E0E0;
+	background-color: #E0E0E0;
 }
 .file-input-container{
-    width: 95%;
+	
 }
 
 .fileInput {
-  opacity: 0;
-  display: inline-block;
- position: absolute;
-   top: 0;
-  left: 0;
-  /*background-repeat: no-repeat no-repeat;
-  pointer-events: none;
-  margin: 5px auto auto;*/
-  
-  /*margin: 5px auto auto;
-  padding: 0;
-  display: inline-block;
-  background-repeat: no-repeat no-repeat;
-  pointer-events: none;*/
+	opacity: 0;
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
-/*
-.server-settings {
-    border: 1px solid red;
-    margin: 0 !important;
-    position: relative;
-    top: 44px;
-    z-index: 9999;
-    -webkit-transition: height .3s ease-in-out;
-    transition: all .3s ease-in-out;
-    height: 0;
-    opacity: 0;
-}
-.server-settings.active {
-    height: 49px;
-    opacity: 1;
-}
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
