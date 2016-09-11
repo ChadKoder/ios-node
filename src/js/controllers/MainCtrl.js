@@ -1,6 +1,6 @@
 //js/controllers/MainCtrl.js
-angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$mdToast', '$scope', '$timeout',
-	function ($window, $http, $mdToast, $scope, $timeout) {
+angular.module('dash-client', []).controller('MainCtrl', ['$http', '$mdToast',
+	function ($http, $mdToast) {
 	var port = ':8888';
 	var vm = this;
 	vm.ipAddress = '';
@@ -10,14 +10,14 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
 	vm.showSettings = false;
 	vm.serverSettings = false;
 	
-    var originatorEvent;
+   // var originatorEvent;
     
     vm.getInfo = function(){
         alert('get info!');
     }
 	    
     vm.openSettings = function ($mdOpenMenu, e){
-        originatorEvent = e;
+       // originatorEvent = e;
         $mdOpenMenu(e);
     };
 	

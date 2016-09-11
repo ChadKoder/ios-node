@@ -35,17 +35,17 @@ module.exports = function(grunt) {
 						'node_modules/angular-material/angular-material.js',
 						'node_modules/angular-mocks/angular-mocks.js',
 						'node_modules/angular-loading-bar/build/loading-bar.js',
-						'unitTests/unitTestData.js',
-						'unitTests/unitTestMocks.js',
+						//'unitTests/unitTestData.js',
+						//'unitTests/unitTestMocks.js',
 						'src/js/app/app.js',
-                        'unitTests/*.spec.js'
+                        'specs/*.spec.js'
                     ],
                     browsers: [
 						'PhantomJS2'
                     ],
                     reporters: ['dots'],
                     preprocessors: {
-						'unitTests/LoginCtrl.spec.js': ['browserify'],
+						'specs/MainCtrl.spec.js': ['browserify'],
                     },
                     coverageReporter: {
                         type: 'lcov',
