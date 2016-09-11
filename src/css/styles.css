@@ -12,6 +12,7 @@ body {
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 }
+
 .full-width-label {
 	width: 100%;
 }
@@ -45,6 +46,7 @@ body {
 	background-color: #9E9E9E;
 }
 .fullscreen-image {
+    position: relative;
 	width: 90%;
 	height: auto;
 }
@@ -54,13 +56,22 @@ background: -webkit-linear-gradient(-90deg, #448aFF, #2962FF);
 
 .label-button {
 	position: relative; 
-	width: 47%; 
+	width: 50%;
 	background: -webkit-linear-gradient(top, #545454, #929292);
-	border-radius: 5px; 
-	font-size: 18pt; 
+	/*border-radius: 5px;*/
+	font-size: 24pt;
 	text-align: center; 
 	color: white;
 }
+
+.label-button.video-input{
+    border-left: 1px solid #929292;
+}
+
+.label-button.image-input {
+    border-right: 1px solid #929292;
+}
+
 .md-button:not([disabled]):hover {
 	background-color: #1E88E5;
 }
@@ -70,6 +81,14 @@ background: -webkit-linear-gradient(-90deg, #448aFF, #2962FF);
 .file-input-container{
 	
 }
+/*
+.settings-input {
+    background-color: #b1b1b1;
+    color: white;
+    border-top: 1px solid grey;
+    border-right: 1px solid grey;
+    border-left: 1px solid grey;
+}*/
 
 .fileInput {
 	opacity: 0;
@@ -77,4 +96,8 @@ background: -webkit-linear-gradient(-90deg, #448aFF, #2962FF);
 	position: absolute;
 	top: 0;
 	left: 0;
+}
+
+md-input-container:not(.md-input-invalid).md-input-focused .md-input {
+    border-color: grey;
 }

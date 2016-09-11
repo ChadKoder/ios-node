@@ -7,38 +7,29 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
 	vm.username = '';
 	vm.password = '';
 	vm.uploadDir = '';
-	//vm.inProgress = false;
-	vm.selectedMedia = 'image';
-    vm.showSettings = false;
+	vm.showSettings = false;
 	vm.serverSettings = false;
-	vm.editSettingsText = 'Hide';
-    vm.buttonText = 'Select Photos';
-    vm.accept = 'image';
 	
-	vm.editSettings = function () {
-		alert('settings...');
-	};
-
-	vm.viewImage = function () {
-		alert('controller viewimage!');
-	};
-
-	vm.mediaSelectText = 'Select ' + vm.selectedMedia;
-
+    var originatorEvent;
+    
+    vm.getInfo = function(){
+        alert('get info!');
+    }
+	    
+    vm.openSettings = function ($mdOpenMenu, e){
+        originatorEvent = e;
+        $mdOpenMenu(e);
+    };
+	
 	vm.toggleServerSettings = function (){
+        var test = document.querySelector('.settings-container');
+        test.classList.toggle('active');
 		if (vm.showSettings){
 			vm.showSettings = false;
 		} else {
 			vm.showSettings = true;
 		}
-	};   
-
-	vm.refresh = function () {
-		if (!$scope.$$phase) {
-			$scope.$apply();
-		}
 	};
-    
 
 	vm.getSettings = function (){
 		var localStorage = window.localStorage;
@@ -75,14 +66,15 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
 		vm.showSimpleToast(msg);
 	};
 	
-	vm.deleteSettings = function () {
+	/*vm.deleteSettings = function () {
 		$http.delete(vm.ipAddress + port + '/settings').then(function (res) {
 			alert('successfully cleared your settings.');
 		}, function (err){
 			alert('error deleting settings: ' + err);
 		});
-	};
+	};*/
 	
+	/*
 	vm.getSettingsFromServer = function() {
 		$http.get(vm.ipAddress + port + '/settings').then(function (res) {
 			alert(JSON.stringify(res));
@@ -90,7 +82,7 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
 			alert('error: ' + err);
 		});
 		
-	};
+	};*/
 
 	vm.saveSettings = function (){
 		//vm.inProgress = true;
@@ -104,7 +96,12 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
 			albumName: vm.albumName
 		}
 		
-		$http.post(vm.ipAddress + port + '/settings', JSON.stringify(settings))
+		localStorage.setItem('ipAddress', vm.ipAddress);
+		localStorage.setItem('credentials', credentials);
+		localStorage.setItem('uploadDir', vm.uploadDir); 
+		localStorage.setItem('albumName', vm.albumName);
+		
+		/*$http.post(vm.ipAddress + port + '/settings', JSON.stringify(settings))
 			.then(function(result) {
 				localStorage.setItem('ipAddress', vm.ipAddress);
 				localStorage.setItem('credentials', credentials);
@@ -116,53 +113,53 @@ angular.module('dash-client', []).controller('MainCtrl', ['$window', '$http', '$
 			}, function (err) {
 				//vm.inProgress = false;
 				alert('error: ' + err);
-		});
+		});*/
 	};
 
 	vm.submit = function (){
 		if (!vm.username || !vm.password) {
 			vm.showErrorToast('username and password are required.');
-		return;
-	}
+			return;
+		}
 
-	var encodedAuth = btoa(vm.username + ':' + vm.password);
-	var formData = new FormData();
-	formData.enctype = "multipart/form-data";
+		var encodedAuth = btoa(vm.username + ':' + vm.password);
+		var formData = new FormData();
+		formData.enctype = "multipart/form-data";
 
-	angular.forEach(vm.photos, function (obj) {
-		formData.append('file', obj.file);
-	});
-    
-    angular.forEach(vm.videos, function (obj) {
-        formData.append('file', obj.file);
-    });
+		angular.forEach(vm.photos, function (obj) {
+			formData.append('file', obj.file);
+		});
+		
+		angular.forEach(vm.videos, function (obj) {
+			formData.append('file', obj.file);
+		});
 
-	$http.defaults.headers.common.Authorization = 'Basic ' + encodedAuth;
-	vm.inProgress = true;
+		$http.defaults.headers.common.Authorization = 'Basic ' + encodedAuth;
+		vm.inProgress = true;
 
-	$http.post(vm.ipAddress + port + '/files', formData, {
-		transformRequest: angular.identity,
-		headers: { 'Content-Type': undefined }
-		}).then(function(result) {
-			vm.inProgress = false;
-			vm.showSuccessToast('Album upload successful!');
-		}, function (err) {
-			alert('err: ' + JSON.stringify(err));
-			var errorStatus = err.status.toString().trim();
-			vm.inProgress = false;
-			switch (errorStatus) {
-				case '401':
-					vm.showErrorToast('username/password validate failed.');
-					vm.username = '';
-					vm.password = '';
-					break;
-				case '-1':
-					vm.showErrorToast('Server is not available.');
-					break;
-				default:
-					vm.showErrorToast('Unknown error.');
-					break;
-			}
+		$http.post(vm.ipAddress + port + '/files', formData, {
+			transformRequest: angular.identity,
+			headers: { 'Content-Type': undefined }
+			}).then(function(result) {
+				vm.inProgress = false;
+				vm.showSuccessToast('Album upload successful!');
+			}, function (err) {
+				alert('err: ' + JSON.stringify(err));
+				var errorStatus = err.status.toString().trim();
+				vm.inProgress = false;
+				switch (errorStatus) {
+					case '401':
+						vm.showErrorToast('username/password validate failed.');
+						vm.username = '';
+						vm.password = '';
+						break;
+					case '-1':
+						vm.showErrorToast('Server is not available.');
+						break;
+					default:
+						vm.showErrorToast('Unknown error.');
+						break;
+				}
 		});
 	};
 
