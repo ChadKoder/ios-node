@@ -27,6 +27,7 @@ module.exports = function(grunt) {
                     frameworks: ['jasmine', 'browserify'],
                     autoWatch: true,
                     files: [
+						'node_modules/underscore/underscore.js',
 						'node_modules/requirejs/require.js', 
 						'node_modules/angular/angular.js',
 						'node_modules/angular-route/angular-route.js',
@@ -57,6 +58,7 @@ module.exports = function(grunt) {
         }
 
 	var requiredJsFiles = [
+		'node_modules/underscore/underscore.js',
 		'node_modules/angular/angular.js',
 		'node_modules/requirejs/require.js',
 		'node_modules/angular-route/angular-route.js',
@@ -66,6 +68,8 @@ module.exports = function(grunt) {
 		'node_modules/angular-messages/angular-messages.js',
 		'node_modules/angular-material/angular-material.js',
 		'node_modules/angular-loading-bar/build/loading-bar.js'
+		//'node_modules/photoswipe/dist/photoswipe.js',
+		//'node_modules/photoswipe/dist/photoswipe-ui-default.js'
 	],
 	concatConfig = {
 		requirements: {
@@ -243,6 +247,24 @@ module.exports = function(grunt) {
 		sync: {
                 main: {
                     files: [
+						{
+							expand: true,
+							cwd: 'node_modules/photoswipe/dist',
+							src: ['photoswipe.js'],
+							dest: './photo-dash/www/js/'
+						},
+						/*{
+							expand: true,
+							cwd: 'lib/angular-photoswipe',
+							src: ['angular-photoswipe.js'],
+							dest: './photo-dash/www/js/'
+						},*/
+						{
+							expand: true,
+							cwd: 'node_modules/photoswipe/dist',
+							src: ['photoswipe-ui-default.js'],
+							dest: './photo-dash/www/js/'
+						},
                         {
                             expand: true,
                             cwd: 'node_modules/angular-material',
@@ -254,6 +276,36 @@ module.exports = function(grunt) {
                             cwd: 'node_modules/angular-loading-bar/build',
                             src: ['loading-bar.min.css'],
                             dest: './photo-dash/www/css/'
+                        },
+						/*{
+                            expand: true,
+                            cwd: 'lib/angular-photoswipe',
+                            src: ['angular-photoswipe.css'],
+                            dest: './photo-dash/www/css/'
+                        },*/
+						/*{
+							expand: true,
+							cwd: 'lib/angular-photoswipe',
+							src: ['angular-photoswipe.min.js'],
+							dest: './photo-dash/www/js/'
+						},*/
+						{
+                            expand: true,
+                            cwd: 'node_modules/photoswipe/dist',
+                            src: ['photoswipe.css'],
+                            dest: './photo-dash/www/css/'
+                        },
+						{
+                            expand: true,
+                            cwd: 'node_modules/photoswipe/dist/default-skin',
+                            src: ['default-skin.css'],
+                            dest: './photo-dash/www/css/'
+                        },
+						{
+                            expand: true,
+                            cwd: 'node_modules/photoswipe/dist/default-skin',
+                            src: ['default-skin.png', 'preloader.gif', 'default-skin.svg'],
+                            dest: './photo-dash/www/res/'
                         },
 						{
                             expand: true,

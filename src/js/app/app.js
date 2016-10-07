@@ -1,5 +1,7 @@
 
 var app = angular.module('photoSaverApp', ['ngMaterial', 'ngRoute', 'ngAnimate', 'dash-client', 'angular-loading-bar']);
+
+app.constant('_', window._);
 app.config(function ($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode({
 		enabled: true,
