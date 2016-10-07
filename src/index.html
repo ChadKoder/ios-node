@@ -9,6 +9,9 @@
 
 		<link rel="stylesheet" href="./css/angular-material.min.css" type="text/css">
 		<link rel="stylesheet" href="./css/loading-bar.min.css" type="text/css">
+    
+		
+		<link rel="stylesheet" href="./css/photoswipe.css" />
 		<link rel="stylesheet" href="./css/styles.css" type="text/css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<title>Photo Dash</title>
@@ -83,11 +86,17 @@
 			</md-toolbar>
 			
 			<md-content style="background-color: #BDBDBD;" flex>
-				<div flex ng-hide="!vm.serverSettings" flex>
+				<div flex>
 				<br />
-				    <file-input ng-hide="vm.showSettings" selected-photos="vm.photos" selected-videos="vm.videos"></file-input>
+				    <file-input selected-photos="vm.photos" selected-videos="vm.videos"></file-input>
 				</div>
-                
+				
+                <md-button ng-click="vm.getContacts()">get contacts from phone</md-button>
+                <md-button ng-click="vm.saveContacts()">SAVE CONTACTS to server</md-button>
+                <md-button ng-click="vm.createContact()">CREATE test CONTACT</md-button>
+                <md-button ng-click="vm.restoreContactsFromServer()">restore contacts from server</md-button>
+                <div style="background-color: green;"> {{ vm.totalRestored}}  </div>
+
 			</md-content>
             <md-button style="position: absolute; background-color: #BDBDBD; font-size: 1.8rem;"class="md-fab md-fab-bottom-right md-mini material-icons" aria-label="upload photo" ng-click="vm.getInfo()">
                 info_outline
@@ -96,7 +105,8 @@
 		<script src="./js/requirements.js" type="text/javascript"></script> 
 		<script src="./cordova.js" type="text/javascript"></script>        
 		<script src="./js/controllers.js" type="text/javascript"></script>        
-		<script src="./js/directives.js" type="text/javascript"></script>      
+		<script src="./js/directives.js" type="text/javascript"></script>
 		<script src="./js/app.js" type="text/javascript"></script>
+	
 	</body>
 </html>

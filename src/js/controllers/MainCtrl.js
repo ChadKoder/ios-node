@@ -1,6 +1,5 @@
-//js/controllers/MainCtrl.js
-angular.module('dash-client', []).controller('MainCtrl', ['$http', '$mdToast',
-	function ($http, $mdToast) {
+angular.module('dash-client', []).controller('MainCtrl', ['$http', '$mdToast', '$scope', '_',
+	function ($http, $mdToast, $scope, _) {
 	var port = ':8888';
 	var vm = this;
 	vm.ipAddress = '';
@@ -9,7 +8,129 @@ angular.module('dash-client', []).controller('MainCtrl', ['$http', '$mdToast',
 	vm.uploadDir = '';
 	vm.showSettings = false;
 	vm.serverSettings = false;
+    $scope.items = [];
+    vm.photos = [];
+    $scope.testitems = [];
+    vm.totalRestored = 0;
+    vm.contacts = [];
+    
+    
+    vm.contactsSuccess = function(contacts) {
+        alert('total contacts: ' + contacts.length);
+        vm.contacts = contacts;
+    };
+    
+    vm.contactsFailure = function(err){
+        alert('Error retrieving contacts: ' + err);
+    };
+    
+    vm.getContacts = function() {
+        //alert('getting contacts');
+        var options = new ContactFindOptions();
+        options.filter = "";
+        options.multiple = true;
+        var filter = ["displayName", "addresses"];
+        navigator.contacts.find(filter, vm.contactsSuccess, vm.contactsFailure, options);
+       
+    };
+    
+    vm.contactSaveSuccess = function (){
+   
+       console.log('adding!!!');
+       vm.totalRestored += 1;
+        //scope.totalSavedContacts = vm
+       // alert('NEW Contact saved!');
+    };
+    
+    vm.contactSaveFailure = function (){
+        alert('NEW contact NOT SAVED :(');
+    };
+    
+    vm.createContact = function (){
+         var newContact = {
+            displayName: 'ATEST TESTUSER',
+            name: {
+                givenName: 'ATEST',
+                familyName: 'TESTUSER'
+            }
+           };
+    
+          var contact = navigator.contacts.create(newContact);
+          contact.save(vm.contactSaveSuccess, vm.contactSaveFailure);
+    
+    };
+    
+    vm.saveContacts = function (){
+                                                          localStorage.setItem('ipAddress', vm.ipAddress);
+                                                          localStorage.setItem('credentials', credentials);
+                                                          localStorage.setItem('uploadDir', vm.uploadDir);
+                                                          //localStorage.setItem('deviceName', vm.deviceName);
+                                                          localStorage.setItem('albumName', vm.albumName);
+                                                          $http.post(vm.ipAddress + port + '/contacts', JSON.stringify(vm.contacts))
+          .then(function(result) {
+              //alert('saved contacts!');
+                /*localStorage.setItem('ipAddress', vm.ipAddress);
+                 localStorage.setItem('credentials', credentials);
+                 localStorage.setItem('uploadDir', vm.uploadDir);
+                 //localStorage.setItem('deviceName', vm.deviceName);
+                 localStorage.setItem('albumName', vm.albumName);
+                 alert('settings saved to server and to device');*/
+                vm.inProgress = false;
+                }, function (err) {
+                vm.inProgress = false;
+                alert('error: ' + err);
+          });
+          
+    };
+    
+    $scope.$watch('items.length', function() {
+        if($scope.items.length === vm.photos.length){
+             //alert($scope.items[0].w);
+        }
+    });
 	
+    $scope.$watch('vm.photos.length', function(i) {
+        //if (i){
+            
+                  //alert(i);
+                  //alert('test i : ' + i);
+                  // alert('MAINCTRL! ' + vm.photos.length);
+                  //var fr = new FileReader;
+                  //fr.onload = function() {
+                  
+                  //alert(vm.photos.length);
+                  
+                  for (var y=0; y < vm.photos.length; y++){
+                  
+                      var img = new Image;
+                      
+                      img.src = vm.photos[y].dataUrl;
+                      
+                      img.onload = function() {
+                          //alert(img.width);
+                          
+                          // alert('scope photos: ' + i);
+                          var item = {
+                              src: img.src,
+                              w: img.width,
+                              h: img.height,
+                              pid: 'photo' + Math.random()
+                          };
+                          
+                          $scope.items.push(item);
+                          
+                      };
+
+                  }
+                                  
+                  // img.src = $scope.photos[i].dataUrl;
+                  
+                  
+           // }
+       
+                  });
+                  
+                  
    // var originatorEvent;
     
     vm.getInfo = function(){
@@ -66,6 +187,64 @@ angular.module('dash-client', []).controller('MainCtrl', ['$http', '$mdToast',
 		vm.showSimpleToast(msg);
 	};
 	
+	vm.showGallery = function (){
+		require([ 
+        './js/photoswipe.js', 
+        './js/photoswipe-ui-default.js' 
+    ], function(PhotoSwipe, PhotoSwipeUI_Default) {
+					 var pswpElement = document.querySelectorAll('.pswp')[0];
+                
+                     /*var items = [];
+                
+                     for (var i = 0; i < vm.photos.length; i++){
+                        var item = {
+                            src:vm.photos[i].dataUrl,
+                            w: 640,
+                            h: 1136,
+                            pid: 'photo' + i
+                        };
+                
+                        items.push(item);
+                
+                     }*/
+        // define options (if needed)
+        var options = {
+                 // history & focus options are disabled on CodePen  
+            index: 0,
+            history: false,
+          //  barsSize: {top:15, bottom:350},
+            focus: false,
+            //fullscreenEl: false,
+            showAnimationDuration: 0,
+            hideAnimationDuration: 0,
+            addCaptionHTMLFn: function (item, captionEl, isFake) {
+                if (!item.title){
+                    captionEl.children[0].innerHTML = 'no title';
+                    return false;
+                }
+                
+            //    captionEl.children[0].innerHTML = item.title;
+                
+                captionEl.children[0].innerHTML = 'BLAH!';
+                return true;
+            },
+            closeEl: true,
+            captionEl: true,
+            zoomEl: true
+
+        };
+
+    var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, $scope.items, options);
+    gallery.init();
+
+});
+	};
+	
+	
+	
+	
+	
+	
 	/*vm.deleteSettings = function () {
 		$http.delete(vm.ipAddress + port + '/settings').then(function (res) {
 			alert('successfully cleared your settings.');
@@ -83,7 +262,79 @@ angular.module('dash-client', []).controller('MainCtrl', ['$http', '$mdToast',
 		});
 		
 	};*/
+    
+         vm.serverContacts = [];
+    
+   
+   vm.sleep = function(length) {
+       return new Promise(function (resolve, reject) {
+           setTimeout(resolve, length);
+       });
+   };
+   
+    vm.restoreContactsFromServer = function(){
+    
+                     
+        //get contacts from device
+         
+          
+        //get contacts from server
+         $http.get(vm.ipAddress + port + '/contacts').then(function (res){
+            vm.serverContacts = res.data;
+                             
+           vm.missing = [];
+           
+           for (var i =0; i < vm.serverContacts.length; i++){
+               if (vm.contacts.length > 0){
 
+                       var index = _.findIndex(vm.contacts, function (c) {
+                           return c.name.formatted == vm.serverContacts[i].name.formatted;
+                        });
+                       
+                       if (index === -1){
+                            console.log('adding NOT FOUNND contact');
+                           var contact = navigator.contacts.create(vm.serverContacts[i]);
+
+                           vm.missing.push(contact);
+                       }
+                 } else {
+                    var contact = navigator.contacts.create(vm.serverContacts[i]);
+                       console.log('adding ALL contact...');
+                     vm.missing.push(contact);
+                }
+                
+            }
+            
+            
+            var ctr = 0;
+            
+                function saveAllContacts(ctr, contacts){
+                    var c = contacts[ctr];
+                    c.save(function(){
+                        console.log('saved ' + ctr);
+                        ctr++;
+                         if (ctr < vm.missing.length){
+                             saveAllContacts(ctr, vm.missing);
+                         } else {
+                             console.log('saved all ' + ctr + ' contacts!');
+                         }
+                    }, function(err){
+                        console.log('error!');
+                    });
+                   //contact.save(vm.contactSaveSuccess, vm.contactSaveFailure);
+                }
+                
+                saveAllContacts(ctr, vm.missing);
+                
+                
+           
+              
+            });
+    };
+    
+    
+    
+ 
 	vm.saveSettings = function (){
 		//vm.inProgress = true;
 		var credentials = btoa(vm.username + ':' + vm.password);
@@ -101,19 +352,19 @@ angular.module('dash-client', []).controller('MainCtrl', ['$http', '$mdToast',
 		localStorage.setItem('uploadDir', vm.uploadDir); 
 		localStorage.setItem('albumName', vm.albumName);
 		
-		/*$http.post(vm.ipAddress + port + '/settings', JSON.stringify(settings))
+		$http.post(vm.ipAddress + port + '/settings', JSON.stringify(settings))
 			.then(function(result) {
-				localStorage.setItem('ipAddress', vm.ipAddress);
+				/*localStorage.setItem('ipAddress', vm.ipAddress);
 				localStorage.setItem('credentials', credentials);
 				localStorage.setItem('uploadDir', vm.uploadDir);
 				//localStorage.setItem('deviceName', vm.deviceName);
 				localStorage.setItem('albumName', vm.albumName);
-				alert('settings saved to server and to device');
-			//	vm.inProgress = false;
+				alert('settings saved to server and to device');*/
+				vm.inProgress = false;
 			}, function (err) {
-				//vm.inProgress = false;
+				vm.inProgress = false;
 				alert('error: ' + err);
-		});*/
+		});
 	};
 
 	vm.submit = function (){
