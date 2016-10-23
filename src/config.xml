@@ -34,4 +34,5 @@
 	<plugin name="cordova-plugin-contacts" spec="~2.2.0">
         <variable name="CONTACTS_USAGE_DESCRIPTION" value="Backup or restore contacts" />
     </plugin>
+	<!--plugin name="cordova-plugin-file" spec="~4.3.0" />-->
 </widget>

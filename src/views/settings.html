@@ -1,0 +1,53 @@
+ <md-menu md-position-mode="target-left target" md-offset="0 42" style="background-color: #4d4d4d;">
+	<md-button aria-label="Open settings menu" class="md-icon-button" ng-click="openSettings($mdOpenMenu, $event)">
+		<md-icon md-menu-origin class="material-icons">settings</md-icon>
+	</md-button>                        
+	<md-menu-content style="background-color: #a5a5a5;">
+		<md-menu-item>
+			<div>
+				<md-input-container ng-no-float>
+					<label style="color:white">IP Address</label>
+						<input style="background-color: #b1b1b1; color: white; border-top: 1px solid grey; border-right: 1px solid grey;border-left: 1px solid grey;" placeholder="" type="text" ng-model="ipAddress" ng-change="updateIPAddress(ipAddress)"/>
+				</md-input-container>
+			</div>
+		</md-menu-item>
+		<md-menu-item>
+		<div>
+			<md-input-container md-no-float>
+				<label style="padding-left: 5px; color: white;">User Name</label>
+				<input placeholder="" style="background-color: #b1b1b1; color: white; border-top: 1px solid grey; border-right: 1px solid grey; border-left: 1px solid grey;" type="text" ng-model="username" ng-change="updateUsername(username)" />
+			</md-input-container>
+		</div>
+		</md-menu-item>
+		<md-menu-item>
+		<div>
+			<md-input-container ng-no-float>
+				<label style="padding-left: 5px; color: white;">Password</label>
+				<input placeholder="" style="background-color: #b1b1b1; color: white; border-top: 1px solid grey; border-right: 1px solid grey; border-left: 1px solid grey;" type="password" ng-model="password" ng-change="updatePassword(password)"/>
+			</md-input-container>
+		</div>
+		</md-menu-item>
+		<md-menu-item>
+		<div>
+			<md-input-container ng-no-float>
+				<label style="padding-left: 5px; color: white;">PC Upload Location</label>
+				<input placeholder="" style="background-color: #b1b1b1; color: white; border-top: 1px solid grey; border-right: 1px solid grey; border-left: 1px solid grey;" type="text" ng-model="uploadDir" ng-change="updateUploadDir(uploadDir)"/>
+			</md-input-container>
+		</div>
+		</md-menu-item>
+		<md-menu-item>
+		<div>
+			<md-input-container ng-no-float>
+				<label style="color: white;">Album Name</label>
+				<input placeholder="" style="background-color: #b1b1b1; color: white; border-top: 1px solid grey; border-right: 1px solid grey; border-left: 1px solid grey;" type="text" ng-model="albumName" ng-change="updateAlbumName(albumName)"/>
+			</md-input-container>
+		</div>
+		</md-menu-item>
+		<md-menu-item>
+			<button class="ng-hide" id="saveBtn" ng-click="saveSettings()"></button>
+			<label style="width: 100%; position: relative; text-align: center; background-color: grey; color:white;" for="saveBtn" md-ink-ripple>
+				Save
+			</label>
+		</md-menu-item>                     
+	</md-menu-content>              
+</md-menu>

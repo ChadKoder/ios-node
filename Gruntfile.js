@@ -59,6 +59,7 @@ module.exports = function(grunt) {
 
 	var requiredJsFiles = [
 		'node_modules/underscore/underscore.js',
+		//'node_modules/ios-gmail-notes/ios-gmail-notes.js',
 		'node_modules/angular/angular.js',
 		'node_modules/requirejs/require.js',
 		'node_modules/angular-route/angular-route.js',

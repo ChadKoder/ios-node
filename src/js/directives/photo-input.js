@@ -1,15 +1,13 @@
-angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeout', function ($q, $compile, $timeout) {
+angular.module('dash-client').directive('photoInput', ['$q', '$compile', '$timeout', function ($q, $compile, $timeout) {
 	return {
 		restrict: 'E',
-		templateUrl: './views/file-input.html',
+		templateUrl: './views/photo-input.html',
 		replace: false,
 		scope: {
-			selectedPhotos: '=?',
-			selectedVideos: '=?'
+			selectedPhotos: '=?'
 		},
 		link: function (scope, element, attrs, ctrl) {
 			scope.selectedPhotos = [];
-			scope.selectedVideos = [];
 			scope.fullScreenObj = null;
 			scope.selectedMediaType = 'image';
 			scope.selectedMediaTypeText = 'images';
@@ -19,7 +17,6 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
 			}
 
 			var elImageInput = angular.element(element[0].querySelector('#imageInput'));
-			var elVideoInput = angular.element(element[0].querySelector('#videoInput'));
 
 			var readAsDataURL = function (file, index) {
 			var deferred = $q.defer();
@@ -71,8 +68,6 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
 
 					if (fileType === 'image/jpeg' || fileType === 'image/png') {
 						scope.selectedPhotos.push(fileObj);
-					} else if(fileType === 'video' || fileType === 'video/quicktime'){
-						scope.selectedVideos.push(fileObj);
 					}
 				}, function(error){
 					alert('error: ' + error);
@@ -82,7 +77,6 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
 		
 			scope.clearAll = function () {
 				scope.selectedPhotos = [];
-				scope.selectedVideos = [];
 			}
 
 			scope.items = [];
@@ -244,13 +238,10 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
 			scope.toggleMediaText = function (newVal){
 				if (newVal === 'image'){
 					scope.selectedMediaTypeText = 'images';
-				} else {
-					scope.selectedMediaTypeText = 'video';
-				}
+				} 
 			}
 
 			elImageInput.bind('change', scope.onFileChange);
-			elVideoInput.bind('change', scope.onFileChange);
 
 		}
 	}

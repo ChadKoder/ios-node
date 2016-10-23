@@ -1,0 +1,23 @@
+<input class="ng-hide fileInput" accept="video/*" id="videoInput" type="file" />
+<div layout="row" layout-align="center center" flex>	
+	<label for="videoInput" md-ink-ripple class="label-button video-input">
+		Add Video
+	</label>
+</div>
+<md-card flex layout="row" layout-wrap flex="25" id="albumReview" class="album" ng-show="selectedVideos.length > 0">
+	<div class="full-width-label">Total Selected: {{selectedVideos.length }}</div>
+		
+	<div class="full-width-label">Videos:</div>
+	<div ng-repeat="video in selectedVideos">
+		<video src="{{video.dataUrl}}" controls autoplay height="auto" width="65px" type="{{video.fileType}}"></video>
+	</div>
+</md-card>
+<md-button ng-show="selectedVideos.length > 0" ng-click="clearAll()">clear all</md-button>
+<div class="fullscreen-container" id="fullScreen" ng-show="fullScreenObj" layout="column" layout-align="center center">
+	<!--<md-button ng-click="closeFullScreen()">close</md-button>-->
+	<img class="fullscreen-image" src="{{fullScreenObj.dataUrl}}">
+		<md-button style="position: absolute; font-size: 1.8rem;"class="md-fab md-fab-top-right md-mini" aria-label="close video" ng-click="closeFullScreen()">
+			X
+		</md-button>
+	</img>
+</div>
