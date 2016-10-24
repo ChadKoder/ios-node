@@ -89,7 +89,11 @@ background: -webkit-linear-gradient(-90deg, #448aFF, #2962FF);
     border-right: 1px solid grey;
     border-left: 1px solid grey;
 }*/
-
+/*
+.dash-fab-icon {
+	position: relative;	display: inline-block;	left: -11px;	top: -8px; 	font-size: 48px;
+}
+*/
 .fileInput {
 	opacity: 0;
 	display: inline-block;

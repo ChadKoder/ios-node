@@ -1,6 +1,6 @@
-angular.module('dash-client').controller('ContactsCtrl', ['$http',
-	function ($http) {
-		var port = ':8888';
+angular.module('dash-client').controller('ContactsCtrl', ['httpService', '$window',
+	function (httpService, $window) {
+		//var port = ':8888';
 		var vm = this;
 		vm.contacts = [];
 		vm.serverContacts = [];
@@ -14,6 +14,52 @@ angular.module('dash-client').controller('ContactsCtrl', ['$http',
 			alert('Error retrieving contacts: ' + err);
 		};
 		
+		vm.deleteContacts = function () {
+			if(!$window.confirm('Delete ALL contacts?')){
+				alert( 'Delete All Canceled!');
+				return;
+			}
+			
+			vm.getContactsForDelete().then(function(res){
+				var contacts = res;
+				var errors = false;
+				
+				for (var i = 0; i < contacts.length; i++){
+					contacts[i].remove(function(){
+						console.log('removing contact...');
+					}, function (err){
+						errors = true;
+						console.log('error deleing contacts');
+						alert('error deleting contact #' + i);
+					});
+				}
+				
+				if (errors){
+					alert('deletion completed WITH ERRORS! :(');
+				} else {
+					alert('deletion completed with NO errors!');
+				}
+				
+			}, function (err){
+				alert('delete contacts failed!');
+			});
+		};
+		
+		vm.getContactsForDelete = function (){
+			return new Promise(function(resolve, reject){
+				var options = new ContactFindOptions();
+				options.filter = "";
+				options.multiple = true;
+				var filter = ["displayName", "addresses"];
+				navigator.contacts.find(filter, 
+					function (res){
+						resolve(res);
+					}, function (err){
+						reject(err);
+					}, options);
+			});
+		};
+		
 		vm.getContacts = function() {
 			//alert('getting contacts');
 			var options = new ContactFindOptions();
@@ -21,11 +67,22 @@ angular.module('dash-client').controller('ContactsCtrl', ['$http',
 			options.multiple = true;
 			var filter = ["displayName", "addresses"];
 			navigator.contacts.find(filter, vm.contactsSuccess, vm.contactsFailure, options);
-		   
 		};
 		
+		
+		
 		vm.saveContacts = function (){
-			alert('saving contacts...');
+			if(!$window.confirm('save contacts to server?')){
+				alert( 'Save contacts canceled!');
+				return;
+			}
+			//alert('saving contacts...');
+			httpService.post('/contacts', vm.contacts).then(function (res){
+				alert('saved contacts!!!!');
+			}, function (err){
+				alert('error saving contacts---> ' + err);
+			});
+			/*
 			$http.post(vm.ipAddress + port + '/contacts', JSON.stringify(vm.contacts))
 				.then(function(result) {
 					alert('saved contacts');
@@ -33,15 +90,21 @@ angular.module('dash-client').controller('ContactsCtrl', ['$http',
 			}, function (err) {
 				vm.inProgress = false;
 				alert('error saving contacts: ' + err);
-			});  
+			});  */
 		};
 		
 		vm.restoreContactsFromServer = function(){
+			if(!$window.confirm('Restore contacts from server?')){
+				alert( 'Restore all Canceled!');
+				return;
+			}
 			alert('restoring contacts...');
 			//get contacts from server
-			 $http.get(vm.ipAddress + port + '/contacts').then(function (res){
+			// $http.get(vm.ipAddress + port + '/contacts').then(function (res){
+			//	vm.serverContacts = res.data;
+			httpService.get('/contacts').then(function (res) {
 				vm.serverContacts = res.data;
-								 
+			
 			   vm.missing = [];
 			   
 			   for (var i =0; i < vm.serverContacts.length; i++){
@@ -81,12 +144,10 @@ angular.module('dash-client').controller('ContactsCtrl', ['$http',
 						}, function(err){
 							console.log('error!');
 					}); 
-					}
-					
-					saveAllContacts(ctr, vm.missing);
-					
-					 
-				});
+				}
+				
+				saveAllContacts(ctr, vm.missing);				
+			});
 		};
 		
 		vm.getSettings = function(){

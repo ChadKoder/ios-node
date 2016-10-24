@@ -1,4 +1,4 @@
-angular.module('dash-client').controller('PhotosCtrl', ['$scope', '$mdToast', '$http',
+angular.module('dash-client').controller('PhotosCtrl', ['$scope', '$mdToast', 'httpService',
 	function ($scope, $mdToast, $http) {
 		var vm = this;
 		
@@ -112,8 +112,8 @@ angular.module('dash-client').controller('PhotosCtrl', ['$scope', '$mdToast', '$
 
 				$http.defaults.headers.common.Authorization = 'Basic ' + encodedAuth;
 				vm.inProgress = true;
-
-				$http.post(vm.ipAddress + port + '/files', formData, {
+					
+				httpService.post('/files', formData,{
 					transformRequest: angular.identity,
 					headers: { 'Content-Type': undefined }
 					}).then(function(result) {

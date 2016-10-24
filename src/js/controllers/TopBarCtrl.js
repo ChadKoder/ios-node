@@ -1,6 +1,6 @@
 angular.module('dash-client')
-.controller('TopbarCtrl', ['$location', 'settingsFactory',
-function ($location, settingsFactory) {
+.controller('TopbarCtrl', ['$location', 'settingsService',
+function ($location, settingsService) {
 	var vm = this;
 	vm.ipAddress = '';
 	vm.username = '';
@@ -13,7 +13,7 @@ function ($location, settingsFactory) {
 	};
 	vm.getSettings = function (){
 		var localStorage = window.localStorage;
-		var settings = settingsFactory.getLocal();
+		var settings = settingsService.getLocal();
 		
 		vm.uploadDir = settings.uploadDir;
 		vm.albumName = settings.albumName;

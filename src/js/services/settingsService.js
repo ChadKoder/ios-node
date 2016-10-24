@@ -1,7 +1,6 @@
-angular.module('dash-client').factory('settingsFactory', [
-    '$http',
-    function ($http) {
-		function SettingsFactory() {
+angular.module('dash-client').factory('settingsService', [
+    function () {
+		function settingsService() {
 			var self = this;
 		
 			self.getLocal = function (){
@@ -19,7 +18,7 @@ angular.module('dash-client').factory('settingsFactory', [
 				settings.uploadDir = localStorage.getItem('uploadDir');
 				settings.albumName = localStorage.getItem('albumName');
 				var credString = atob(creds);
-				alert('credsString: ' + credString);
+				//alert('credsString: ' + credString);
 				var credsSplit = credString.split(':');
 			
 				if (credsSplit) {
@@ -31,6 +30,6 @@ angular.module('dash-client').factory('settingsFactory', [
 			}
 		}
 		
-		return new SettingsFactory();
+		return new settingsService();
 	}
 ]);
