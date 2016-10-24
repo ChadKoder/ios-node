@@ -10,6 +10,9 @@ function ($location) {
 	vm.openSettings = function ($mdOpenMenu, e){
 		$mdOpenMenu(e);
 	};
+	
+	 
+	
 }]);
 /*angular.module('dash-client', []).controller('MainCtrl', ['$http', '$mdToast', '$scope', '_',
 	function ($http, $mdToast, $scope, _) {

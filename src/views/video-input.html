@@ -1,8 +1,21 @@
-<input class="ng-hide fileInput" accept="video/*" id="videoInput" type="file" />
-<div layout="row" layout-align="center center" flex>	
-	<label for="videoInput" md-ink-ripple class="label-button video-input">
-		Add Video
-	</label>
+<!--<input class="ng-hide fileInput" accept="video/*" multiple id="videoInput" type="file" />-->
+<div layout="row" layout-align="center center" flex>
+	<!--<label for="videoInput" md-ink-ripple class="label-button video-input">-->
+		<!--Add Photos-->
+        <!--<label for="videoInput" class="md-button md-fab md-primary" style="position: relative; font-size: 65pt;" aria-label="add photo">-->
+		<!--<md-icon class="material-icons" aria-label="Add Photos" style="position:relative; font-size: 65pt;" md-ink-ripple>add_box</md-icon>-->
+      <!--  </label>-->
+	<!--</label>-->
+    
+   <input type="file" accept="video/*" id="videoInput" multiple class="ng-hide fileInput">
+       
+	<div class="md-button md-fab md-raised md-primary" style="line-height: 6rem; min-width: 0; width: 6rem; height: 6rem; border-radius: 50%;" ng-click="clickInput()">
+		<md-icon class="material-icons" style="position: relative; display: inline-block; left: -10px; top: -10px; font-size: 48px;" aria-label="Add Video">add</md-icon>
+	</div>
+	<div class="md-button md-fab md-raised md-primary" style="line-height: 6rem; min-width: 0; width: 6rem; height: 6rem; border-radius: 50%;" ng-click="vm.submit()">
+		<md-icon class="material-icons" style="position: relative; display: inline-block; left: -10px; top: -10px; font-size: 48px;" aria-label="Upload Videos">file_upload</md-icon>
+	</div>
+
 </div>
 <md-card flex layout="row" layout-wrap flex="25" id="albumReview" class="album" ng-show="selectedVideos.length > 0">
 	<div class="full-width-label">Total Selected: {{selectedVideos.length }}</div>
@@ -15,7 +28,7 @@
 <md-button ng-show="selectedVideos.length > 0" ng-click="clearAll()">clear all</md-button>
 <div class="fullscreen-container" id="fullScreen" ng-show="fullScreenObj" layout="column" layout-align="center center">
 	<!--<md-button ng-click="closeFullScreen()">close</md-button>-->
-	<img class="fullscreen-image" src="{{fullScreenObj.dataUrl}}">
+	<img class="fullscreen-video" src="{{fullScreenObj.dataUrl}}">
 		<md-button style="position: absolute; font-size: 1.8rem;"class="md-fab md-fab-top-right md-mini" aria-label="close video" ng-click="closeFullScreen()">
 			X
 		</md-button>

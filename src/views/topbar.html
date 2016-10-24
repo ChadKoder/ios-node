@@ -1,18 +1,8 @@
 <md-toolbar style="background-color: #4d4d4d;">
 	<div class="md-toolbar-tools">
-	   <settings username="username" password="password" upload-dir="uploadDir" album-name="albumName" ip-address="ipAddress"></settings>
-	
-			<md-icon class="material-icons toolbar-icon" md-ink-ripple ng-click="vm.go('/photos')">add_a_photo</md-icon>
-			
-			<md-icon class="material-icons toolbar-icon" md-ink-ripple ng-click="vm.go('/videos')">my_library_add</md-icon>
-			
-			<md-icon class="material-icons toolbar-icon" md-ink-ripple ng-click="vm.go('/contacts')">contacts</md-icon>
-		
-		
-		<!--<div layout="column" layout-align="center end">
-			<div>
-				<md-icon ng-click="vm.submit()" class="material-icons toolbar-icon" md-ink-ripple ng-show="vm.photos.length >= 0 || vm.videos.length >= 0">file_upload</md-icon>
-			</div>
-		</div> -->
+		<settings username="username" password="password" upload-dir="uploadDir" album-name="albumName" ip-address="ipAddress"></settings>
+		<md-icon class="material-icons toolbar-icon" md-ink-ripple ng-click="vm.go('/photos')">photo_camera</md-icon>
+		<md-icon class="material-icons toolbar-icon" md-ink-ripple ng-click="vm.go('/videos')">play_circle_fill</md-icon>
+		<md-icon class="material-icons toolbar-icon" md-ink-ripple ng-click="vm.go('/contacts')">people</md-icon>
 	</div>
 </md-toolbar>

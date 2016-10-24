@@ -1,48 +1,27 @@
 angular.module('dash-client')
-.controller('TopbarCtrl', ['$location', '$http', '$scope',
-function ($location, $http, $scope) {
-	var port = ':8888';
+.controller('TopbarCtrl', ['$location', 'settingsFactory',
+function ($location, settingsFactory) {
 	var vm = this;
-	$scope.ipAddress = '';
-	$scope.username = '';
-	$scope.password = '';
-	$scope.uploadDir = '';
-	$scope.albumName = '';
+	vm.ipAddress = '';
+	vm.username = '';
+	vm.password = '';
+	vm.uploadDir = '';
+	vm.albumName = '';
 	
 	vm.go = function(url){
 		$location.url(url);
 	};
-	/*
-	vm.openSettings = function ($mdOpenMenu, e){
-		$mdOpenMenu(e);
-	};*/
-
-	/*$scope.saveSettings = function (){
-		alert('saving MAIN : --> ' + $scope.ipAddress);
-		//scope.inProgress = true;
-		var credentials = btoa($scope.username + ':' + $scope.password);
+	vm.getSettings = function (){
 		var localStorage = window.localStorage;
-		var settings = {
-			ipAddress: $scope.ipAddress,
-		//	deviceName: vm.deviceName,
-			credentials: credentials,
-			uploadDir: $scope.uploadDir,
-			albumName: $scope.albumName
-		}
+		var settings = settingsFactory.getLocal();
 		
-		localStorage.setItem('ipAddress', $scope.ipAddress);
-		localStorage.setItem('credentials', credentials);
-		localStorage.setItem('uploadDir', $scope.uploadDir);
-		localStorage.setItem('albumName', $scope.albumName);
-		
-		$http.post($scope.ipAddress + port + '/settings', JSON.stringify(settings))
-			.then(function(result) {
-				vm.inProgress = false;
-				alert('settings saved!');
-			}, function (err) {
-				vm.inProgress = false;
-				alert('error: ' + err);
-		});
-	};*/
+		vm.uploadDir = settings.uploadDir;
+		vm.albumName = settings.albumName;
+		vm.ipAddress = settings.ipAddress;
+		vm.username = settings.username;
+		vm.password = settings.password;
+	};
+	
+	vm.getSettings();
 
 }]);

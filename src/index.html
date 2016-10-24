@@ -20,58 +20,12 @@
 		<div ng-controller="TopbarCtrl as vm">
 			<topbar></topbar>
 		</div>
-	
 		<div ng-view></div>
-	<!--	<div ng-controller="MainCtrl as vm" layout="column" layout-fill>
-			
-			<md-toolbar style="background-color: #4d4d4d;">
-				<div class="md-toolbar-tools">
-                   <settings save-settings="vm.saveSettings()" username="vm.username" password="vm.password" upload-dir="vm.uploadDir" album-name="vm.albumName" ip-address="vm.ipAddress"></settings>
-				 
-					
-						<label>photo</label>
-						<md-icon class=material-icons toolbar-icon" md-ink-ripple ng-click="vm.go('/photos')">add_a_photo</md-icon>
-						<label>video</label>
-						<md-icon class=material-icons toolbar-icon" md-ink-ripple ng-click="vm.go('/videos')">my_library_add</md-icon>
-						<label>contacts</label>
-						<md-icon class=material-icons toolbar-icon" md-ink-ripple ng-click="vm.go('/contacts')">contacts</md-icon>
-					
-					
-					<div layout="column" layout-align="center end">
-						<div>
-							<md-icon ng-click="vm.submit()" class="material-icons toolbar-icon" md-ink-ripple ng-show="vm.photos.length >= 0 || vm.videos.length >= 0">file_upload</md-icon>
-						</div>
-					</div>
-				</div>
-			</md-toolbar>
-			
-			<md-content style="background-color: #BDBDBD;" flex>
-				<div flex>
-				<br />
-				    <file-input selected-photos="vm.photos" selected-videos="vm.videos"></file-input>
-				</div>
-				
-                <md-button ng-click="vm.getContacts()">get contacts from phone</md-button>
-				<md-button ng-click="vm.getNotes()">get notes from phone</md-button>
-				<br />
-				<md-button ng-click="vm.deleteContacts()">DELETE ALL LOCAL CONTACTS</md-button>
-				
-				
-				
-				 
-                <md-button ng-click="vm.saveContacts()">SAVE CONTACTS to server</md-button>
-                <md-button ng-click="vm.restoreContactsFromServer()">restore contacts from server</md-button>
-                <md-button ng-click="vm.getDocuments()">get docs</md-button>
-                <div style="background-color: green;"> {{ vm.totalRestored}}  </div> 
-			</md-content>
-            <md-button style="position: absolute; background-color: #BDBDBD; font-size: 1.8rem;"class="md-fab md-fab-bottom-right md-mini material-icons" aria-label="upload photo" ng-click="vm.getInfo()">
-                info_outline
-            </md-button>
-		</div> -->
 		<script src="./js/requirements.js" type="text/javascript"></script> 
 		<script src="./cordova.js" type="text/javascript"></script>        
 		<script src="./js/app.js" type="text/javascript"></script>
-		<script src="./js/controllers.js" type="text/javascript"></script>        
+		<script src="./js/services.js" type="text/javascript"></script>
+		<script src="./js/controllers.js" type="text/javascript"></script>
 		<script src="./js/directives.js" type="text/javascript"></script>
 			
 	</body>

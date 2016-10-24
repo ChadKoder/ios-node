@@ -1,1 +1,15 @@
-<h3>Contacts Page</h3>
+<div  layout="column" layout-align="center center">
+	<h3>Contacts Page</h3>
+	<md-button ng-click="vm.getContacts()">get contacts from phone</md-button>
+	<!--<md-button ng-click="vm.saveContacts()">SAVE CONTACTS to server</md-button>
+	<md-button ng-click="vm.restoreContactsFromServer()">restore contacts from server</md-button> -->
+	
+	<div class="md-button md-fab md-raised md-primary" style="line-height: 6rem; min-width: 0; width: 6rem; height: 6rem; border-radius: 50%;" ng-click="vm.saveContacts()">
+		<md-icon class="material-icons" style="position: relative; display: inline-block; left: -10px; top: -10px; font-size: 48px;" aria-label="Upload Contacts">file_upload</md-icon>
+	</div>
+	<div class="md-button md-fab md-raised md-primary" ng-click="vm.restoreContactsFromServer()">
+		<md-icon class="material-icons" style="position: relative; display: inline-block;" aria-label="Restore Contacts">restore</md-icon>
+	</div>
+	
+	
+</div>

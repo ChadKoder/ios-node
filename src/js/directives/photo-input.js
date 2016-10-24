@@ -3,6 +3,11 @@ angular.module('dash-client').directive('photoInput', ['$q', '$compile', '$timeo
 		restrict: 'E',
 		templateUrl: './views/photo-input.html',
 		replace: false,
+		bindToController: {
+			submit: '&'
+		},
+		controller: 'PhotosCtrl',
+		controllerAs: 'vm',
 		scope: {
 			selectedPhotos: '=?'
 		},
@@ -75,6 +80,10 @@ angular.module('dash-client').directive('photoInput', ['$q', '$compile', '$timeo
 				});
 			};
 		
+			scope.clickInput = function (){
+				document.getElementById('imageInput').click();
+			};
+			
 			scope.clearAll = function () {
 				scope.selectedPhotos = [];
 			}

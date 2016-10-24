@@ -1,9 +1,10 @@
 angular.module('dash-client')
-.controller('VideosCtrl', [
-function () {
+.controller('VideosCtrl', ['$http',
+function ($http) {
+	var port = ':8888';
 	var vm = this;
-	
 	vm.videos = [];
+	
 	vm.submit = function (){
 			if (!vm.username || !vm.password) {
 				vm.showErrorToast('username and password are required.');

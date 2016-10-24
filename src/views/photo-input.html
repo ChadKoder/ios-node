@@ -1,8 +1,21 @@
-<input class="ng-hide fileInput" accept="image/*" multiple id="imageInput" type="file" />
+<!--<input class="ng-hide fileInput" accept="image/*" multiple id="imageInput" type="file" />-->
 <div layout="row" layout-align="center center" flex>
-	<label for="imageInput" md-ink-ripple class="label-button image-input">
-		Add Photos
-	</label>
+	<!--<label for="imageInput" md-ink-ripple class="label-button image-input">-->
+		<!--Add Photos-->
+        <!--<label for="imageInput" class="md-button md-fab md-primary" style="position: relative; font-size: 65pt;" aria-label="add photo">-->
+		<!--<md-icon class="material-icons" aria-label="Add Photos" style="position:relative; font-size: 65pt;" md-ink-ripple>add_box</md-icon>-->
+      <!--  </label>-->
+	<!--</label>-->
+    
+   <input type="file" accept="image/*" id="imageInput" multiple class="ng-hide fileInput">
+       
+	<div class="md-button md-fab md-raised md-primary" style="line-height: 6rem; min-width: 0; width: 6rem; height: 6rem; border-radius: 50%;" ng-click="clickInput()">
+		<md-icon class="material-icons" style="position: relative; display: inline-block; left: -10px; top: -10px; font-size: 48px;" aria-label="Add Photos">add</md-icon>
+	</div>
+	<div class="md-button md-fab md-raised md-primary" style="line-height: 6rem; min-width: 0; width: 6rem; height: 6rem; border-radius: 50%;" ng-click="vm.submit()">
+		<md-icon class="material-icons" style="position: relative; display: inline-block; left: -10px; top: -10px; font-size: 48px;" aria-label="Add Photos">file_upload</md-icon>
+	</div>
+
 </div>
 <md-card flex layout="row" layout-wrap flex="25" id="albumReview" class="album" ng-show="selectedPhotos.length > 0">
 	<div class="full-width-label">Total Selected: {{ selectedPhotos.length }}</div>

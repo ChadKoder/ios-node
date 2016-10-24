@@ -359,7 +359,7 @@ module.exports = function(grunt) {
 						{
 							expand: true,
 							cwd: 'www/js',
-							src: ['requirements.js', 'controllers.js', 'directives.js'],
+							src: ['requirements.js', 'controllers.js', 'directives.js', 'services.js'],
 							dest: './photo-dash/www/js/'
 						},
 						{

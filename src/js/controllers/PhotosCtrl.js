@@ -1,5 +1,5 @@
-angular.module('dash-client').controller('PhotosCtrl', ['$scope',
-	function ($scope) {
+angular.module('dash-client').controller('PhotosCtrl', ['$scope', '$mdToast', '$http',
+	function ($scope, $mdToast, $http) {
 		var vm = this;
 		
 		vm.photos = [];
@@ -27,6 +27,10 @@ angular.module('dash-client').controller('PhotosCtrl', ['$scope',
 				};
 			}
 		});
+		
+		vm.showSimpleToast = function (msg){
+			$mdToast.showSimple(msg);
+		};
 		
 		vm.showErrorToast = function (err) {
 			vm.showSimpleToast(err);
@@ -73,53 +77,73 @@ angular.module('dash-client').controller('PhotosCtrl', ['$scope',
 				gallery.init();
 
 			});
-		}; 
+		};
 		
 		vm.submit = function (){
-			if (!vm.username || !vm.password) {
-				vm.showErrorToast('username and password are required.');
+			alert('submitting...');
+			 var ip = localStorage.getItem('ipAddress');
+			var creds = localStorage.getItem('credentials');
+			var uploadDir = localStorage.getItem('uploadDir');
+			 var albumName = localStorage.getItem('albumName');
+			var credString = atob(creds);
+			alert('credsString: ' + credString);
+			var credsSplit = credString.split(':');
+		
+			if (credsSplit) {
+				var userName = credsSplit[0];
+				var pass = credsSplit[1];
+				
+				 if (!userName || !pass) {
+					vm.showErrorToast('username and password are required.');
+					return;
+				}
+
+				var encodedAuth = btoa(userName + ':' + pass);
+				var formData = new FormData();
+				formData.enctype = "multipart/form-data";
+
+				angular.forEach(vm.photos, function (obj) {
+					formData.append('file', obj.file);
+				});
+				
+				angular.forEach(vm.videos, function (obj) {
+					formData.append('file', obj.file);
+				});
+
+				$http.defaults.headers.common.Authorization = 'Basic ' + encodedAuth;
+				vm.inProgress = true;
+
+				$http.post(vm.ipAddress + port + '/files', formData, {
+					transformRequest: angular.identity,
+					headers: { 'Content-Type': undefined }
+					}).then(function(result) {
+						vm.inProgress = false;
+						vm.showSuccessToast('Album upload successful!');
+					}, function (err) {
+						alert('err: ' + JSON.stringify(err));
+						var errorStatus = err.status.toString().trim();
+						vm.inProgress = false;
+						switch (errorStatus) {
+							case '401':
+								vm.showErrorToast('username/password validate failed.');
+								vm.username = '';
+								vm.password = '';
+								break;
+							case '-1':
+								vm.showErrorToast('Server is not available.');
+								break;
+							default:
+								vm.showErrorToast('Unknown error.');
+								break;
+						}
+				});
+				
+			} else {
+				alert('no creds! returning...');
 				return;
 			}
+			              
 
-			var encodedAuth = btoa(vm.username + ':' + vm.password);
-			var formData = new FormData();
-			formData.enctype = "multipart/form-data";
-
-			angular.forEach(vm.photos, function (obj) {
-				formData.append('file', obj.file);
-			});
-			
-			angular.forEach(vm.videos, function (obj) {
-				formData.append('file', obj.file);
-			});
-
-			$http.defaults.headers.common.Authorization = 'Basic ' + encodedAuth;
-			vm.inProgress = true;
-
-			$http.post(vm.ipAddress + port + '/files', formData, {
-				transformRequest: angular.identity,
-				headers: { 'Content-Type': undefined }
-				}).then(function(result) {
-					vm.inProgress = false;
-					vm.showSuccessToast('Album upload successful!');
-				}, function (err) {
-					alert('err: ' + JSON.stringify(err));
-					var errorStatus = err.status.toString().trim();
-					vm.inProgress = false;
-					switch (errorStatus) {
-						case '401':
-							vm.showErrorToast('username/password validate failed.');
-							vm.username = '';
-							vm.password = '';
-							break;
-						case '-1':
-							vm.showErrorToast('Server is not available.');
-							break;
-						default:
-							vm.showErrorToast('Unknown error.');
-							break;
-					}
-			});
 		};
 		
 	}]);

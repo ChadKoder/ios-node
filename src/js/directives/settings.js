@@ -8,7 +8,8 @@ angular.module('dash-client').directive('settings', ['$http', function ($http) {
 		templateUrl: './views/settings.html',
 		replace: true,
          bindToController: {
-         saveSettings: '&'
+         saveSettings: '&',
+		 getSettings: '&'
          },
          controller: 'TopbarCtrl',
          controllerAs: 'vm',       

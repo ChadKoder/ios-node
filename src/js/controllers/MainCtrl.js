@@ -124,8 +124,8 @@ function ($location) {
 		});
 		
 		$scope.$watch('vm.photos.length', function(i) {
-		  for (var y=0; y < vm.photos.length; y++){  
-				var img = new Image;  
+		  for (var y=0; y < vm.photos.length; y++){
+				var img = new Image;
 				img.src = vm.photos[y].dataUrl;
 				
 				img.onload = function() { 
