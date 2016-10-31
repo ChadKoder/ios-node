@@ -1,4 +1,3 @@
-
 angular.module('dash-client').directive('settings', ['$http', function ($http) {
 	  var port = ':8888';
     
@@ -17,8 +16,6 @@ angular.module('dash-client').directive('settings', ['$http', function ($http) {
 			scope.openSettings = function ($mdOpenMenu, e){
 				$mdOpenMenu(e);
 			};
-			
-			scope.settingsIcon = './res/ic_settings.svg';
 			
             scope.saveSettings = function (){
             //alert('save settingsDIR');
