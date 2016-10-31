@@ -1,8 +1,13 @@
-<md-toolbar style="background-color: #4d4d4d;">
-	<div class="md-toolbar-tools">
-		<settings username="username" password="password" upload-dir="uploadDir" album-name="albumName" ip-address="ipAddress"></settings>
-		<md-icon class="material-icons toolbar-icon" style="font-size: 36px;" md-ink-ripple ng-click="vm.go('/photos')">photo_camera</md-icon>
-		<md-icon class="material-icons toolbar-icon" style="font-size: 36px;" md-ink-ripple ng-click="vm.go('/videos')">play_circle_fill</md-icon>
-		<md-icon class="material-icons toolbar-icon" style="font-size: 36px;" md-ink-ripple ng-click="vm.go('/contacts')">people</md-icon>
-	</div>
+<md-toolbar style="height: 105px; background-color: #4d4d4d; ">
+		<div class="md-toolbar-tools" style="padding-top: 30px; padding-bottom: 10px;">
+			<div layout="row">
+				<settings username="username" password="password" upload-dir="uploadDir" album-name="albumName" ip-address="ipAddress"></settings>
+                <h1 layout-align="center" style="font-size: 32px;">Photo Dash</h1>
+			</div>
+		</div>
+		<div class="md-toolbar-tools" layout="row"s>
+			<md-icon class="toolbar-icon" ng-style="photosIconStyle" md-ink-ripple ng-click="go('/photos')"  md-svg-src="./res/ic_photo_camera.svg"></md-icon>
+			<md-icon class="toolbar-icon"ng-style="videosIconStyle" md-ink-ripple ng-click="go('/videos')" md-svg-src="./res/ic_play_circle_filled.svg"></md-icon>
+			<md-icon class="toolbar-icon" ng-style="contactsIconStyle" md-ink-ripple ng-click="go('/contacts')" md-svg-src="./res/ic_people.svg"></md-icon>
+		</div>
 </md-toolbar>

@@ -1,5 +1,4 @@
-angular.module('dash-client')
-.controller('VideosCtrl', ['$http',
+angular.module('dash-client').controller('VideosCtrl', ['$http',
 function ($http) {
 	var port = ':8888';
 	var vm = this;

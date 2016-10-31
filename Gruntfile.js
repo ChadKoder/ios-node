@@ -341,7 +341,11 @@ module.exports = function(grunt) {
 						{
 							expand: true,
 							cwd: 'src/res',
-							src: ['icon-transfer.png'],
+							src: ['icon-transfer.png','ic_photo_camera.svg',
+                            'ic_people.svg',
+                            'ic_play_circle_filled.svg',
+							'ic_settings.svg'
+                            ],
 							dest: './photo-dash/www/res/'
 						},
 						{

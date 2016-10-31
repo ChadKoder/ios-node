@@ -16,7 +16,6 @@ angular.module('dash-client').directive('videoInput', ['$q', '$compile', '$timeo
 				scope.buttonText = attrs.disptext;
 			}
 
-			var elImageInput = angular.element(element[0].querySelector('#imageInput'));
 			var elVideoInput = angular.element(element[0].querySelector('#videoInput'));
 
 			var readAsDataURL = function (file, index) {
@@ -74,6 +73,11 @@ angular.module('dash-client').directive('videoInput', ['$q', '$compile', '$timeo
 					alert('error: ' + error);
 				}, function (notify) {
 				});
+			};
+			
+			scope.clickInput = function (){
+				alert('clicking input?');
+				document.getElementById('videoInput').click();
 			};
 		
 			scope.clearAll = function () {

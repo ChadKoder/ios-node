@@ -1,6 +1,5 @@
 angular.module('dash-client').controller('ContactsCtrl', ['httpService', '$window',
 	function (httpService, $window) {
-		//var port = ':8888';
 		var vm = this;
 		vm.contacts = [];
 		vm.serverContacts = [];
@@ -61,7 +60,6 @@ angular.module('dash-client').controller('ContactsCtrl', ['httpService', '$windo
 		};
 		
 		vm.getContacts = function() {
-			//alert('getting contacts');
 			var options = new ContactFindOptions();
 			options.filter = "";
 			options.multiple = true;
@@ -76,21 +74,11 @@ angular.module('dash-client').controller('ContactsCtrl', ['httpService', '$windo
 				alert( 'Save contacts canceled!');
 				return;
 			}
-			//alert('saving contacts...');
 			httpService.post('/contacts', vm.contacts).then(function (res){
 				alert('saved contacts!!!!');
 			}, function (err){
 				alert('error saving contacts---> ' + err);
 			});
-			/*
-			$http.post(vm.ipAddress + port + '/contacts', JSON.stringify(vm.contacts))
-				.then(function(result) {
-					alert('saved contacts');
-				 
-			}, function (err) {
-				vm.inProgress = false;
-				alert('error saving contacts: ' + err);
-			});  */
 		};
 		
 		vm.restoreContactsFromServer = function(){
@@ -99,9 +87,6 @@ angular.module('dash-client').controller('ContactsCtrl', ['httpService', '$windo
 				return;
 			}
 			alert('restoring contacts...');
-			//get contacts from server
-			// $http.get(vm.ipAddress + port + '/contacts').then(function (res){
-			//	vm.serverContacts = res.data;
 			httpService.get('/contacts').then(function (res) {
 				vm.serverContacts = res.data;
 			
@@ -146,7 +131,7 @@ angular.module('dash-client').controller('ContactsCtrl', ['httpService', '$windo
 					}); 
 				}
 				
-				saveAllContacts(ctr, vm.missing);				
+				saveAllContacts(ctr, vm.missing);
 			});
 		};
 		

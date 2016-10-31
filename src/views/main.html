@@ -1,1 +1,13 @@
-<h3>Home Page</h3>
+<h3>Info Page</h3>
+<!--<md-icon class="toolbar-icon" ng-style="{{iconStyle}}" ng-click="changeColor()" style="width: 50px; height: 50px; color: green;" md-svg-src="./res/ic_photo_camera.svg"></md-icon>-->
+<!--<md-icon style="width: 50px; height: 50px; fill: green;" md-svg-src="./res/ic_photo_camera.svg"></md-icon>-->
+<md-icon style="vm.style" 
+	md-svg-src="./res/ic_photo_camera.svg">
+</md-icon>
+
+<md-button class="md-raised md-primary" ng-click="vm.toggleStyle()">toggle style</md-button>
+
+<ol>
+	<li type="cicle">+ Add Photos to your album</li>
+	<li type="circle">^ send your album to your PC</li>
+</ol>
