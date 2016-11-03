@@ -17,8 +17,6 @@ angular.module('dash-client').directive('settings', ['$http', function ($http) {
 				$mdOpenMenu(e);
 			};
 			
-			scope.settingsIcon = './res/ic_settings.svg';
-			
             scope.saveSettings = function (){
             //alert('save settingsDIR');
            // alert('saving from settings Directive!');
