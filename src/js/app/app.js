@@ -34,16 +34,4 @@ app.config(function ($routeProvider, $locationProvider) {
 		controller: 'MainCtrl',
 		controllerAs: 'vm'
 	});
-})
-.run(['$rootScope', function($rootScope) {
-	 document.addEventListener("deviceready", onDeviceReady, false);
-		 
-		 function onDeviceReady() {
-			 $rootScope.deviceReady = true;
-             cordova.plugins.backgroundMode.enable();
-                                                       
-             if (!$rootScope.$$phase) {
-                $rootScope.$apply();
-             }
-        };
-}]);
+});

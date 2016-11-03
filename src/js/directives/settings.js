@@ -1,4 +1,3 @@
-
 angular.module('dash-client').directive('settings', ['$http', function ($http) {
 	  var port = ':8888';
     
@@ -8,8 +7,8 @@ angular.module('dash-client').directive('settings', ['$http', function ($http) {
 		templateUrl: './views/settings.html',
 		replace: true,
          bindToController: {
-         saveSettings: '&',
-		 getSettings: '&'
+         buttonAction: '&',
+		 getSettings: '='
          },
          controller: 'TopbarCtrl',
          controllerAs: 'vm',       
@@ -35,6 +34,7 @@ angular.module('dash-client').directive('settings', ['$http', function ($http) {
                  albumName: scope.albumName
              }
              
+             localStorage.setItem('accountId', scope.accountId);
              localStorage.setItem('ipAddress', scope.ipAddress);
              localStorage.setItem('credentials', credentials);
              localStorage.setItem('uploadDir', scope.uploadDir);

@@ -1,16 +1,35 @@
-<div  layout="column" layout-align="center center">
-	<h3>Contacts Page</h3>
-	<div class="md-button md-fab md-raised md-primary" style="line-height: 5.1rem; min-width: 0; width: 5.1rem; height: 5.1rem; border-radius: 50%;" ng-click="vm.getContacts()">
-		<md-icon class="material-icons"  style="position: relative; display: inline-block; left: -21px; top: -20px; font-size: 75px;" aria-label="Get Total Contacts">info_outline</md-icon>
+<div layout="column">
+	<div style="display: inline-block;">
+		<div style="text-align: left; width: 30%; font-size: 21px; font-weight: bold;">Contacts</div>
+        <div style="text-align:right; font-size: 12px; width: 30%;">Total: {{vm.contacts.length}}</div>
+		<!--<div layout-align="right">
+			<md-icon style="width: 62px; height: 62px; position:absolute;" md-svg-src="./res/ic_people.svg"></md-icon>
+			<div style="position: relative; width: 28px; height: 28px; font-size: 8pt; z-index:10;">{{vm.contacts.length}}</div>
+		</div>-->
 	</div>
-	<div class="md-button md-fab md-raised md-primary" style="line-height: 5.1rem; min-width: 0; width: 5.1rem; height: 5.1rem; border-radius: 50%;" ng-click="vm.saveContacts()">
-		<md-icon class="material-icons"  style="position: relative; display: inline-block; left: -21px; top: -20px; font-size: 65px;" aria-label="Upload Contacts">file_upload</md-icon>
-	</div>
-	<div class="md-button md-fab md-raised md-primary" style="line-height: 5.1rem; min-width: 0; width: 5.1rem; height: 5.1rem; border-radius: 50%;" ng-click="vm.restoreContactsFromServer()">
-		<md-icon class="material-icons"  style="position: relative; display: inline-block; left: -21px; top: -22px; font-size: 75px;" aria-label="Restore Contacts">restore</md-icon>
-	</div>
-	<div class="md-button md-fab md-raised md-primary" style="line-height: 5.1rem; min-width: 0; width: 5.1rem; height: 5.1rem; border-radius: 50%;" ng-click="vm.deleteContacts()">
-		<md-icon class="material-icons" style="position: relative; display: inline-block; left: -21px; top: -19px; font-size: 65px;" aria-label="Delete Contacts">delete_forever</md-icon>
-	</div>
-	
+    
+    
+    
+    <!-- BEGIN TEST -->
+    
+    <dash-button button-action="vm.test()"></dash-button>
+    
+    <!-- END TEST -->
+    
+    
+    <div flex layout-align="center center" style="margin: 2%; position: relative; width: 95%;" md-whiteframe="7" md-ink-ripple ng-click="vm.saveContacts($event)">
+        <md-icon style="background-color: #0B7CDC; width: 25%; height: 100%; top: 0;" layout-align="left" md-ink-ripple md-svg-src="./res/ic_file_upload.svg"></md-icon>
+        <div flex style="font-size: 14px; text-align: left; position: absolute; word-wrap: break-word; display: inline-block;">Backup {{vm.contacts.length}} contacts to your PC. <div style="color: yellow; font-style: oblique; font-size: 12px;">WARNING: This will overwrite any previous backups!</div>
+        </div>
+    </div>
+     
+     <div flex layout-align="center center" style="margin: 2%; position: relative; width: 95%;" md-whiteframe="7" md-ink-ripple ng-click="vm.restoreContactsFromServer($event)">
+         <md-icon style="background-color: #0B7CDC; width: 25%; height: 100%; top: 0;" layout-align="left" md-ink-ripple md-svg-src="./res/ic_restore.svg"></md-icon>
+         <div flex style="font-size: 14px; text-align: left; position: absolute; word-wrap: break-word; display: inline-block;">Restore all contacts from the server for this user. <div style="color: red; font-style: oblique; font-size: 12px;">WARNING: This will overwrite ALL contacts on your device!</div></div>
+     </div>
+
+    <div flex layout-align="center center" style="margin: 2%; position: relative; width: 95%;" md-whiteframe="7" md-ink-ripple ng-click="vm.deleteContacts($event)">
+        <md-icon style="background-color: #0B7CDC; width: 25%; height: 100%; top: 0;" layout-align="left" md-ink-ripple md-svg-src="./res/ic_delete_forever.svg"></md-icon>
+        <div style="font-size: 14px; text-align: left; position: absolute; word-wrap: break-word; display: inline-block;">Delete all {{vm.contacts.length}} of your contacts from your device. <div style="color: red; font-style: oblique; font-size: 12px;">WARNING: The only way to recover your contacts is if you have a backup somewhere. Proceed with Caution!</div></div>
+    </div>
 </div>

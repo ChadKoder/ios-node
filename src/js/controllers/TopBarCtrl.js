@@ -3,21 +3,22 @@ angular.module('dash-client')
 function ($location, settingsService) {
 	var vm = this;
 	vm.ipAddress = '';
+    vm.accountId = '';
 	vm.username = '';
 	vm.password = '';
 	vm.uploadDir = '';
 	vm.albumName = '';
     
    vm.activePhotosStyle = {
-		'width': '50px',
-		'height': '50px',
-		'fill': 'white'
+		width: '50px',
+		height: '50px',
+		fill: 'white'
    }; 
    
    vm.inactivePhotosStyle = {
-		'width': '50px',
-		'height': '50px',
-		'fill': 'black'
+		width: '50px',
+		height: '50px',
+		fill: 'black'
    };
    
    vm.photosIconStyle = vm.inactivePhotosStyle;
@@ -46,6 +47,7 @@ function ($location, settingsService) {
 		var localStorage = window.localStorage;
 		var settings = settingsService.getLocal();
 		
+        vm.accountId = settings.accountId;
 		vm.uploadDir = settings.uploadDir;
 		vm.albumName = settings.albumName;
 		vm.ipAddress = settings.ipAddress;

@@ -81,6 +81,7 @@ angular.module('dash-client').controller('PhotosCtrl', ['$scope', '$mdToast', 'h
 		
 		vm.submit = function (){
 			alert('submitting...');
+            var accountId = localStorage.getItem('accountId');
 			 var ip = localStorage.getItem('ipAddress');
 			var creds = localStorage.getItem('credentials');
 			var uploadDir = localStorage.getItem('uploadDir');

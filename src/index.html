@@ -16,8 +16,10 @@
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<title>Photo Dash</title>
 	</head>
-	<body ng-app="dash-client" flex>
-		<div ng-controller="TopbarCtrl as vm">
+	<!--<body ng-app="dash-client" flex>-->
+	
+	<body id="dash-client" flex>
+		<div ng-controller="TopbarCtrl as vm" flex>
 			<topbar></topbar>
 		</div>
 		<div ng-view></div>
@@ -27,6 +29,6 @@
 		<script src="./js/services.js" type="text/javascript"></script>
 		<script src="./js/controllers.js" type="text/javascript"></script>
 		<script src="./js/directives.js" type="text/javascript"></script>
-			
+		<script src="./js/startup.js" type="text/javascript"/></script>
 	</body>
 </html>

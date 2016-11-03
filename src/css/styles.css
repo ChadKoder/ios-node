@@ -1,14 +1,21 @@
-@font-face {
+/*@font-face {
 	font-family: 'CaptureIt';
 	src: url('../fonts/Capture_it.ttf'); 
-	 url('../fonts/Capture_it.ttf')  format('truetype'), /* Safari, Android, iOS */
-	font-weight: bold;
+	 url('../fonts/Capture_it.ttf')  format('truetype'),
+}*/
+
+@font-face {
+    font-family: 'ColaborateLight';
+    src: url('../fonts/ColabLig.otf');
+    url('../fonts/ColabLig.otf')  format('opentype'), /* Safari, Android, iOS */
+    /*font-weight: bold;*/
 }
+
 
 body {
 	background-color: #BDBDBD;
 	text-transform: none;
-	font-family: CaptureIt;
+	font-family: ColaborateLight;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 }

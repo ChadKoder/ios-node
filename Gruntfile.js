@@ -39,6 +39,7 @@ module.exports = function(grunt) {
 						//'unitTests/unitTestData.js',
 						//'unitTests/unitTestMocks.js',
 						'src/js/app/app.js',
+						'src/js/startup.js',
                         'specs/*.spec.js'
                     ],
                     browsers: [
@@ -341,10 +342,8 @@ module.exports = function(grunt) {
 						{
 							expand: true,
 							cwd: 'src/res',
-							src: ['icon-transfer.png','ic_photo_camera.svg',
-                            'ic_people.svg',
-                            'ic_play_circle_filled.svg',
-							'ic_settings.svg'
+							src: ['icon-transfer.png','ic_photo_camera.svg', 'ic_add.svg', 'ic_delete_forever.svg', 'ic_file_upload.svg',
+                            'ic_people.svg', 'ic_restore.svg', 'ic_play_circle_filled.svg', 'ic_settings.svg', 'ic_info_outline.svg'
                             ],
 							dest: './photo-dash/www/res/'
 						},
@@ -357,9 +356,10 @@ module.exports = function(grunt) {
 						{
 							expand: true,
 							cwd: 'src/js/app',
-							src: ['app.js'],
+							src: ['app.js', 'startup.js'],
 							dest: './photo-dash/www/js/'
 						},
+
 						{
 							expand: true,
 							cwd: 'www/js',

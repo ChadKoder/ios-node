@@ -1,26 +1,28 @@
-angular.module('dash-client').directive('topbar', ['settingsService', '$location', 
+angular.module('dash-client').directive('topbar', ['settingsService', '$location',
 function (settingsService, $location) {
 	return {
 		transclude: true,
-        require: '?ngModel',
+		require: '?ngModel',
 		templateUrl: './views/topbar.html',
 		replace: true,
 		link: function(scope, element, attrs){
+            scope.accountId = '';
 			scope.ipAddress = '';
 			scope.username = '';
 			scope.password = '';
 			scope.uploadDir = '';
 			scope.albumName = '';
+			var width = '42px', height = '42px';
 			
 		   scope.activeIconStyle = {
-				'width': '50px',
-				'height': '50px',
+				'width': '48px',
+				'height': '48px',
 				'fill': 'white'
 		   }; 
 		   
 		   scope.inactiveIconStyle = {
-				'width': '50px',
-				'height': '50px',
+				'width': width,
+				'height': height,
 				'fill': 'black'
 		   };
 		   
@@ -55,6 +57,7 @@ function (settingsService, $location) {
 				var localStorage = window.localStorage;
 				var settings = settingsService.getLocal();
 				
+                scope.accountId = settings.accountId;
 				scope.uploadDir = settings.uploadDir;
 				scope.albumName = settings.albumName;
 				scope.ipAddress = settings.ipAddress;
