@@ -79,7 +79,14 @@ angular.module('dash-client').directive('photoInput', ['$q', '$compile', '$timeo
 				}, function (notify) {
 				});
 			};
-		
+			
+			scope.addIcon = './res/ic_add.svg';
+			scope.addActionDesc = 'Select photos to add to album';
+			//scope.warningActionDesc = '';
+			
+			scope.uploadIcon = './res/ic_file_upload.svg';
+			scope.uploadActionDesc = 'Upload album to your PC';
+			
 			scope.clickInput = function (){
 				document.getElementById('imageInput').click();
 			};

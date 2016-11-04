@@ -10,11 +10,18 @@ angular.module('dash-client').controller('ContactsCtrl', ['httpService', '$scope
 				$scope.$apply();
 			//}
 		};
-        
-        vm.test = function (){
-        
-            alert('ok!');
-        };
+		
+		vm.backupIcon = './res/ic_file_upload.svg';
+		vm.backupActionDesc = 'Backup ' + vm.contacts.length + ' contacts to your PC.';
+		vm.backupWarningDesc = 'Warning: This will overwrite all previous backusp!';
+		
+		vm.restoreIcon = './res/ic_restore.svg';
+		vm.restoreActionDesc = 'Restore all contacts from the server for this user.';
+		vm.restoreWarningDesc = 'WARNING: This will overwrite ALL contacts on your device!';
+		
+		vm.deleteIcon = './res/ic_delete_forever.svg';
+		vm.deleteActionDesc = 'Deletes ALL contacts from your device';
+		vm.deleteWarningDesc = 'WARNING! You will lose all contacts';
 		
 		vm.contactsFailure = function(err){
 			alert('Error retrieving contacts: ' + err);
@@ -105,7 +112,7 @@ angular.module('dash-client').controller('ContactsCtrl', ['httpService', '$scope
 											});
 										   
 										   if (index === -1){
-												console.log('adding NOT FOUNND contact');
+												console.log('adding NOT FOUND contact');
 											   var contact = navigator.contacts.create(vm.serverContacts[i]);
 
 											   vm.missing.push(contact);

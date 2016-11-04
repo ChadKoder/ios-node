@@ -75,6 +75,14 @@ angular.module('dash-client').directive('videoInput', ['$q', '$compile', '$timeo
 				});
 			};
 			
+			scope.addIcon = './res/ic_add.svg';
+			scope.addActionDesc = 'Select videos to add to album';
+			//scope.warningActionDesc = '';
+			
+			scope.uploadIcon = './res/ic_file_upload.svg';
+			scope.uploadActionDesc = 'Upload album to your PC';
+			
+			
 			scope.clickInput = function (){
 				alert('clicking input?');
 				document.getElementById('videoInput').click();

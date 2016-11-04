@@ -1,5 +1,5 @@
-angular.module('dash-client').controller('PhotosCtrl', ['$scope', '$mdToast', 'httpService',
-	function ($scope, $mdToast, $http) {
+angular.module('dash-client').controller('PhotosCtrl', ['$scope', 'dialogService', 'httpService',
+	function ($scope, dialogService, $http) {
 		var vm = this;
 		
 		vm.photos = [];
@@ -28,16 +28,20 @@ angular.module('dash-client').controller('PhotosCtrl', ['$scope', '$mdToast', 'h
 			}
 		});
 		
-		vm.showSimpleToast = function (msg){
-			$mdToast.showSimple(msg);
+		vm.showErrorDialog = function (err) {
+			//vm.showSimpleToast(err);
 		};
 		
-		vm.showErrorToast = function (err) {
-			vm.showSimpleToast(err);
+		vm.successAlert = function (e){
+			dialogService.showAlert('Success!', 'You are a success!', 'Okay!', e);
 		};
 
-		vm.showSuccessToast = function (msg) {
-			vm.showSimpleToast(msg);
+		vm.errorAlert = function (e){
+			dialogService.showAlert('Error!', 'You are a failure!', 'Awww Shucks :(...', e);
+		};
+		
+		vm.showSuccessDialog = function (msg, e) {
+			dialogService.showSuccessAlert('Upload Complete', msg, e);
 		};
 		
 		vm.showGallery = function (){
@@ -79,7 +83,7 @@ angular.module('dash-client').controller('PhotosCtrl', ['$scope', '$mdToast', 'h
 			});
 		};
 		
-		vm.submit = function (){
+		vm.submit = function (e){
 			alert('submitting...');
             var accountId = localStorage.getItem('accountId');
 			 var ip = localStorage.getItem('ipAddress');
@@ -95,7 +99,7 @@ angular.module('dash-client').controller('PhotosCtrl', ['$scope', '$mdToast', 'h
 				var pass = credsSplit[1];
 				
 				 if (!userName || !pass) {
-					vm.showErrorToast('username and password are required.');
+					vm.showErrorDialog('username and password are required.');
 					return;
 				}
 
@@ -119,22 +123,22 @@ angular.module('dash-client').controller('PhotosCtrl', ['$scope', '$mdToast', 'h
 					headers: { 'Content-Type': undefined }
 					}).then(function(result) {
 						vm.inProgress = false;
-						vm.showSuccessToast('Album upload successful!');
+						vm.showSuccessDialog('Album upload successful!', e);
 					}, function (err) {
 						alert('err: ' + JSON.stringify(err));
 						var errorStatus = err.status.toString().trim();
 						vm.inProgress = false;
 						switch (errorStatus) {
 							case '401':
-								vm.showErrorToast('username/password validate failed.');
+								vm.showErrorDialog('username/password validate failed.');
 								vm.username = '';
 								vm.password = '';
 								break;
 							case '-1':
-								vm.showErrorToast('Server is not available.');
+								vm.showErrorDialog('Server is not available.');
 								break;
 							default:
-								vm.showErrorToast('Unknown error.');
+								vm.showErrorDialog('Unknown error.');
 								break;
 						}
 				});
@@ -143,8 +147,5 @@ angular.module('dash-client').controller('PhotosCtrl', ['$scope', '$mdToast', 'h
 				alert('no creds! returning...');
 				return;
 			}
-			              
-
 		};
-		
 	}]);

@@ -15,17 +15,30 @@ angular.module('dash-client').factory('dialogService', ['$mdDialog',
 					
 					return new Promise(function(resolve, reject){
 						$mdDialog.show(confirm).then(function() {
-						  //$scope.status = 'You decided to get rid of your debt.';
-						  //alert('moving on!!');
 						  resolve(true);
 						}, function() {
 							reject('User canceled save');
-							//alert('Canceled!');
-						  //$scope.status = 'You decided to keep your debt.';
 						});
 					});
-
+			};
+			
+			self.showAlert = function (title, textContent, btnText, e){
+				var alert = $mdDialog.alert()
+					//.clickOutsideToClose(true)
+					.title(title)
+					.textContent(textContent)
+					//.ariaLabel('Success Dialog')
+					.ok(btnText)
+					.targetEvent(e);
 					
+					return new Promise(function(resolve, reject){
+						$mdDialog.show(alert).then(function() {
+						  resolve(true);
+						}, function() {
+							reject('User canceled save');
+						});
+					});
+				
 			};
 		}
 		

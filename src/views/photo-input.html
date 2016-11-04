@@ -1,12 +1,7 @@
-<div layout="row" layout-align="center center" flex>
-   <input type="file" accept="image/*" id="imageInput" multiple class="ng-hide fileInput">
-       
-	<div class="md-button md-fab md-raised md-primary" style="line-height: 5.1rem; min-width: 0; width: 5.1rem; height: 5.1rem; border-radius: 50%;" ng-click="clickInput()">
-         <md-icon style="width: 50px; height: 50px;" md-ink-ripple="#00f1ff" md-svg-src="./res/ic_add.svg"></md-icon>
-	</div>
-    <div class="md-button md-fab md-raised md-primary" style="line-height: 5.1rem; min-width: 0; width: 5.1rem; height: 5.1rem; border-radius: 50%;" ng-click="vm.submit()">
-        <md-icon md-ink-ripple="#00f1ff" style="width: 50px; height: 50px;" md-svg-src="./res/ic_file_upload.svg"></md-icon>
-    </div>
+<div layout="column" flex>
+	<input type="file" accept="image/*" id="imageInput" multiple class="ng-hide fileInput">
+	<dash-button button-action="clickInput()" action-description="addActionDesc" dash-svg-src="addIcon"></dash-button>
+	<dash-button button-action="vm.submit()" action-description="uploadActionDesc" dash-svg-src="uploadIcon"></dash-button>
 </div>
 <md-card flex layout="row" layout-wrap flex="25" id="albumReview" class="album" ng-show="selectedPhotos.length > 0">
 	<div class="full-width-label">Total Selected: {{ selectedPhotos.length }}</div>

@@ -1,8 +1,11 @@
-<div  layout="column" layout-align="center center">
+<div layout="column" flex>
 	<h3>
 	<md-icon class="material-icons">photo_camera</md-icon>
 		Upload Photos
 		<md-icon class="material-icons">photo_camera</md-icon>
 	</h3>
 	<photo-input selected-photos="vm.photos"></photo-input>
+	
+	<md-button ng-click="vm.successAlert()">Success alert test</md-button>
+	<md-button ng-click="vm.errorAlert()">Error alert test</md-button>
 </div>

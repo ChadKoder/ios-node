@@ -1,6 +1,7 @@
 <div flex layout-align="center center" style="margin: 2%; position: relative; width: 95%;" md-whiteframe="7" md-ink-ripple ng-click="buttonAction($event)">
     <!--<md-icon style="background-color: #0B7CDC; width: 25%; height: 100%; top: 0;" layout-align="left" md-ink-ripple md-svg-src="{{ svgIcon }}"></md-icon>-->
-    <md-icon style="background-color: #0B7CDC; width: 25%; height: 100%; top: 0;" layout-align="left" md-ink-ripple></md-icon>
-    <div flex style="font-size: 14px; text-align: left; position: absolute; word-wrap: break-word; display: inline-block;">Descritpion<div style="color: yellow; font-style: oblique; font-size: 12px;">Notification alert</div>
+    <md-icon style="background-color: #0B7CDC; width: 25%; height: 100%; top: 0;" layout-align="left" md-ink-ripple md-svg-src="{{dashSvgSrc}}"></md-icon>
+    <div flex style="font-size: 14px; text-align: left; position: absolute; word-wrap: break-word; display: inline-block;">{{actionDescription}}
+		<div style="color: yellow; font-style: oblique; font-size: 12px;">{{warningDescription}}</div>
     </div>
 </div>

@@ -7,29 +7,25 @@
 			<div style="position: relative; width: 28px; height: 28px; font-size: 8pt; z-index:10;">{{vm.contacts.length}}</div>
 		</div>-->
 	</div>
-    
-    
-    
-    <!-- BEGIN TEST -->
-    
-    <dash-button button-action="vm.test()"></dash-button>
-    
-    <!-- END TEST -->
-    
-    
-    <div flex layout-align="center center" style="margin: 2%; position: relative; width: 95%;" md-whiteframe="7" md-ink-ripple ng-click="vm.saveContacts($event)">
-        <md-icon style="background-color: #0B7CDC; width: 25%; height: 100%; top: 0;" layout-align="left" md-ink-ripple md-svg-src="./res/ic_file_upload.svg"></md-icon>
-        <div flex style="font-size: 14px; text-align: left; position: absolute; word-wrap: break-word; display: inline-block;">Backup {{vm.contacts.length}} contacts to your PC. <div style="color: yellow; font-style: oblique; font-size: 12px;">WARNING: This will overwrite any previous backups!</div>
-        </div>
-    </div>
-     
-     <div flex layout-align="center center" style="margin: 2%; position: relative; width: 95%;" md-whiteframe="7" md-ink-ripple ng-click="vm.restoreContactsFromServer($event)">
+	<dash-button button-action="vm.saveContacts($event)" action-description="vm.backupActionDesc" warning-description="vm.backupWarningDesc" dash-svg-src="vm.backupIcon"></dash-button>
+	<dash-button button-action="vm.restoreContactsFromServer($event)" action-description="vm.restoreActionDesc" warning-description="vm.restoreWarningDesc" dash-svg-src="vm.restoreIcon"></dash-button>
+	<dash-button button-action="vm.deleteContacts($event)" action-description="vm.deleteActionDesc" warning-description="vm.deleteWarningDesc" dash-svg-src="vm.deleteIcon"></dash-button>
+	
+     <!--<div flex layout-align="center center" style="margin: 2%; position: relative; width: 95%;" md-whiteframe="7" md-ink-ripple ng-click="vm.restoreContactsFromServer($event)">
          <md-icon style="background-color: #0B7CDC; width: 25%; height: 100%; top: 0;" layout-align="left" md-ink-ripple md-svg-src="./res/ic_restore.svg"></md-icon>
-         <div flex style="font-size: 14px; text-align: left; position: absolute; word-wrap: break-word; display: inline-block;">Restore all contacts from the server for this user. <div style="color: red; font-style: oblique; font-size: 12px;">WARNING: This will overwrite ALL contacts on your device!</div></div>
-     </div>
-
+         <div flex style="font-size: 14px; text-align: left; position: a
+		 bsolute; word-wrap: break-word; display: inline-block;">
+		 
+		 Restore all contacts from the server for this user. 
+		 <div style="color: red; font-style: oblique; font-size: 12px;">
+		 WARNING: This will overwrite ALL contacts on your device!</div></div>
+     </div>-->
+<!--
     <div flex layout-align="center center" style="margin: 2%; position: relative; width: 95%;" md-whiteframe="7" md-ink-ripple ng-click="vm.deleteContacts($event)">
         <md-icon style="background-color: #0B7CDC; width: 25%; height: 100%; top: 0;" layout-align="left" md-ink-ripple md-svg-src="./res/ic_delete_forever.svg"></md-icon>
-        <div style="font-size: 14px; text-align: left; position: absolute; word-wrap: break-word; display: inline-block;">Delete all {{vm.contacts.length}} of your contacts from your device. <div style="color: red; font-style: oblique; font-size: 12px;">WARNING: The only way to recover your contacts is if you have a backup somewhere. Proceed with Caution!</div></div>
+        <div style="font-size: 14px; text-align: left; position: absolute; word-wrap: break-word; display: inline-block;">
+		
+		Delete all {{vm.contacts.length}} of your contacts from your device. <div style="color: red; font-style: oblique; font-size: 12px;">
+		WARNING: The only way to recover your contacts is if you have a backup somewhere. Proceed with Caution!</div></div>-->
     </div>
 </div>

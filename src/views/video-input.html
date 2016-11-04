@@ -1,12 +1,7 @@
-<div layout="row" layout-align="center center" flex>
+<div layout="column" flex>
    <input type="file" accept="video/*" id="videoInput" multiple class="ng-hide fileInput">
-       <div md-ink-ripple class="md-button md-fab md-raised md-primary" style="line-height: 5.1rem; min-width: 0; width: 5.1rem; height: 5.1rem; border-radius: 50%;" ng-click="clickInput()">
-           <md-icon style="width: 50px; height: 50px;" md-svg-src="./res/ic_add.svg"></md-icon>
-       </div>
-       <div md-ink-ripple class="md-button md-fab md-raised md-primary" style="line-height: 5.1rem; min-width: 0; width: 5.1rem; height: 5.1rem; border-radius: 50%;" ng-click="vm.submit()">
-           <md-icon style="width: 50px; height: 50px;" md-svg-src="./res/ic_file_upload.svg"></md-icon>
-       </div>
-
+   <dash-button button-action="clickInput()" action-description="addActionDesc" dash-svg-src="addIcon"></dash-button>
+	<dash-button button-action="vm.submit()" action-description="uploadActionDesc" dash-svg-src="uploadIcon"></dash-button>
 </div>
 <md-card flex layout="row" layout-wrap flex="25" id="albumReview" class="album" ng-show="selectedVideos.length > 0">
 	<div class="full-width-label">Total Selected: {{selectedVideos.length }}</div>
