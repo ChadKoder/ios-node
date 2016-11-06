@@ -16,7 +16,12 @@ app.config(function ($routeProvider, $locationProvider) {
 	})
 	.when('/photos', {
 		templateUrl:'./views/photos.html',
-		controller: 'MainCtrl',
+		controller: 'PhotosCtrl',
+		controllerAs: 'vm'
+	})
+	.when('/contacts', {
+		templateUrl:  './views/contacts.html',
+		controller: 'ContactsCtrl',
 		controllerAs: 'vm'
 	})
 	.otherwise({
