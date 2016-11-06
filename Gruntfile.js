@@ -308,9 +308,17 @@ module.exports = function(grunt) {
                             dest: './photo-dash/www/res/'
                         },
 						{
+							expand: true,
+							cwd: 'src/res',
+							src: ['icon-transfer.png','ic_photo_camera.svg', 'ic_add.svg', 'ic_delete_forever.svg', 'ic_file_upload.svg',
+                            'ic_people.svg', 'ic_restore.svg', 'ic_play_circle_filled.svg', 'ic_settings.svg', 'ic_info_outline.svg'
+                            ],
+							dest: './photo-dash/www/res/'
+						},
+						{
                             expand: true,
                             cwd: 'src/fonts',
-                            src: ['Capture_it.ttf', 'Capture_it_2.ttf'],
+                            src: ['Capture_it.ttf', 'Capture_it_2.ttf', 'ColabLig.otf'],
                             dest: './photo-dash/www/fonts/'
                         },
 						{
@@ -358,7 +366,7 @@ module.exports = function(grunt) {
 						{
 							expand: true,
 							cwd: 'www/js',
-							src: ['requirements.js', 'controllers.js', 'directives.js'],
+							src: ['requirements.js', 'controllers.js', 'directives.js',  'services.js'],
 							dest: './photo-dash/www/js/'
 						},
 						{

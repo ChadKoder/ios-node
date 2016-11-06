@@ -1,4 +1,5 @@
-angular.module('dash-client', []).controller('MainCtrl', ['$http', '$mdToast', '$scope', '_',
+angular.module('dash-client')
+.controller('MainCtrl', ['$http', '$mdToast', '$scope', '_',
 	function ($http, $mdToast, $scope, _) {
 	var port = ':8888';
 	var vm = this;

@@ -1,16 +1,25 @@
-@font-face {
+/*@font-face {
 	font-family: 'CaptureIt';
 	src: url('../fonts/Capture_it.ttf'); 
-	 url('../fonts/Capture_it.ttf')  format('truetype'), /* Safari, Android, iOS */
-	font-weight: bold;
+	 url('../fonts/Capture_it.ttf')  format('truetype'),
+}*/
+
+@font-face {
+	font-family: 'ColaborateLight';
+	src: url('../fonts/ColabLig.otf');
+	src: url('../fonts/ColabLig.otf') format('opentype');/* Safari, Android, iOS */
 }
 
 body {
 	background-color: #BDBDBD;
 	text-transform: none;
-	font-family: CaptureIt;
+	font-family: ColaborateLight;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
+}
+
+md-icon svg{
+    fill: inherit;
 }
 
 .full-width-label {
@@ -89,7 +98,11 @@ background: -webkit-linear-gradient(-90deg, #448aFF, #2962FF);
     border-right: 1px solid grey;
     border-left: 1px solid grey;
 }*/
-
+/*
+.dash-fab-icon {
+	position: relative;	display: inline-block;	left: -11px;	top: -8px; 	font-size: 48px;
+}
+*/
 .fileInput {
 	opacity: 0;
 	display: inline-block;
