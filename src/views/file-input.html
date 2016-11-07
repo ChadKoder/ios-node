@@ -1,35 +1,65 @@
-<input class="ng-hide fileInput" accept="video/*" id="videoInput" type="file" />
-<input class="ng-hide fileInput" accept="image/*" multiple id="imageInput" type="file" />
-<div layout="row" layout-align="center center" flex>
-	<label for="imageInput" md-ink-ripple class="label-button image-input">
-		Add Photos
-	</label>
-	<label for="videoInput" md-ink-ripple class="label-button video-input">
-		Add Video
-	</label>
+<!--
+ 
+ <div flex layout-align="center center" style="margin: 2%; position: relative; width: 95%;" md-whiteframe="7" md-ink-ripple ng-click="buttonAction($event)">
+ <md-icon style="background-color: #0B7CDC; width: 25%; height: 100%; top: 0;" layout-align="left" md-ink-ripple></md-icon>
+ <div flex style="font-size: 14px; text-align: left; position: absolute; word-wrap: break-word; display: inline-block;">Descritpion<div style="color: yellow; font-style: oblique; font-size: 12px;">Notification alert</div>
+ </div>
+ </div>
+ 
+ <div flex layout-align="center center" style="margin: 2%; position: relative; width: 95%;" md-whiteframe="7" md-ink-ripple ng-click="vm.saveContacts($event)">
+ <md-icon style="background-color: #0B7CDC; width: 25%; height: 100%; top: 0;" layout-align="left" md-ink-ripple md-svg-src="./res/ic_file_upload.svg"></md-icon>
+ <div flex style="font-size: 14px; text-align: left; position: absolute; word-wrap: break-word; display: inline-block;">Backup {{vm.contacts.length}} contacts to your PC. <div style="color: yellow; font-style: oblique; font-size: 12px;">WARNING: This will overwrite any previous backups!</div>
+ </div>
+ </div>
+ -->
+<div layout="column" flex>
+    <input class="ng-hide fileInput" accept="video/*" id="videoInput" type="file" />
+    <input class="ng-hide fileInput" accept="image/*" multiple id="imageInput" type="file" />
+    
+    <label for="imageInput" md-whiteframe="7" md-ink-ripple style="margin: 2%; position: relative; width: 95%;">
+        <md-icon style="background-color: #0B7CDC; width: 25%; height: 100%; display: inline-block;" md-svg-src="./res/ic_add.svg"></md-icon>
+        <div style="position: absolute; display: inline-block;"> Add Photos
+            
+        </div>
+    </label>
+    
+    
+    <!--  <label for="imageInput" md-whiteframe="7" md-ink-ripple style="margin: 2%; z-index: 25; position: relative; width: 95%;">
+     <div style="width: 100%; height: 100%; top 0; left: 0; z-index: 15;">
+     
+     
+     <md-icon style="background-color: #0B7CDC; width: 25%; height: 100%; top: 0;" layout-align="left" md-ink-ripple md-svg-src="./res/ic_add.svg"></md-icon>
+     Add Photos
+     
+     </div>
+     </label>
+     -->
+    
+    <label for="videoInput" md-ink-ripple class="label-button video-input">
+        Add Video
+    </label>
+    
+    <md-card flex layout="row" layout-wrap flex="25" id="albumReview" class="album" ng-show="selectedPhotos.length > 0 || selectedVideos.length > 0">
+        <div class="full-width-label">Total Selected: {{ selectedPhotos.length + selectedVideos.length }}</div>
+        <div class="full-width-label">Photos:</div>
+        <div ng-repeat="photo in selectedPhotos">
+            <img class="image-display" src="{{photo.dataUrl}}" ng-click="showGallery(photo.fileName)" />
+        </div>
+        <div class="full-width-label">Videos:</div>
+        <div ng-repeat="video in selectedVideos">
+            <video src="{{video.dataUrl}}" controls autoplay height="auto" width="65px" type="{{video.fileType}}"></video>
+        </div>
+    </md-card>
+    <md-button ng-show="selectedPhotos.length > 0" ng-click="clearAll()">clear all</md-button>
+    <div class="fullscreen-container" id="fullScreen" ng-show="fullScreenObj" layout="column" layout-align="center center">
+        <!--<md-button ng-click="closeFullScreen()">close</md-button>-->
+        <img class="fullscreen-image" src="{{fullScreenObj.dataUrl}}">
+            <md-button style="position: absolute; font-size: 1.8rem;"class="md-fab md-fab-top-right md-mini" aria-label="close photo" ng-click="closeFullScreen()">
+                X
+            </md-button>
+        </img>
+    </div>
 </div>
-<md-card flex layout="row" layout-wrap flex="25" id="albumReview" class="album" ng-show="selectedPhotos.length > 0 || selectedVideos.length > 0">
-	<div class="full-width-label">Total Selected: {{ selectedPhotos.length + selectedVideos.length }}</div>
-	<div class="full-width-label">Photos:</div>
-	<div ng-repeat="photo in selectedPhotos">
-		<img class="image-display" src="{{photo.dataUrl}}" ng-click="showGallery(photo.fileName)" />
-	</div>
-	<div class="full-width-label">Videos:</div>
-	<div ng-repeat="video in selectedVideos">
-		<video src="{{video.dataUrl}}" controls autoplay height="auto" width="65px" type="{{video.fileType}}"></video>
-	</div>
-</md-card>
-<md-button ng-show="selectedPhotos.length > 0" ng-click="clearAll()">clear all</md-button>
-<div class="fullscreen-container" id="fullScreen" ng-show="fullScreenObj" layout="column" layout-align="center center">
-	<!--<md-button ng-click="closeFullScreen()">close</md-button>-->
-	<img class="fullscreen-image" src="{{fullScreenObj.dataUrl}}">
-		<md-button style="position: absolute; font-size: 1.8rem;"class="md-fab md-fab-top-right md-mini" aria-label="close photo" ng-click="closeFullScreen()">
-			X
-		</md-button>
-	</img>
-</div>
-
-
 
 <!-- Root element of PhotoSwipe. Must have class pswp. -->
 <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
@@ -60,14 +90,14 @@
                             
                             <div class="pswp__counter"></div>
                             
-                           
+                            
                             <!--<button style="color: white;" class="pswp__button pswp__button--close" title="Close (Esc)">WTF</button>
-                            
-                            <button  style="color: white; top: 15px;" class="pswp__button pswp__button--share" title="Share">shizaare</button>
-                            
-                            <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-                            
-                            <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>-->
+                             
+                             <button  style="color: white; top: 15px;" class="pswp__button pswp__button--share" title="Share">shizaare</button>
+                             
+                             <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                             
+                             <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>-->
                             
                             <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
                             <!-- element will get class pswp__preloader--active when preloader is running -->
@@ -81,14 +111,14 @@
                         </div>
                         
                         <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                            <div class="pswp__share-tooltip"></div> 
+                            <div class="pswp__share-tooltip"></div>
                         </div>
                         
-                       <!-- <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-                        </button>
-                        
-                        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-                        </button>-->
+                        <!-- <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                         </button>
+                         
+                         <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                         </button>-->
                         
                         <div class="pswp__caption">
                             <div class="pswp__caption__center"></div>
