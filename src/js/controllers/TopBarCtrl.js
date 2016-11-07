@@ -8,7 +8,7 @@ function ($location, settingsService) {
 	vm.password = '';
 	vm.uploadDir = '';
 	vm.albumName = '';*/
-    alert('top bar loaded!');
+  
    vm.activePhotosStyle = {
 		width: '50px',
 		height: '50px',
