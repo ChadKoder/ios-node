@@ -11,15 +11,15 @@ angular.module('dash-client').controller('ContactsCtrl', ['httpService', '$scope
 			//}
 		};
 		
-		vm.backupIcon =  '/res/ic_file_upload.svg';
+		vm.backupIcon =  './res/ic_file_upload.svg';
 		vm.backupActionDesc = 'Backup ' + vm.contacts.length + ' contacts to your PC.';
 		vm.backupWarningDesc = 'Warning: This will overwrite all previous backusp!';
 		
-		vm.restoreIcon =  '/res/ic_restore.svg';
+		vm.restoreIcon =  './res/ic_restore.svg';
 		vm.restoreActionDesc = 'Restore all contacts from the server for this user.';
 		vm.restoreWarningDesc = 'WARNING: This will overwrite ALL contacts on your device!';
 		
-		vm.deleteIcon =  '/res/ic_delete_forever.svg';
+		vm.deleteIcon =  './res/ic_delete_forever.svg';
 		vm.deleteActionDesc = 'Deletes ALL contacts from your device';
 		vm.deleteWarningDesc = 'WARNING! You will lose all contacts';
 		
@@ -158,6 +158,6 @@ angular.module('dash-client').controller('ContactsCtrl', ['httpService', '$scope
 			vm.getContacts();
 		};
 		
-		//vm.init();
+		vm.init();
 	
 }]);

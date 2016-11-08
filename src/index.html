@@ -6,11 +6,8 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="msapplication-tap-highlight" content="no">
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-
 		<link rel="stylesheet" href="./css/angular-material.min.css" type="text/css">
 		<link rel="stylesheet" href="./css/loading-bar.min.css" type="text/css">
-    
-		
 		<link rel="stylesheet" href="./css/photoswipe.css" />
 		<link rel="stylesheet" href="./css/styles.css" type="text/css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -20,105 +17,12 @@
 		<div ng-controller="TopbarCtrl as vm" flex>
 			<topbar></topbar>
 		</div>
-		
 		<div ng-view></div>
-		
-		
-		<!--<div ng-controller="MainCtrl as vm" layout="column" layout-fill>
-			
-			<md-toolbar style="background-color: #4d4d4d;">
-				<div class="md-toolbar-tools">
-                    <md-menu md-position-mode="target-left target" md-offset="0 42" style="background-color: #4d4d4d;">
-                        <md-button aria-label="Open settings menu" class="md-icon-button" ng-click="vm.openSettings($mdOpenMenu, $event)">
-                            <md-icon md-menu-origin class="material-icons">settings</md-icon>
-                        </md-button>                        
-                        <md-menu-content style="background-color: #a5a5a5;">
-                                <md-menu-item>
-                                    <div>
-                                        <md-input-container ng-no-float>
-                                            <label style="color:white">IP Address</label>
-                                                <input style="background-color: #b1b1b1; color: white; border-top: 1px solid grey; border-right: 1px solid grey;border-left: 1px solid grey;" placeholder="" type="text" ng-model="vm.ipAddress" />
-                                        </md-input-container>
-                                    </div>
-                                </md-menu-item>
-                                <md-menu-item>
-                                <div>
-                                    <md-input-container md-no-float>
-                                        <label style="padding-left: 5px; color: white;">User Name</label>
-                                        <input placeholder="" style="background-color: #b1b1b1; color: white; border-top: 1px solid grey; border-right: 1px solid grey; border-left: 1px solid grey;" type="text" ng-model="username" />
-                                    </md-input-container>
-                                </div>
-                                </md-menu-item>
-                                <md-menu-item>
-                                <div>
-                                    <md-input-container ng-no-float>
-                                        <label style="padding-left: 5px; color: white;">Password</label>
-                                        <input placeholder="" style="background-color: #b1b1b1; color: white; border-top: 1px solid grey; border-right: 1px solid grey; border-left: 1px solid grey;" type="password" ng-model="password" />
-                                    </md-input-container>
-                                </div>
-                                </md-menu-item>
-                                <md-menu-item>
-                                <div>
-                                    <md-input-container ng-no-float>
-                                        <label style="padding-left: 5px; color: white;">PC Upload Location</label>
-                                        <input placeholder="" style="background-color: #b1b1b1; color: white; border-top: 1px solid grey; border-right: 1px solid grey; border-left: 1px solid grey;" type="text" ng-model="vm.uploadDir"/>
-                                    </md-input-container>
-                                </div>
-                                </md-menu-item>
-                                <md-menu-item>
-                                <div>
-                                    <md-input-container ng-no-float>
-                                        <label style="color: white;">Album Name</label>
-                                        <input placeholder="" style="background-color: #b1b1b1; color: white; border-top: 1px solid grey; border-right: 1px solid grey; border-left: 1px solid grey;" type="text" ng-model="vm.albumName"/>
-                                    </md-input-container>
-                                </div>
-                                </md-menu-item>
-                                <md-menu-item>
-                                    <button class="ng-hide" id="saveBtn" ng-click="vm.saveSettings()"></button>
-                                    <label style="width: 100%; position: relative; text-align: center; background-color: grey; color:white;" for="saveBtn" md-ink-ripple>
-                                        Save
-                                    </label>
-                                </md-menu-item>                     
-                        </md-menu-content>              
-                    </md-menu>
-					<span flex></span>
-					<h3>Photo Dash</h3>
-					<span flex></span>
-					<div layout="column" layout-align="center end">
-						<div>
-							<md-icon ng-click="vm.submit()" class="material-icons toolbar-icon" md-ink-ripple ng-show="vm.photos.length >= 0 || vm.videos.length >= 0">file_upload</md-icon>
-						</div>
-					</div>
-				</div>
-			</md-toolbar>
-			
-			<md-content style="background-color: #BDBDBD;" flex>
-				<div flex>
-				<br />
-				    <file-input selected-photos="vm.photos" selected-videos="vm.videos"></file-input>
-				</div>
-				
-                <md-button ng-click="vm.getContacts()">get contacts from phone</md-button>
-                <md-button ng-click="vm.saveContacts()">SAVE CONTACTS to server</md-button>
-                <md-button ng-click="vm.createContact()">CREATE test CONTACT</md-button>
-                <md-button ng-click="vm.restoreContactsFromServer()">restore contacts from server</md-button>
-                <div style="background-color: green;"> {{ vm.totalRestored}}  </div>
-
-			</md-content>
-            <md-button style="position: absolute; background-color: #BDBDBD; font-size: 1.8rem;"class="md-fab md-fab-bottom-right md-mini material-icons" aria-label="upload photo" ng-click="vm.getInfo()">
-                info_outline
-            </md-button>
-			
-			<div>
-				<md-icon ng-click="vm.submit()" class="material-icons toolbar-icon" md-ink-ripple ng-show="vm.photos.length >= 0 || vm.videos.length >= 0">file_upload</md-icon>
-			</div>
-		</div>-->
 		<script src="./js/requirements.js" type="text/javascript"></script> 
 		<script src="./cordova.js" type="text/javascript"></script>      
 		<script src="./js/app.js" type="text/javascript"></script>
 		<script src="./js/services.js" type="text/javascript"></script>
 		<script src="./js/controllers.js" type="text/javascript"></script>        
 		<script src="./js/directives.js" type="text/javascript"></script>
-	
 	</body>
 </html>

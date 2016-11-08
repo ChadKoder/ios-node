@@ -19,6 +19,11 @@ app.config(function ($routeProvider, $locationProvider) {
 		controller: 'PhotosCtrl',
 		controllerAs: 'vm'
 	})
+	.when('/videos', {
+		templateUrl:  './views/videos.html',
+		controller: 'VideosCtrl',
+		controllerAs: 'vm'
+	})
 	.when('/contacts', {
 		templateUrl:  './views/contacts.html',
 		controller: 'ContactsCtrl',
