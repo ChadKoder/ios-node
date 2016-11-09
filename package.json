@@ -36,6 +36,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-karma": "^0.12.2",
     "grunt-sync": "^0.5.2",
+    "jquery": "^3.1.1",
     "photoswipe": "latest",
     "underscore": "^1.8.3",
     "watchify": "^3.7.0"

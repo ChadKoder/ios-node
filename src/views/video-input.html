@@ -1,0 +1,29 @@
+<h3>Videos</h3>
+<div layout="column" flex>
+    <input class="ng-hide fileInput" accept="video/*" id="videoInput" type="file" />
+    
+    <label for="videoInput" md-whiteframe="7" md-ink-ripple style="margin: 2%; position: relative; width: 95%;">
+        <md-icon style="pointer-events: none; background-color: #0B7CDC; width: 25%; height: 100%; display: inline-block;" md-svg-src="./res/ic_add.svg"></md-icon>
+        <div style="position: absolute; display: inline-block;"> Add Video
+            
+        </div>
+    </label>
+    
+    <md-card flex layout="row" layout-wrap flex="25" id="albumReview" class="album" ng-show="selectedVideos.length > 0">
+        <div class="full-width-label">Total Selected: {{ selectedVideos.length }}</div>
+      
+        <div class="full-width-label">Videos:</div>
+        <div ng-repeat="video in selectedVideos">
+            <video src="{{video.dataUrl}}" controls autoplay height="auto" width="65px" type="{{video.fileType}}"></video>
+        </div>
+    </md-card>
+    <md-button ng-show="selectedVideos.length > 0" ng-click="clearAll()">clear all</md-button>
+  <!--  <div class="fullscreen-container" id="fullScreen" ng-show="fullScreenObj" layout="column" layout-align="center center">
+       
+        <img class="fullscreen-image" src="{{fullScreenObj.dataUrl}}">
+            <md-button style="position: absolute; font-size: 1.8rem;"class="md-fab md-fab-top-right md-mini" aria-label="close photo" ng-click="closeFullScreen()">
+                X
+            </md-button>
+        </img>
+    </div>-->
+</div>
