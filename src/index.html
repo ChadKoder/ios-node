@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com/  data: gap: https://ssl.gstatic.com 'unsafe-eval';
-			style-src 'self' https://fonts.googleapis.com/ 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com/; media-src *; connect-src 'self' http://192.168.1.109:8888/">
-		<meta name="format-detection" content="telephone=no">
-		<meta name="msapplication-tap-highlight" content="no">
-		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-		<link rel="stylesheet" href="./css/angular-material.min.css" type="text/css">
-		<link rel="stylesheet" href="./css/loading-bar.min.css" type="text/css">
-		<link rel="stylesheet" href="./css/photoswipe.css" />
-		<link rel="stylesheet" href="./css/styles.css" type="text/css">
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<title>Photo Dash</title>
-	</head>
-	<body ng-app="dash-client" flex>
-		<div ng-controller="TopbarCtrl as vm" flex>
-			<topbar></topbar>
-		</div>
-		<div ng-view></div>
-		<script src="./js/jquery-3.1.1.min.js" type="text/javascript"></script>
-		<script src="./js/requirements.js" type="text/javascript"></script> 
-		<script src="./cordova.js" type="text/javascript"></script>
-		<script src="./js/app.js" type="text/javascript"></script>
-		<script src="./js/services.js" type="text/javascript"></script>
-		<script src="./js/controllers.js" type="text/javascript"></script>
-		<script src="./js/directives.js" type="text/javascript"></script>
-	</body>
+    <head>
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com/ https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.js data: gap: https://ssl.gstatic.com 'unsafe-eval';
+            style-src 'self' https://fonts.googleapis.com/ 'unsafe-inline';img-src 'self' data: blob: filesystem:; font-src 'self' https://fonts.gstatic.com/; media-src *; connect-src 'self' http://192.168.1.109:8888/">
+            <meta name="format-detection" content="telephone=no">
+                <meta name="msapplication-tap-highlight" content="no">
+                    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+                        <link rel="stylesheet" href="./css/angular-material.min.css" type="text/css">
+                            <link rel="stylesheet" href="./css/loading-bar.min.css" type="text/css">
+                                <link rel="stylesheet" href="./css/photoswipe.css" />
+                                <link rel="stylesheet" href="./css/styles.css" type="text/css">
+                                    <!--TODO: IS the below needed??? -->
+                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.js"></script>
+                                    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+                                        <title>Photo Dash</title>
+                                        </head>
+    <body ng-app="dash-client" flex>
+        <div ng-controller="TopbarCtrl as vm" flex>
+            <topbar></topbar>
+        </div>
+        <div ng-view></div>
+        <!--<script src="./js/jquery-3.1.1.min.js" type="text/javascript"></script>-->
+        <script src="./js/requirements.js" type="text/javascript"></script>
+        <script src="./cordova.js" type="text/javascript"></script>
+        <script src="./js/app.js" type="text/javascript"></script>
+        <script src="./js/services.js" type="text/javascript"></script>
+        <script src="./js/controllers.js" type="text/javascript"></script>
+        <script src="./js/directives.js" type="text/javascript"></script>
+    </body>
 </html>

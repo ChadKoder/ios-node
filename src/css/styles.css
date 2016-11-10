@@ -14,8 +14,8 @@ body {
 	background-color: #BDBDBD;
 	text-transform: none;
 	font-family: ColaborateLight;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
+	/*-webkit-touch-callout: none;
+	-webkit-user-select: none;*/
 }
 
 md-icon svg{

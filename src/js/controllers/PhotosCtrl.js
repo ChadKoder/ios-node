@@ -40,8 +40,8 @@ angular.module('dash-client')
                           // alert('scope photos: ' + i);
                           var item = {
                               src: img.src,
-                              w: img.width,
-                              h: img.height,
+                              //w: img.width,
+                              //h: img.height,
                               pid: 'photo' + Math.random()
                           };
                           
@@ -145,6 +145,88 @@ angular.module('dash-client')
 
 	vm.showSimpleToast = function (msg){
 		$mdToast.showSimple(msg);
+	};
+	
+	
+	vm.showGallery = function (fileName){
+		var imgIndex = 0;
+		for (var i = 0; i < vm.photos.length; i++){
+			if (fileName === vm.photos[i].fileName){
+				imgIndex = i;
+			}
+
+		}
+		
+		require([
+		'./js/photoswipe.js',
+		'./js/photoswipe-ui-default.js'
+		], function(PhotoSwipe, PhotoSwipeUI_Default) {
+			var pswpElement = document.querySelectorAll('.pswp')[0];
+
+			// define options (if needed)
+			var options = {
+				// history & focus options are disabled on CodePen
+				index: imgIndex,
+				history: false,
+				barsSize: {top:250, bottom: 'auto'},
+				focus: false,
+				//fullscreenEl: false,
+				showAnimationDuration: 2,
+				hideAnimationDuration: 2,
+				addCaptionHTMLFn: function (item, captionEl, isFake) {
+					if (!item.title){
+						captionEl.children[0].innerHTML = 'no title';
+						return false;
+					}
+					captionEl.children[0].innerHTML = item.title;
+					return true;
+				},
+				closeEl: true,
+				captionEl: true,
+				zoomEl: true,
+				getDoubleTapZoom: function(isMouseClick, item) {
+					if(isMouseClick) {
+						return 1;
+					} else {
+						return item.initialZoomLevel < 0.7 ? 1 : 1.5;
+					}
+				}
+			};
+
+			var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, $scope.items, options);
+
+			gallery.listen('gettingData', function(index, item) {
+				if (item.w < 1 || item.h < 1) { // unknown size
+					var img = new Image();
+					img.onload = function() { // will get size after load
+						item.w= this.width;
+						item.h = this.height;
+						//item.title = ' TITLE YO!';
+						gallery.invalidateCurrItems(); // reinit Items
+						gallery.updateSize(true); // reinit Items
+					}
+					img.src = item.src; // let's download image
+				}
+
+				//alert('w: ' + item.w + ' h: ' + item.h);
+			});
+
+			/*  gallery.listen('imageLoadComplete', function(index, item) {
+			var linkEl = item.el.children[0];
+			var img = item.container.children[0];
+			if (!linkEl.getAttribute('data-size')) {
+			linkEl.setAttribute('data-size', img.naturalWidth + 'x' + img.naturalHeight);
+			item.w = img.naturalWidth;
+			item.h = img.naturalHeight;
+			gallery.invalidateCurrItems();
+			gallery.updateSize(true);
+			}
+			});*/
+
+			gallery.init();
+
+			});
+
 	};
 
 	vm.getSettings();

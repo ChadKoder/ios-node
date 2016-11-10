@@ -31,6 +31,7 @@ function (httpService, settingsService) {
 		 var settings = {
 			 ipAddress: vm.ipAddress,
 			 //	deviceName: vm.deviceName,
+			 accountId: vm.accountId,
 			 credentials: credentials,
 			 uploadDir: vm.uploadDir,
 			 albumName: vm.albumName
@@ -42,13 +43,13 @@ function (httpService, settingsService) {
 		localStorage.setItem('uploadDir', vm.uploadDir);
 		localStorage.setItem('albumName', vm.albumName);
 		 
-		 httpService.post('/settings', settings)
+		 httpService.post('/settings', credentials, settings)
 		 .then(function(result) {
 			  // vm.inProgress = false;
 			   alert('settings saved!');
 			   }, function (err) {
 			  // vm.inProgress = false;
-			   alert('error: ' + err);
+			   alert('error: ' + JSON.stringify(err));
 			   });
 		 // alert('1111');
 		  // ngModel.saveSettings();

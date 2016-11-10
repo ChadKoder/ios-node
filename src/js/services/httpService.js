@@ -20,7 +20,7 @@ angular.module('dash-client').factory('httpService', ['settingsService',
 						console.log('POST SUCCESS...');
 						resolve(result);
 					}, function (err) {
-						console.log('POST FAILURE');
+						console.log('POST FAILURE: ' + JSON.stringify(err));
 						reject(err);
 					});
 				});

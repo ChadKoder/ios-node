@@ -19,6 +19,7 @@
     <preference name="SplashScreenDelay" value="1000" />
     <preference name="FadeSplashScreen" value="true" />
     <preference name="FadeSplashScreenDuration" value="750" />
+	<preference name="SuppressesLongPressGesture" value="true" />
     <platform name="android">
         <allow-intent href="market:*" />
     </platform>
@@ -31,7 +32,10 @@
     <plugin name="cordova-plugin-whitelist" spec="~1.2.2" />
     <plugin name="cordova-plugin-splashscreen" spec="~3.2.2" />
     <plugin name="cordova-plugin-background-mode" spec="https://github.com/katzer/cordova-plugin-background-mode.git" />
-	<plugin name="cordova-plugin-contacts" spec="~2.2.0">
+    <plugin name="cordova-plugin-contacts" spec="~2.2.0">
         <variable name="CONTACTS_USAGE_DESCRIPTION" value="Backup or restore contacts" />
+    </plugin>
+    <plugin name="cordova-plugin-photo-usage-description" spec="https://github.com/ChadKoder/cordova-plugin-photo-usage.git" >
+        <variable name="PHOTO_USAGE_DESCRIPTION" value="Photo-Dash will use your photos for backup purposes only" />
     </plugin>
 </widget>
