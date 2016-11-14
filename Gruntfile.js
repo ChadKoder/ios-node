@@ -253,12 +253,12 @@ module.exports = function(grunt) {
 							src: ['photoswipe.js'],
 							dest: './photo-dash/www/js/'
 						},
-						/*{
+						{
 							expand: true,
-							cwd: 'lib/angular-photoswipe',
-							src: ['angular-photoswipe.js'],
+							cwd: 'node_modules/exif-js',
+							src: ['exif.js'],
 							dest: './photo-dash/www/js/'
-						},*/
+						},
 						{
 							expand: true,
 							cwd: 'node_modules/photoswipe/dist',
@@ -295,12 +295,12 @@ module.exports = function(grunt) {
                             src: ['photoswipe.css'],
                             dest: './photo-dash/www/css/'
                         },
-						{
+						/*{
 							expand: true,
 							cwd: 'lib/jquery/',
 							src: ['jquery-3.1.1.min.js'],
 							dest: './photo-dash/www/js/'
-						},
+						},*/
 						{
                             expand: true,
                             cwd: 'node_modules/photoswipe/dist/default-skin',

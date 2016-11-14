@@ -18,6 +18,28 @@ body {
 	-webkit-user-select: none;*/
 }
 
+#photo-gallery{
+	width: 100%;
+	float: left;
+}
+
+#photo-gallery img {
+	width: 100%;
+	height: auto;
+}
+
+#photo-gallery figure{
+	display: block;
+	float: left;
+	margin: 0 5px 5px 0;
+	width: 150px;
+}
+
+/*
+#photo-gallery figcaption {
+	display: none;
+}*/
+
 md-icon svg{
     fill: inherit;
 }

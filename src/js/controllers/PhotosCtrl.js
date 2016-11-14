@@ -1,3 +1,4 @@
+
 angular.module('dash-client')
 .controller('PhotosCtrl', ['$http', '$mdToast', '$scope', '_',
 	function ($http, $mdToast, $scope, _) {
@@ -6,73 +7,15 @@ angular.module('dash-client')
 	vm.ipAddress = '';
 	vm.username = '';
 	vm.password = '';
-	vm.uploadDir = ''; 
-    $scope.items = [];
-    vm.photos = [];
-    $scope.testitems = [];
-    vm.totalRestored = 0;
-    
-    $scope.$watch('items.length', function() {
-        if($scope.items.length === vm.photos.length){
-        }
-    });
+	vm.uploadDir = '';
+	vm.photos = [];
 	
-    $scope.$watch('vm.photos.length', function(i) {
-        //if (i){
-            
-                  //alert(i);
-                  //alert('test i : ' + i);
-                  // alert('MAINCTRL! ' + vm.photos.length);
-                  //var fr = new FileReader;
-                  //fr.onload = function() {
-                  
-                  //alert(vm.photos.length);
-                  
-                  for (var y=0; y < vm.photos.length; y++){
-                  
-                      var img = new Image;
-                      
-                      img.src = vm.photos[y].dataUrl;
-                      
-                      img.onload = function() {
-                          //alert(img.width);
-                          
-                          // alert('scope photos: ' + i);
-                          var item = {
-                              src: img.src,
-                              //w: img.width,
-                              //h: img.height,
-                              pid: 'photo' + Math.random()
-                          };
-                          
-                          $scope.items.push(item);
-                          
-                      };
-
-                  }
-                                  
-                  // img.src = $scope.photos[i].dataUrl;
-                  
-                  
-           // }
-       
-                  });
-                  
-                  
-   // var originatorEvent;
-    
     vm.getInfo = function(){
         alert('get info!');
     }
 
 	vm.getSettings = function (){
 		var localStorage = window.localStorage;
-		//vm.deviceName = localStorage.getItem('deviceName');
-		
-		/*if (!vm.deviceName){
-			alert('Enter a device name to continue...');
-			return;
-		}		*/
 		
 		vm.uploadDir = localStorage.getItem('uploadDir');
 		vm.albumName = localStorage.getItem('albumName');
@@ -91,6 +34,10 @@ angular.module('dash-client')
 			vm.editSettingsText = 'Show';
 		}
 	};
+    
+    vm.clearAlbum = function(){
+        vm.photos = [];
+    }
 
 	vm.showErrorToast = function (err) {
 		vm.showSimpleToast(err);
@@ -146,17 +93,51 @@ angular.module('dash-client')
 	vm.showSimpleToast = function (msg){
 		$mdToast.showSimple(msg);
 	};
-	
-	
-	vm.showGallery = function (fileName){
-		var imgIndex = 0;
-		for (var i = 0; i < vm.photos.length; i++){
-			if (fileName === vm.photos[i].fileName){
-				imgIndex = i;
-			}
 
-		}
+	 vm.photoItems = [];
+
+    vm.showGallery = function (pid){
+		var index = 0;
+        vm.photoItems = [];
+		        
+        var figureEls = document.getElementsByTagName('figure');
+        var orientation = null;
+        var src = null;
+        var item = {};
+        
 		
+           for (var p = 0; p < vm.photos.length; p++){
+			  // console.log('looking up pid->' + pid);
+               if (vm.photos[p].pid === pid){
+				   //alert('Found item with pid:' + pid);
+				   index = p;
+             
+			       console.log('photo' + p + ' + has pid-->' + vm.photos[p].pid);
+                   orientation = vm.photos[p].orientation;
+                   
+                   item.el = figureEls[p];
+                   item.src = vm.photos[p].src;
+                   item.pid = vm.photos[p].pid;
+                   item.msrc= vm.photos[p].src;
+                   
+                   item.w= vm.photos[p].width;
+                   item.h=  vm.photos[p].height;
+                   
+                   if (orientation === 6){
+                       if (parseInt(item.w) > parseInt(item.h)){
+                           item.w = vm.photos[p].height;
+                           item.h = vm.photos[p].width;
+                           
+                       }
+                   }
+                           
+                   break;
+               }
+           }
+            //console.log('ITEM #' + pid + ' WIDTH->' + item.w + ' HEIGHT->' + item.h);
+            vm.photoItems.push(item);
+          
+        
 		require([
 		'./js/photoswipe.js',
 		'./js/photoswipe-ui-default.js'
@@ -165,70 +146,34 @@ angular.module('dash-client')
 
 			// define options (if needed)
 			var options = {
-				// history & focus options are disabled on CodePen
-				index: imgIndex,
-				history: false,
+				index: index,
+				//history: false,
 				barsSize: {top:250, bottom: 'auto'},
-				focus: false,
-				//fullscreenEl: false,
-				showAnimationDuration: 2,
-				hideAnimationDuration: 2,
-				addCaptionHTMLFn: function (item, captionEl, isFake) {
-					if (!item.title){
-						captionEl.children[0].innerHTML = 'no title';
-						return false;
-					}
-					captionEl.children[0].innerHTML = item.title;
-					return true;
+				getThumbBoundsFn: function(thumbIndex){
+                    var thumbnail = vm.photoItems[thumbIndex].el.getElementsByTagName('img')[0];
+                    var rect = thumbnail.getBoundingClientRect();
+                      var body = document.body;
+                      var docElem = document.documentElement;
+                    /*TODO: CLEAN THIS UP!!!*/
+                      var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
+                      var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
+                      var clientTop = docElem.clientTop || body.clientTop || 0;
+                      var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+                
+                      var top = thumbnail.top + scrollTop - clientTop;
+                      var left = thumbnail.left + scrollLeft - clientLeft;
+                      var pageYScroll = window.pageYOffset || document.documentElement.scrollTop;
+                
+                        return { x: rect.left, y: rect.top + pageYScroll, w: rect.width };
 				},
-				closeEl: true,
-				captionEl: true,
-				zoomEl: true,
-				getDoubleTapZoom: function(isMouseClick, item) {
-					if(isMouseClick) {
-						return 1;
-					} else {
-						return item.initialZoomLevel < 0.7 ? 1 : 1.5;
-					}
-				}
+				showAnimationDuration: 2
 			};
-
-			var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, $scope.items, options);
-
-			gallery.listen('gettingData', function(index, item) {
-				if (item.w < 1 || item.h < 1) { // unknown size
-					var img = new Image();
-					img.onload = function() { // will get size after load
-						item.w= this.width;
-						item.h = this.height;
-						//item.title = ' TITLE YO!';
-						gallery.invalidateCurrItems(); // reinit Items
-						gallery.updateSize(true); // reinit Items
-					}
-					img.src = item.src; // let's download image
-				}
-
-				//alert('w: ' + item.w + ' h: ' + item.h);
-			});
-
-			/*  gallery.listen('imageLoadComplete', function(index, item) {
-			var linkEl = item.el.children[0];
-			var img = item.container.children[0];
-			if (!linkEl.getAttribute('data-size')) {
-			linkEl.setAttribute('data-size', img.naturalWidth + 'x' + img.naturalHeight);
-			item.w = img.naturalWidth;
-			item.h = img.naturalHeight;
-			gallery.invalidateCurrItems();
-			gallery.updateSize(true);
-			}
-			});*/
-
+    
+            var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, vm.photoItems, options);
 			gallery.init();
-
 			});
-
 	};
-
+    
 	vm.getSettings();
 
 }]);
