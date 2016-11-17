@@ -18,7 +18,7 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
                   scope.loadImageData = function (src, i, callback){
                   var img = new Image();
                   img.onload = function(){
-					  console.log('Retrieving EXIF data...');
+					//  console.log('Retrieving EXIF data...');
 					  EXIF.getData(img, function(){
 						   var tags = EXIF.getAllTags(this);
 						   
@@ -28,9 +28,9 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
 								   orientation: tags.Orientation,
 								   width: this.width,
 								   height: this.height,
-								   pid: 'photo' + i
+                                   pid: 'photoImage' + i
 							   };
-							   
+							   console.log('DIRECTIVE..... ADDING PID---> ' + item.pid);
 							   callback(item);
 						   }
 					  });
@@ -70,7 +70,9 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
                   var readSelectedFile = function (file, index){
 					readAsDataURL(file).then(function(result) {
 						var selectedFile = file;
-						var fileName = file.name + '_' + index;
+						var fileName = file.name;// + '_' + index;
+                        
+                       // console.log('FILE NAME ----->' + fileName);
 						var fileType = file.type;
                         
                         var dataUrl = window.URL.createObjectURL(file);
@@ -78,9 +80,46 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
 						scope.closeFullScreen = function () {
 							scope.fullScreenObj = null;
 						}
+                        
+                        
+                        /***
+                        
+                         https://farm7.staticflickr.com/6175/6176698785_7dee72237e_b.jpg" itemprop="contentUrl" data-size="1024x683">
+                         <img src="https://farm7.staticflickr.com/6175/6176698785_7dee72237e_m.jpg" itemprop="thumbnail" alt="Image description" />
+                         </a>
+                         <figcaption itemprop="caption description">Image caption 3</figcaption>
+                         </figure>
+                         
+                         <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                         <a href="https://farm6.staticflickr.com/5023/5578283926_822e5e5791_b.jpg" itemprop="contentUrl" data-size="1024x768">
+                         <img src="https://farm6.staticflickr.com/5023/5578283926_822e5e5791_m.jpg" itemprop="thumbnail" alt="Image description" />
+                         </a>
+                         <figcaption itemprop="caption description">Image caption 4</figcaption>
+                         </figure>
+                         
+                         
+                         </div>
+                         
+                         <h2>Second gallery:</h2>
+                         
+                         <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                         
+                         
+                         
+
+                        
+                        
+                        
+                        
+                        */
 
 						if (fileType === 'image/jpeg' || fileType === 'image/png') {
 							scope.loadImageData(dataUrl, index, function (imgData){
+                             //   console.log('FILE NAME???---> ' + fileName);
+                                //if (!fileName){
+                                  //  fileName = 'photo_file_' + index;
+                               //     console.log('created file name:' + fileName);
+                               // }
 								var item = {
 									file: selectedFile,
 									fileName: fileName,
@@ -88,18 +127,28 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
                                     width: imgData.width,
                                     height: imgData.height,
 									dataUrl: dataUrl,
-									pid: 'photo' + index,
+									pid: imgData.pid,
                                     src: imgData.src,
                                     orientation: imgData.orientation
 								};
+                              //  console.log('ADDED FILENAME: ' + item.fileName);
 								
 								// console.log('adding photo item... w: ' + item.w + ' h: ' + item.h + ' dataUrl: ' + item.dataUrl + ' pid: ' + item.pid);
-								console.log('DIRECTIVE.... Adding item PID: ' + item.pid + ' WIDTH: ' + item.width + ' HEIGHT: ' + item.height);
+								//console.log('DIRECTIVE.... Adding item PID: ' + item.pid + ' WIDTH: ' + item.width + ' HEIGHT: ' + item.height);
 								scope.selectedPhotos.push(item);
                                 
                                 if (scope.selectedPhotos.length === scope.totalFiles){
+                                                
+                                              //  console.log('BEGIN <---------------------');
+                                                
+                                               // console.log('DIRECTIVE.... 1--->  PID => ' + scope.selectedPhotos[0].pid);
+                                                
+                                               // console.log('DIRECTIVE.... 2--->  PID => ' + scope.selectedPhotos[1].pid);
+                                                
+                                               // console.log('DIRECTIVE.... 3--->  PID => ' + scope.selectedPhotos[2].pid);
+                                               // console.log('END <---------------------');
                                     //scope.photosAreLoaded = true;
-									console.log('DIRECTIVE... LOADING IMAGES COMPLETE! TOTAL--->' + scope.selectedPhotos.length);
+									//console.log('DIRECTIVE... LOADING IMAGES COMPLETE! TOTAL--->' + scope.selectedPhotos.length);
                                     scope.$apply();
                                 }
 							});
@@ -107,8 +156,8 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
 						} else if(fileType === 'video' || fileType === 'video/quicktime'){
 							var fileObj = {
 								file: selectedFile,
-								//w: imgData.width,
-								//h: imgData.height,
+								width: imgData.width,
+								height: imgData.height,
 								fileName: fileName,
 								fileType: fileType,
 								dataUrl: dataUrl,

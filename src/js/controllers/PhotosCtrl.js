@@ -1,4 +1,3 @@
-
 angular.module('dash-client')
 .controller('PhotosCtrl', ['$http', '$mdToast', '$scope', '_',
 	function ($http, $mdToast, $scope, _) {
@@ -20,6 +19,7 @@ angular.module('dash-client')
 		vm.uploadDir = localStorage.getItem('uploadDir');
 		vm.albumName = localStorage.getItem('albumName');
 		vm.ipAddress = localStorage.getItem('ipAddress');
+        
 		var cred = localStorage.getItem('credentials');
 		var credString = atob(cred);
 		var creds = credString.split(':');
@@ -93,87 +93,212 @@ angular.module('dash-client')
 	vm.showSimpleToast = function (msg){
 		$mdToast.showSimple(msg);
 	};
-
-	 vm.photoItems = [];
-
-    vm.showGallery = function (pid){
-		var index = 0;
-        vm.photoItems = [];
-		        
-        var figureEls = document.getElementsByTagName('figure');
-        var orientation = null;
-        var src = null;
-        var item = {};
-        
-		
-           for (var p = 0; p < vm.photos.length; p++){
-			  // console.log('looking up pid->' + pid);
-               if (vm.photos[p].pid === pid){
-				   //alert('Found item with pid:' + pid);
-				   index = p;
+     
+    /* vm.scaleDownImage = function (w, h){
+         var newDimensions = {};
+         var maxWidth = 1000;
+         var maxHeight = 1000;
+         var ratio = 0;
+         var width = w;
+         var height = h;
+         console.log(' scalling down... width > max? ' + width + ' ' + maxWidth);
+         if (width > maxWidth){
+             //ratio = maxWidth / width;
+             newDimensions.height = height * (maxWidth / width);
+             newDimensions.width = maxWidth;
              
-			       console.log('photo' + p + ' + has pid-->' + vm.photos[p].pid);
-                   orientation = vm.photos[p].orientation;
-                   
-                   item.el = figureEls[p];
-                   item.src = vm.photos[p].src;
-                   item.pid = vm.photos[p].pid;
-                   item.msrc= vm.photos[p].src;
-                   
-                   item.w= vm.photos[p].width;
-                   item.h=  vm.photos[p].height;
-                   
-                   if (orientation === 6){
-                       if (parseInt(item.w) > parseInt(item.h)){
-                           item.w = vm.photos[p].height;
-                           item.h = vm.photos[p].width;
-                           
-                       }
-                   }
-                           
-                   break;
-               }
-           }
-            //console.log('ITEM #' + pid + ' WIDTH->' + item.w + ' HEIGHT->' + item.h);
-            vm.photoItems.push(item);
-          
-        
-		require([
-		'./js/photoswipe.js',
-		'./js/photoswipe-ui-default.js'
-		], function(PhotoSwipe, PhotoSwipeUI_Default) {
-			var pswpElement = document.querySelectorAll('.pswp')[0];
-
-			// define options (if needed)
-			var options = {
-				index: index,
-				//history: false,
-				barsSize: {top:250, bottom: 'auto'},
-				getThumbBoundsFn: function(thumbIndex){
-                    var thumbnail = vm.photoItems[thumbIndex].el.getElementsByTagName('img')[0];
+         }
+         console.log('scale down height? height' + ' ' + height + ' max: ' + maxHeight);
+         if (height > maxHeight){
+             newDimensions.width = maxWidth *(maxHeight / newDimensions.height);
+             newDimensions.height = maxHeight;
+         }
+         
+         console.log('new width: ' + newDimensions.width + ' ew Height: ' + newDimensions.height);
+         
+         return newDimensions;
+     
+     };*/
+     
+     vm.getOptions = function(items){
+           // define options (if needed)
+           var options = {
+               //index: index,
+               //   arrowEl: true,
+               // tapToToggleControls: true,
+               history: false,
+               loop: true,
+               timeToIdle: 4000,
+               showHideOpacity: false,
+               hideAnimationDuration: 333,
+               bgOpacity: 1,
+               spacing: 0.12,
+               allowPanToNext: true,
+               maxSpreadZoom: 2,
+               pinchToClose: true,
+               closeOnScroll: false,
+               closeOnVerticalDrag: true,
+               mouseUsed: false,
+               escKey: false,
+               arrowKeys: false,
+               galleryPIDs: true,
+               preload: [1,1],
+               mainClass: "testClass1",
+               focus: true,
+               isClickableElement: function (el){
+                   return false;
+               },
+               modal: true,
+               
+               // getNumItemsFn
+               // getDoubleTapZoon
+               barsSize: {top:55, bottom: 'auto'},
+               timeToIdleOutside: 1000,
+               loadingIndicatorDelay: 1000,
+               addCaptionHTMLFn: function (item, captionEl, isFake){
+                   captionEl.children[0].innerHTML = 'Caption Test1';
+                   return true;
+               },
+               closeEl: true,
+               captionEl: true,
+               fullscreenEl: true,
+               zoomEl: true,
+               shareEl: false,
+               counterEl: true,
+               arrowEl: true,
+               preloaderEl: true,
+               tapToClose: false,
+               tapToToggleControls: true,
+               clickToCloseNonZoomable: false,
+               closeElClasses: ['item', 'caption', 'zoom-wrap', 'ui', 'top-bar'],
+               indexIndicatorSep: '/',
+               
+               getThumbBoundsFn: function(index){
+                    var thumbnail = items[index].el;
                     var rect = thumbnail.getBoundingClientRect();
-                      var body = document.body;
-                      var docElem = document.documentElement;
-                    /*TODO: CLEAN THIS UP!!!*/
-                      var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
-                      var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
-                      var clientTop = docElem.clientTop || body.clientTop || 0;
-                      var clientLeft = docElem.clientLeft || body.clientLeft || 0;
-                
-                      var top = thumbnail.top + scrollTop - clientTop;
-                      var left = thumbnail.left + scrollLeft - clientLeft;
-                      var pageYScroll = window.pageYOffset || document.documentElement.scrollTop;
-                
-                        return { x: rect.left, y: rect.top + pageYScroll, w: rect.width };
-				},
-				showAnimationDuration: 2
+                    var pageYScroll = window.pageYOffset || document.documentElement.scrollTop;
+                   
+                    return { x: rect.left, y: rect.top + pageYScroll, w: rect.width };
+               },
+               showAnimationDuration: 2
+           };
+           
+           return options;
+                           
+       };
+       
+		vm.getDataFromElements = function(photo, index){
+			var returnObj = {
+				width: photo.width,
+				height: photo.height,
+				src: photo.src,
+				pid: photo.pid,
+				msrc: photo.src
 			};
-    
-            var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, vm.photoItems, options);
-			gallery.init();
-			});
-	};
-    
-	vm.getSettings();
+               
+			var imageEls = document.querySelectorAll('img');
+           
+			for (var i = 0; i < imageEls.length; i++){
+				var imageEl = imageEls[i];
+				var imagepid = imageEl.getAttribute('id');
+				if (photo.pid === imagepid){
+					returnObj.el = imageEl;
+					break;
+				}
+			}
+           
+			return returnObj;
+       };
+					   
+		vm.loadPhotoswipe = function(index) {
+			var pswpElement = document.querySelectorAll('.pswp')[0];
+			var items = [];
+			var currIndex = 0;
+			var currEl = null;
+           
+			for (var i = 0; i < vm.photos.length; i++){
+				var elementDataObj = vm.getDataFromElements(vm.photos[i], index);
+				var origWidth = vm.photos[i].width;
+				var origHeight = vm.photos[i].height;
 
+				var item = {
+					src: elementDataObj.src,
+					msrc: elementDataObj.src,
+					pid: elementDataObj.pid,
+					el: elementDataObj.el,
+					w: origWidth,
+					h: origHeight
+				};
+
+				if (vm.photos[i].orientation === 6){
+					if (parseInt(origWidth) > parseInt(origHeight)){
+						item.w = origHeight;
+						item.h = origWidth;
+					}
+				}
+
+				items.push(item);
+            }
+            
+			for (var g = 0; g < items.length; g++){
+				if (items[g].pid === index){
+				  currIndex = g;
+				  break;
+				}
+			}
+            
+			var options = vm.getOptions(items);
+			options.index = currIndex;
+
+			var gallery = new PhotoSwipe(pswpElement, false, items, options);
+
+           /* gallery.listen('imageLoadComplete', function(index, item){
+                console.log('PHOTOSWIPE------> LOADED item of INDEX: ' + index + ' and pid: ' + item.pid);
+              });*/
+           
+           /*TODO: is this needed?*/
+			gallery.listen('destroy', function(){
+				$scope.$apply();
+			});
+           
+			gallery.init();
+	};               
+                        
+	vm.clear = function(){
+		vm.photos = [];
+	};
+	
+	vm.buildPhotoswipeItem = function (photoItem, i, callback){
+		var figureEls = document.getElementsByTagName('figure');
+		var orientation = photoItem.orientation;
+
+		var item = {
+			el: figureEls[i],
+			src: photoItem.src,
+			msrc: photoItem.src,
+			w: photoItem.width,
+			h:  photoItem.height,
+			pid: 'photo' + i
+		};
+
+		if (orientation === 6){
+		   if (parseInt(item.w) > parseInt(item.h)){
+				item.w = photoItem.height;
+				item.h = photoItem.width;
+		   }
+		}
+		
+		callback(item);
+	};
+	
+	vm.showSlides = function(){
+		vm.showGallery(0);
+	}
+
+	vm.showGallery = function(index){
+		vm.loadPhotoswipe(index);
+	};
+	
+	vm.getSettings();
+	
 }]);
