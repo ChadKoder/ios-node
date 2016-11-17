@@ -35,11 +35,6 @@ body {
 	width: 150px;
 }
 
-/*
-#photo-gallery figcaption {
-	display: none;
-}*/
-
 md-icon svg{
     fill: inherit;
 }

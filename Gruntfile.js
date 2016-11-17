@@ -68,8 +68,6 @@ module.exports = function(grunt) {
 		'node_modules/angular-messages/angular-messages.js',
 		'node_modules/angular-material/angular-material.js',
 		'node_modules/angular-loading-bar/build/loading-bar.js'
-		//'node_modules/photoswipe/dist/photoswipe.js',
-		//'node_modules/photoswipe/dist/photoswipe-ui-default.js'
 	],
 	concatConfig = {
 		requirements: {
@@ -146,7 +144,7 @@ module.exports = function(grunt) {
         }
 
         //Push remaining web/js files that may not have been caught.
-        //jshintFiles.push('!www/js/angular-ui.js');
+        //jshintFiles.push('');
     })();	
 	 
 	grunt.initConfig({
@@ -277,30 +275,12 @@ module.exports = function(grunt) {
                             src: ['loading-bar.min.css'],
                             dest: './photo-dash/www/css/'
                         },
-						/*{
-                            expand: true,
-                            cwd: 'lib/angular-photoswipe',
-                            src: ['angular-photoswipe.css'],
-                            dest: './photo-dash/www/css/'
-                        },*/
-						/*{
-							expand: true,
-							cwd: 'lib/angular-photoswipe',
-							src: ['angular-photoswipe.min.js'],
-							dest: './photo-dash/www/js/'
-						},*/
 						{
                             expand: true,
                             cwd: 'node_modules/photoswipe/dist',
                             src: ['photoswipe.css'],
                             dest: './photo-dash/www/css/'
                         },
-						/*{
-							expand: true,
-							cwd: 'lib/jquery/',
-							src: ['jquery-3.1.1.min.js'],
-							dest: './photo-dash/www/js/'
-						},*/
 						{
                             expand: true,
                             cwd: 'node_modules/photoswipe/dist/default-skin',
