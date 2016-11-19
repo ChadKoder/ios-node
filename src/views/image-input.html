@@ -1,10 +1,14 @@
 <div layout="column" flex>
     <input class="ng-hide fileInput" accept="image/*" multiple id="imageInput" type="file" />
     
-    <label for="imageInput" md-whiteframe="7" md-ink-ripple style="margin: 2%; position: relative; width: 95%;">
+    <label for="imageInput" ng-click="startSpinner()" md-whiteframe="7" md-ink-ripple style="margin: 2%; position: relative; width: 95%;">
         <md-icon style="pointer-events: none; background-color: #0B7CDC; width: 25%; height: 100%; display: inline-block;" md-svg-src="./res/ic_add.svg"></md-icon>
         <div style="position: absolute; display: inline-block;">
 			Add Photos
         </div>
     </label>
+</div>
+
+<div layout="row" layout-sm="column" ng-show="isLoading" layout-align="space-around">
+    <md-progress-circular md-diameter="20px" md-mode="indeterminate" ng-disabled="!isLoading"></md-progress-circular>
 </div>

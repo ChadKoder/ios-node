@@ -8,11 +8,16 @@ angular.module('dash-client')
 	vm.password = '';
 	vm.uploadDir = '';
 	vm.photos = [];
+    //vm.isLoading = false;
 	
     vm.getInfo = function(){
         alert('get info!');
     }
 
+    vm.startSpinner = function(){
+        vm.isLoading = true;
+    };
+    
 	vm.getSettings = function (){
 		var localStorage = window.localStorage;
 		
@@ -45,7 +50,21 @@ angular.module('dash-client')
 
 	vm.showSuccessToast = function (msg) {
 		vm.showSimpleToast(msg);
-	};	
+	};
+     
+   vm.isGalleryOpen = false;
+   
+    vm.openGallery = function(){
+          var galleryEl = document.getElementById('photo-gallery');
+           galleryEl.className = 'slide-in';
+           vm.isGalleryOpen = true;
+    };
+       
+	vm.closeGallery = function(){
+		var galleryEl = document.getElementById('photo-gallery');
+		galleryEl.className = 'slide-out';
+		vm.isGalleryOpen = false;
+	};
    
 	vm.submit = function (){
 		if (!vm.username || !vm.password) {
@@ -89,15 +108,21 @@ angular.module('dash-client')
 				}
 		});
 	};
+    
+    vm.onPhotosLoaded = function(photos){
+        vm.photos = photos;
+        $scope.$apply();
+        vm.isLoading = false;
+    };
 
 	vm.showSimpleToast = function (msg){
 		$mdToast.showSimple(msg);
 	};
      
-    /* vm.scaleDownImage = function (w, h){
+     vm.scaleDownImage = function (w, h){
          var newDimensions = {};
-         var maxWidth = 1000;
-         var maxHeight = 1000;
+         var maxWidth = 90;
+         var maxHeight = 90;
          var ratio = 0;
          var width = w;
          var height = h;
@@ -114,11 +139,10 @@ angular.module('dash-client')
              newDimensions.height = maxHeight;
          }
          
-         console.log('new width: ' + newDimensions.width + ' ew Height: ' + newDimensions.height);
          
          return newDimensions;
      
-     };*/
+     };
      
      vm.getOptions = function(items){
            // define options (if needed)
@@ -236,6 +260,11 @@ angular.module('dash-client')
 						item.h = origWidth;
 					}
 				}
+				
+				//scale down for thumbnail image
+				//var newDims = vm.scaleDownImage(item.w, item.h);
+				//item.w = newDims.width;
+				//item.h = newDims.height;
 
 				items.push(item);
             }

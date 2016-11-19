@@ -3,11 +3,12 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
 		return {
 			restrict: 'E',
 			scope: {
-				selectedPhotos: '=?',
 				selectedVideos: '=?',
-				inputType: '='
+				inputType: '=',
+                onLoadSuccess: '&'
 			},
 			link: function (scope, element, attrs, ctrl) {
+                scope.isLoading = false;
 				scope.selectedPhotos = [];
 				scope.selectedVideos = [];
 				scope.fullScreenObj = null;
@@ -76,43 +77,12 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
 						var fileType = file.type;
                         
                         var dataUrl = window.URL.createObjectURL(file);
+                        window.URL.revokeObjectURL(file);
 
 						scope.closeFullScreen = function () {
 							scope.fullScreenObj = null;
 						}
-                        
-                        
-                        /***
-                        
-                         https://farm7.staticflickr.com/6175/6176698785_7dee72237e_b.jpg" itemprop="contentUrl" data-size="1024x683">
-                         <img src="https://farm7.staticflickr.com/6175/6176698785_7dee72237e_m.jpg" itemprop="thumbnail" alt="Image description" />
-                         </a>
-                         <figcaption itemprop="caption description">Image caption 3</figcaption>
-                         </figure>
-                         
-                         <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                         <a href="https://farm6.staticflickr.com/5023/5578283926_822e5e5791_b.jpg" itemprop="contentUrl" data-size="1024x768">
-                         <img src="https://farm6.staticflickr.com/5023/5578283926_822e5e5791_m.jpg" itemprop="thumbnail" alt="Image description" />
-                         </a>
-                         <figcaption itemprop="caption description">Image caption 4</figcaption>
-                         </figure>
-                         
-                         
-                         </div>
-                         
-                         <h2>Second gallery:</h2>
-                         
-                         <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-                         
-                         
-                         
-
-                        
-                        
-                        
-                        
-                        */
-
+               
 						if (fileType === 'image/jpeg' || fileType === 'image/png') {
 							scope.loadImageData(dataUrl, index, function (imgData){
                              //   console.log('FILE NAME???---> ' + fileName);
@@ -138,6 +108,8 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
 								scope.selectedPhotos.push(item);
                                 
                                 if (scope.selectedPhotos.length === scope.totalFiles){
+                                    scope.isLoading = false;
+                                    scope.onLoadSuccess({photos: scope.selectedPhotos});
                                                 
                                               //  console.log('BEGIN <---------------------');
                                                 
@@ -149,7 +121,7 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
                                                // console.log('END <---------------------');
                                     //scope.photosAreLoaded = true;
 									//console.log('DIRECTIVE... LOADING IMAGES COMPLETE! TOTAL--->' + scope.selectedPhotos.length);
-                                    scope.$apply();
+                                    //scope.$apply();
                                 }
 							});
 							
@@ -175,8 +147,13 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
 						
 					});
 				};
+                
+                scope.startSpinner = function(){
+                    scope.isLoading = true;
+                };
 				
 				scope.onFileChange = function (e) {
+                    //scope.isLoading = true;
 					var selectedFiles = e.target.files;
 					scope.totalFiles = selectedFiles.length;
 

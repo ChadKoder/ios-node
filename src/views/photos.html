@@ -1,28 +1,50 @@
-<md-content style="background-color: #BDBDBD;" layout="column" flex>
-	<br />
-		<file-input selected-photos="vm.photos" input-type="'image'"></file-input>
-    
-    <md-button style="width: 100%;" class="md-primary md-raised" ng-click="vm.clear()">CLEAR GALLERY</md-button>
-    
-    <div id="photo-gallery" style="width: 100%; float: left;">
-         <md-content flex style="border: 1px solid firebrick; width: 100%; height: 200px;" layout="column">
-             <md-content flex layout="row" layout-align="left" class="dash-figure" layout-align="center" layout-wrap>
-                 <md-content flex="45" ng-repeat="photo in vm.photos" style="border: 1px; solid black; padding: 2px 2px 2px 2px; border-radius: 3px;">
-                     <img id="{{photo.pid}}" style="width: 100%; height: auto;" src="{{photo.dataUrl}}" ng-click="vm.showGallery(photo.pid)" >
-                         
-                 </md-content>
-              
+<file-input input-type="'image'" on-load-success="vm.onPhotosLoaded(photos)"></file-input>
+<div>Total Selected: {{vm.photos.length}}</div>
+
+
+<!--<div id="photo-gallery" md-swipe-right="vm.closeGallery()">
+    <md-content id="gallery-container" layout="column">
+         <md-content flex layout="row" layout-align="left" layout-wrap>
+             <md-button class="md-raised" ng-click="vm.closeGallery()" stlye="width: 20%;"><md-icon style="pointer-events: none; left: 0; background-color: #0B7CDC; width: 10%; min-height: 100%; display: inline-block;" md-svg-src="./res/ic_keyboard_arrow_left.svg"></md-icon></md-button>
+            
+              <md-content ng-repeat="photo in vm.photos" class="photo-container">
+                 <img id="{{photo.pid}}" style="min-width: 100%; min-height: auto;" src="{{photo.dataUrl}}" ng-click="vm.showGallery(photo.pid)" >
+                     
              </md-content>
+          
+         </md-content>
+    </md-content>
+</div>-->
+
+
+<div id="photo-gallery" style="width: 100%; float: left;" md-swipe-right="vm.closeGallery()">
+    <md-content flex style="border: 1px solid black; width: 100%; height: 100%;" layout="column">
+        <md-content flex layout="row" layout-align="left" class="dash-figure" layout-align="center" layout-wrap>
+            <md-content flex="25" ng-repeat="photo in vm.photos" style="border: 1px; solid black; padding: 2px 2px 2px 2px; border-radius: 3px;">
+                <img id="{{photo.pid}}" style="width: 100%; height: auto;" src="{{photo.dataUrl}}" ng-click="vm.showGallery(photo.pid)" >
+                    
+                    </md-content>
+            
         </md-content>
+    </md-content>
+</div>
+
+
+
+
+
+<label ng-click="vm.submit()" md-whiteframe="4" md-ink-ripple style="margin: 2%; position: relative; width: 95%;">
+    <md-icon style="pointer-events: none; background-color: #0B7CDC; width: 13%; height: 100%; display: inline-block;" md-svg-src="./res/ic_file_upload.svg"></md-icon>
+    <div style="position: absolute; display: inline-block;">
+        upload album
     </div>
-    
-    <label ng-click="vm.submit()" md-whiteframe="4" md-ink-ripple style="margin: 2%; position: relative; width: 95%;">
-        <md-icon style="pointer-events: none; background-color: #0B7CDC; width: 13%; height: 100%; display: inline-block;" md-svg-src="./res/ic_file_upload.svg"></md-icon>
-        <div style="position: absolute; display: inline-block;">
-            upload album
-        </div>
-    </label>
-    
+</label>
+
+<md-button style="width: 95%;" class="md-primary md-raised" ng-click="vm.clear()">CLEAR GALLERY</md-button>
+<md-button style="width: 95%;" class="md-primary md-raised" ng-click="vm.openGallery()">open GALLERY</md-button>
+
+
+
     <!-- Root element of PhotoSwipe. Must have class pswp. -->
     <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
         
@@ -93,4 +115,3 @@
       </div>
     </div>
 
-</md-content>
