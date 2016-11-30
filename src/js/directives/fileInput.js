@@ -1,3 +1,4 @@
+
 angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeout','$templateRequest', '$compile', '$location', 
 	function ($q, $compile, $timeout,$compile, $templateRequest, $location) {
 		return {
@@ -5,9 +6,11 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
 			scope: {
 				selectedVideos: '=?',
 				inputType: '=',
-                onLoadSuccess: '&'
+                onLoadSuccess: '&',
+				onPhotoLoaded: '&'
 			},
 			link: function (scope, element, attrs, ctrl) {
+				scope.totalAdded = 0;
                 scope.isLoading = false;
 				scope.selectedPhotos = [];
 				scope.selectedVideos = [];
@@ -15,8 +18,8 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
 				scope.selectedMediaType = 'image';
 				scope.selectedMediaTypeText = 'images';
 				scope.templateLoaded = false;
-                
-                  scope.loadImageData = function (src, i, callback){
+				                
+			    scope.loadImageData = function (src, i, callback){
                   var img = new Image();
                   img.onload = function(){
 					//  console.log('Retrieving EXIF data...');
@@ -31,7 +34,7 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
 								   height: this.height,
                                    pid: 'photoImage' + i
 							   };
-							   console.log('DIRECTIVE..... ADDING PID---> ' + item.pid);
+							   
 							   callback(item);
 						   }
 					  });
@@ -68,7 +71,7 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
                   return deferred.promise;
               };
                                                       
-                  var readSelectedFile = function (file, index){
+			  var readSelectedFile = function (file, index){
 					readAsDataURL(file).then(function(result) {
 						var selectedFile = file;
 						var fileName = file.name;// + '_' + index;
@@ -77,23 +80,20 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
 						var fileType = file.type;
                         
                         var dataUrl = window.URL.createObjectURL(file);
-                        window.URL.revokeObjectURL(file);
 
 						scope.closeFullScreen = function () {
 							scope.fullScreenObj = null;
 						}
                
+                      
 						if (fileType === 'image/jpeg' || fileType === 'image/png') {
 							scope.loadImageData(dataUrl, index, function (imgData){
-                             //   console.log('FILE NAME???---> ' + fileName);
-                                //if (!fileName){
-                                  //  fileName = 'photo_file_' + index;
-                               //     console.log('created file name:' + fileName);
-                               // }
 								var item = {
 									file: selectedFile,
 									fileName: fileName,
 									fileType: fileType,
+                                   // width: newSize[0],
+                                   // height: newSize[1],
                                     width: imgData.width,
                                     height: imgData.height,
 									dataUrl: dataUrl,
@@ -101,28 +101,22 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
                                     src: imgData.src,
                                     orientation: imgData.orientation
 								};
-                              //  console.log('ADDED FILENAME: ' + item.fileName);
 								
-								// console.log('adding photo item... w: ' + item.w + ' h: ' + item.h + ' dataUrl: ' + item.dataUrl + ' pid: ' + item.pid);
-								//console.log('DIRECTIVE.... Adding item PID: ' + item.pid + ' WIDTH: ' + item.width + ' HEIGHT: ' + item.height);
-								scope.selectedPhotos.push(item);
                                 
-                                if (scope.selectedPhotos.length === scope.totalFiles){
+								scope.onPhotoLoaded({photo: item});
+								scope.totalAdded+=1;
+								scope.$apply();
+                                
+								if (scope.totalAdded === scope.totalFiles - 1){
+									scope.isLoading = false;
+								}
+                                
+								//scope.selectedPhotos.push(item);
+                                
+                                /*if (scope.selectedPhotos.length === scope.totalFiles){
                                     scope.isLoading = false;
                                     scope.onLoadSuccess({photos: scope.selectedPhotos});
-                                                
-                                              //  console.log('BEGIN <---------------------');
-                                                
-                                               // console.log('DIRECTIVE.... 1--->  PID => ' + scope.selectedPhotos[0].pid);
-                                                
-                                               // console.log('DIRECTIVE.... 2--->  PID => ' + scope.selectedPhotos[1].pid);
-                                                
-                                               // console.log('DIRECTIVE.... 3--->  PID => ' + scope.selectedPhotos[2].pid);
-                                               // console.log('END <---------------------');
-                                    //scope.photosAreLoaded = true;
-									//console.log('DIRECTIVE... LOADING IMAGES COMPLETE! TOTAL--->' + scope.selectedPhotos.length);
-                                    //scope.$apply();
-                                }
+                                }*/
 							});
 							
 						} else if(fileType === 'video' || fileType === 'video/quicktime'){
@@ -146,63 +140,61 @@ angular.module('dash-client').directive('fileInput', ['$q', '$compile', '$timeou
 					}, function (notify) {
 						
 					});
-				};
+			};
                 
-                scope.startSpinner = function(){
-                    scope.isLoading = true;
-                };
+			scope.startSpinner = function(){
+				scope.isLoading = true;
+			};
 				
-				scope.onFileChange = function (e) {
-                    //scope.isLoading = true;
-					var selectedFiles = e.target.files;
-					scope.totalFiles = selectedFiles.length;
-
-					for (var i = 0; i < selectedFiles.length; i++){
-						var file = selectedFiles[i];
-						setTimeout(readSelectedFile(file, i), i * 100);
-					}
-				};
-                
-                var isBound = false;
+			scope.onFileChange = function (e) {
+				var files = document.querySelector('input[type=file]').files;
 				
-				$timeout(function(){
-					var inputElement;
-					if (scope.inputType === 'image'){
-                        if (!isBound){
-                            inputElement = angular.element(element[0].querySelector('#imageInput'));
-                            console.log('Binding IMGE INPUT to ONFILECHANGE in DIRECTIVE');
-                            inputElement.bind('change', scope.onFileChange);
-                            scope.$apply();
-                            isBound = true;
-                            return;
-                        }
-					}
-					if (scope.inputType === 'video'){
-                        if (!isBound){
-                            inputElement = angular.element(element[0].querySelector('#videoInput'));
-                            console.log('Binding VIDEO INPUT to ONFILECHANGE in DIRECTIVE');
-                            inputElement.bind('change', scope.onFileChange);
-                            scope.$apply();
-                            isBound = true;
-                            return;
-                        }
-					}
-				}, 900);
-				
-				scope.getContentUrl = function(){
-					if (scope.inputType === 'image'){
-						return './views/image-input.html';
-					}
-					if (scope.inputType === 'video'){
-						return './views/video-input.html';
-					}
-				};
-				
-				scope.clearAll = function () {
-					scope.selectedPhotos = [];
-					scope.selectedVideos = [];
+				for (var i = 0; i < files.length; i++){
+					var file = files[i];
+					setTimeout(readSelectedFile(file, i), i * 100);
 				}
-			},
-			template: '<div ng-include="getContentUrl()"></div>'
-		}
+			};
+
+			var isBound = false;
+			
+			$timeout(function(){
+				var inputElement;
+				if (scope.inputType === 'image'){
+					if (!isBound){
+						inputElement = angular.element(element[0].querySelector('#imageInput'));
+						//console.log('Binding IMGE INPUT to ONFILECHANGE in DIRECTIVE');
+						inputElement.bind('change', scope.onFileChange);
+						scope.$apply();
+						isBound = true;
+						return;
+					}
+				}
+				if (scope.inputType === 'video'){
+					if (!isBound){
+						inputElement = angular.element(element[0].querySelector('#videoInput'));
+						//console.log('Binding VIDEO INPUT to ONFILECHANGE in DIRECTIVE');
+						inputElement.bind('change', scope.onFileChange);
+						scope.$apply();
+						isBound = true;
+						return;
+					}
+				}
+			}, 900);
+				
+			scope.getContentUrl = function(){
+				if (scope.inputType === 'image'){
+					return './views/image-input.html';
+				}
+				if (scope.inputType === 'video'){
+					return './views/video-input.html';
+				}
+			};
+			
+			scope.clearAll = function () {
+				scope.selectedPhotos = [];
+				scope.selectedVideos = [];
+			}
+		},
+		template: '<div ng-include="getContentUrl()"></div>'
+	}
 }]);

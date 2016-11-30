@@ -1,35 +1,35 @@
-<file-input input-type="'image'" on-load-success="vm.onPhotosLoaded(photos)"></file-input>
-<div>Total Selected: {{vm.photos.length}}</div>
+<file-input input-type="'image'" on-photo-loaded="vm.onPhotoLoaded(photo)"></file-input>
+<div>Total in Album: {{vm.photos.length}}</div>
+
+<div> Total selected: {{vm.allPhotos.length}}</div>
 
 
-<!--<div id="photo-gallery" md-swipe-right="vm.closeGallery()">
-    <md-content id="gallery-container" layout="column">
-         <md-content flex layout="row" layout-align="left" layout-wrap>
-             <md-button class="md-raised" ng-click="vm.closeGallery()" stlye="width: 20%;"><md-icon style="pointer-events: none; left: 0; background-color: #0B7CDC; width: 10%; min-height: 100%; display: inline-block;" md-svg-src="./res/ic_keyboard_arrow_left.svg"></md-icon></md-button>
-            
-              <md-content ng-repeat="photo in vm.photos" class="photo-container">
-                 <img id="{{photo.pid}}" style="min-width: 100%; min-height: auto;" src="{{photo.dataUrl}}" ng-click="vm.showGallery(photo.pid)" >
-                     
-             </md-content>
-          
-         </md-content>
-    </md-content>
-</div>-->
 
 
-<div id="photo-gallery" style="width: 100%; float: left;" md-swipe-right="vm.closeGallery()">
+
+<div id="photo-gallery" class="use-gpu" style="width: 100%; float: left; margin: 0 0 50px 0;" md-swipe-right="vm.closeGallery()">
     <md-content flex style="border: 1px solid black; width: 100%; height: 100%;" layout="column">
-        <md-content flex layout="row" layout-align="left" class="dash-figure" layout-align="center" layout-wrap>
-            <md-content flex="25" ng-repeat="photo in vm.photos" style="border: 1px; solid black; padding: 2px 2px 2px 2px; border-radius: 3px;">
-                <img id="{{photo.pid}}" style="width: 100%; height: auto;" src="{{photo.dataUrl}}" ng-click="vm.showGallery(photo.pid)" >
-                    
-                    </md-content>
-            
+        <md-content id="scrollArea" flex layout="row" layout-align="start start" layout-wrap style="height: 100%; width: 100%;">
+            <div ng-repeat="photo in vm.photos" flex="nogrow" style="width: 50%; height: 28%; position: relative;">
+                
+               <!-- <img id="{{photo.pid}}" ng-style="vm.styles[$index]" src="{{photo.dataUrl}}" ng-click="vm.showGallery(photo.pid)" >-->
+               <div style="width: 100%; height: 100%; background-color: black; padding-top: 1px; padding-bottom: 1px;">
+                   <img id="{{photo.pid}}" ng-style="vm.styles[$index]" src="{{photo.dataUrl}}" ng-click="vm.showGallery(photo.pid)" >
+                </div>
+                
+            </div>
+            <!--<md-button class="md-raised md-primary" ng-show="vm.displayShowMoreIcon" style="width: 50%; color: white; position: absolute; left: 50%; top: 95%;" ng-click="vm.getNextTwelve()">Load more...</md-button>
+            -->
+           
         </md-content>
+        
     </md-content>
+    
 </div>
 
-
+<md-button ng-click="vm.getNextTwelve()" ng-show="vm.displayShowMoreIcon" style="z-index: 9999; position: fixed !important;" class="md-fab md-fab-bottom-right" aria-label="test">
+        <md-icon>add</md-icon>
+    </md-button>
 
 
 

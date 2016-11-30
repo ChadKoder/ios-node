@@ -18,6 +18,12 @@ body {
 	-webkit-user-select: none;*/
 }
 
+.use-gpu{
+	-webkit-transform: translateZ(0);
+	/*-webkit-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);*/
+}
+
 #photo-gallery {
     position: absolute;
     top: 20px;
