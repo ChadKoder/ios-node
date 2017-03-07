@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.photo.dash" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Photo Dash</name>
+    <description>
+        Backup photos, images, and contacts
+    </description>
+    <author email="chadk241@gmail.com" href="github.com/ChadKoder">
+        ChadKoder
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <preference name="orientation" value="portrait" />
+    <preference name="SplashScreenDelay" value="700" />
+    <preference name="BackupWebStorage" value="none" />
+    <preference name="FadeSplashScreen" value="true" />
+    <preference name="FadeSplashScreenDuration" value="750" />
+    <preference name="SuppressesLongPressGesture" value="true" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+    </platform>
+    <platform name="ios">
+        <splash height="1136" src="www/res/screen/ios/Default_2x_iphone.png" width="640" />
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+    </platform>
+    <plugin name="cordova-plugin-whitelist" spec="~1.2.2" />
+    <plugin name="cordova-plugin-splashscreen" spec="~3.2.2" />
+    <plugin name="cordova-plugin-background-mode" spec="https://github.com/katzer/cordova-plugin-background-mode.git" />
+    <plugin name="cordova-plugin-contacts" spec="~2.2.0">
+        <variable name="CONTACTS_USAGE_DESCRIPTION" value="Backup or restore contacts" />
+    </plugin>
+    <plugin name="cordova-plugin-photo-usage-description" spec="https://github.com/ChadKoder/cordova-plugin-photo-usage.git">
+        <variable name="PHOTO_USAGE_DESCRIPTION" value="Photo-Dash will use your photos for backup purposes only" />
+    </plugin>
+    <plugin name="cordova-plugin-file-transfer" spec="~1.6.1" />
+    <plugin name="cordova-plugin-file" spec="~4.3.1" />
+    <plugin name="cordova-plugin-media" spec="~2.4.1" />
+    <plugin name="com.hutchind.cordova.plugins.streamingmedia" spec="~0.1.4" />
+    <plugin name="cordova-plugin-inappbrowser" spec="~1.6.1" />
+</widget>

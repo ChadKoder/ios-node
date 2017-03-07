@@ -1,0 +1,28 @@
+<div id="library-page" class="page no-swipeback navbar-through" ng-controller="PhotoAlbumCtrl as vm">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="left">
+                <a href="#" class="link" ng-click="vm.goBack()">
+                    <i class="icon icon-back"></i>
+                    <span>Back</span>
+                </a>
+            </div>
+            <div class="center" ng-if="vm.totalPhotos > 0">{{vm.totalPhotos | number: 0}}</div>
+            <div class="right">
+                <a href="#" class="link">
+                    <i class="icon icon-camera" style="font-size: 16px;">
+                        <span style="font-size: 12px;" class="badge bg-green">{{vm.totalSelected}}</span>
+                    </i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--  <div class="page-content infinite-scroll">
+      -->
+      <div class="page-content infinite-scroll">
+        
+                <my-photo-library total-photos="vm.totalPhotos" total-selected="vm.totalSelected" full-library="vm.myLibrary"></my-photo-library>
+           
+        
+    </div>
+</div>

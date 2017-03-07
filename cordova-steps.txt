@@ -1,6 +1,0 @@
-Steps for Cordova Project:
-1. cordova create photo-saver com.example.photosaver PhotoSaver
-2. run grunt! this will update photo-saver js and views
-3. cordova platform add ios --save
-4. go to IOS X. Navigate to photo-saver/ and run cordova build ios
-5. cd platforms/ios run cordova emulate ios
