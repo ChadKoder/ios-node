@@ -1,7 +1,6 @@
 Framework7.prototype.plugins.angular = function(app, params) {
 	function compile(newPage) {
 		try {
-            console.log('VV NEW PAGE VV');
             //console.log(newPage);
             
 			var $page = $(newPage);

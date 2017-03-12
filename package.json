@@ -1,0 +1,29 @@
+{
+  "name": "ios-node",
+  "version": "1.0.0",
+  "description": "ios fw7 app",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "angular": "^1.6.3",
+    "framework7": "^1.5.3",
+    "framework7-icons": "^0.8.9",
+    "grunt": "^1.0.1",
+    "jquery": "^3.1.1",
+    "photoswipe": "^4.1.1",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChadKoder/ios-node.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChadKoder/ios-node/issues"
+  },
+  "homepage": "https://github.com/ChadKoder/ios-node#readme"
+}

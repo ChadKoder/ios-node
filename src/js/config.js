@@ -1,4 +1,5 @@
 var $$ = Dom7;
+var $$ = Dom7;
 var PhotoDash = {};
 var mainView = {};
 
@@ -25,7 +26,7 @@ underscore.factory('_', ['$window', function($window){
     return $window._;
 }]);
 
-PhotoDash.angular = angular.module('PhotoDash', ['angularLazyImg', 'underscore'])
+PhotoDash.angular = angular.module('PhotoDash', ['underscore'])
 
 .config(['$compileProvider', function ($compileProvider) {
 	$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|cdvphotolibrary):/);
