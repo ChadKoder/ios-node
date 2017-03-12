@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 	var pkg = grunt.file.readJSON('package.json'),
 		build = grunt.template.today('yyyymmdd_HHMMss_1');
 	
-	var karmaConfig = {
+	/*var karmaConfig = {
             debug: {
                 options: {
                     frameworks: ['jasmine', 'browserify'],
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
                 },
                 singleRun: false
             }
-        }
+        }*/
 
 	var requiredJsFiles = [
 		'node_modules/jquery/dist/jquery.min.js',
@@ -127,7 +127,7 @@ module.exports = function(grunt) {
             //push first party post-concat modules to ensure nothing went wrong with concat.
             jshintFiles.push(concatenatedFile);
 
-            karmaConfig.debug.options.files.push(concatenatedFile);
+            //karmaConfig.debug.options.files.push(concatenatedFile);
         }
 
         //Push remaining web/js files that may not have been caught.
@@ -228,7 +228,7 @@ module.exports = function(grunt) {
                 }
 		},
 		uglify: uglifyConfig,
-		karma: karmaConfig,
+		//karma: karmaConfig,
 		sync: {
                 main: {
                     files: [
@@ -333,7 +333,7 @@ module.exports = function(grunt) {
 		}
 	});
 
-    grunt.loadNpmTasks('grunt-karma');
+    //grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
