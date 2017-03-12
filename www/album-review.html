@@ -9,7 +9,7 @@
             </div>
             <div class="center" ng-if="vm.totalPhotos > 0">{{vm.totalPhotos}}</div>
             <div class="right">
-                <a href="#" class="link">
+                <a href="#">
                     <i class="icon icon-camera" style="font-size: 16px;">
                         <span style="font-size: 12px;" class="badge bg-green">{{vm.totalSelected}}</span>
                     </i>
@@ -17,11 +17,14 @@
             </div>
         </div>
     </div>
+	
+	
+	
     <!--  <div class="page-content infinite-scroll">
       -->
       <div class="page-content infinite-scroll">
         
-        
+        <album-review total-photos="vm.totalPhotos"></album-review>
            
         
     </div>
