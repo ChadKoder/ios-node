@@ -95,6 +95,17 @@ PhotoDash.angular.directive('albumReview', ['$q', '$rootScope', '$compile', 'sel
                                                
                     getThumbBoundsFn: function(index){
                        var thumbnail = items[index].el;
+					   
+					   if (thumbnail === undefined){
+							//thumbnail is not yet loaded via infinite-scroll, so return somewhere below viewable area.
+							return {
+								x: 50,
+								y: 1000,
+								w: 75
+							};
+					   
+					   }
+					   
                        var rect = thumbnail.getBoundingClientRect();
                        var pageYScroll = window.pageYOffset || document.documentElement.scrollTop;
 											

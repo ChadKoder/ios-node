@@ -1,4 +1,4 @@
-PhotoDash.angular.directive('myPhotoLibrary', ['$q', '$rootScope', '$compile', 'selectionService', '_',
+PhotoDash.angular.directive('photoLibrary', ['$q', '$rootScope', '$compile', 'selectionService', '_',
  function ($q, $rootScope, $compile, selectionService, _) {
 	return {
 		restrict: 'E',
