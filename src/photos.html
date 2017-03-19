@@ -1,43 +1,98 @@
 <div id="photos" data-page="photos" class="page">
     <div class="page-content" ng-controller="PhotosCtrl as vm">
-	
-	<!--
-        <div class="row">
-            <div class="col-50">
-                <p><a href="photo-album.html" class="button button-fill button-big color-green">
-                    <i class="f7-icons">images<sup>add</sup></i>
-                    Photos
-                </a></p>
-            </div>
-            <div class="col-50">
-                <p><div class="button button-fill button-big" style="position: relative;">
-                    <i class="f7-icons">videocam_round<sup>add</sup></i>
-                    <input id="video-input" type="file" style="padding-top: 200px; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; position: absolute !important;"  accept="video/*"/>
-                    Video
-                </div></p>
-            </div>
-        </div>-->
-		
+		 <!-- Settings Popup -->
+		<div class="popup popup-settings" style="background-color: #222426; font-size: 12px;">
+			<div class="content-block">
+				<div class="content-block-title">Settings</div>
+				<div class="list-block">
+				  <ul>
+					<!-- Text inputs -->
+					<li>
+					  <div class="item-content">
+						<div class="item-media"><i class="icon f7-icons">folder</i></div>
+						<div class="item-inner">
+						  <div class="item-title label">Album Name</div>
+						  <div class="item-input">
+							<input ng-model="vm.albumName" type="text" placeholder="New Album">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					 <li>
+					  <div class="item-content">
+						<div class="item-media"><i class="icon f7-icons">person</i></div>
+						<div class="item-inner">
+						  <div class="item-title label">User Name</div>
+						  <div class="item-input">
+							<input type="text" placeholder="User Name">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					<li>
+					  <div class="item-content">
+						<div class="item-media"><i class="icon f7-icons">lock</i></div>
+						<div class="item-inner">
+						  <div class="item-title label">Password</div>
+						  <div class="item-input">
+							<input type="password" placeholder="Password">
+						  </div>
+						</div>
+					  </div>
+					</li>
+					<li>
+					  <div class="item-content">
+						<div class="item-media"><i class="icon f7-icons">world</i></div>
+						<div class="item-inner">
+						  <div class="item-title label">IP Address</div>
+						  <div class="item-input">
+							<input type="text" placeholder="http://">
+						  </div>
+						</div>
+					  </div>
+					</li>
+				  </ul>
+				</div>
+			
+				<p>
+					<a href="photo-album.html" class="close-popup button button-fill button-big color-green"><i class="f7-icons">images<sup>add</sup></i>
+					Photos
+					</a>
+				</p>
+				<p><a class="close-popup button button-fill button-big color-gray">
+					Cancel
+				</a></p>
+			</div>
+		  </div>
 		<div class="list-block media-list">
 			<ul>
 				<li>
-					<a href="photo-album.html" class="item-content item-link">
+					<div class="item-content open-popup">
 						<div class="item-media">
 							<i class="f7-icons">add</i>
 						</div>
 						<div class="item-inner">
 							<div class="item-title-row">
-								<div class="item-title">Add Photos</div>
+								<div class="item-title">Create New Album</div>
 							</div>
-							<div class="item-text">Create a photo album to upload</div>
+						</div>
+					</div>
+				</li>
+			
+			
+				<!--<li>
+										
+					<a class="open-popup" data-popup=".popup-settings" class="item-content">
+						<div class="item-media">
+							<i class="f7-icons">add</i>
+						</div>
+						<div class="item-title-row">
+							<div class="item-text">Create New Album</div>
 						</div>
 					</a>
-				</li>
-				
+				</li> -->
 			</ul>
 		</div>
-		
-		
 		
 		
         <div class="list-block media-list">

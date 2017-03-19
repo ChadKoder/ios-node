@@ -5,6 +5,7 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 	vm.username = 'chad';
 	vm.password = 'pass';
 	vm.thumbnail = null;
+	vm.albumName = null;
 	vm.selectedPhotos = [];
 	var currIndex = 0;
 	
@@ -112,8 +113,8 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 		if (vm.selectedPhotos.length > 0){
 			 photoAlbumExists = true;
 			vm.thumbnail = vm.selectedPhotos[0].thumbnailURL;
-			var viewAlbumTemplate = '<li class="swipeout"><div class="swipeout-content"><a ng-href="album-review.html" class="item-content"><div class="item-media"><img ng-src="{{vm.thumbnail}}" width="50"></div><div class="item-inner"><div class="item-title-row"><div class="item-title">Photo Album</div><div class="item-after">({{vm.selectedPhotos.length}})</div></div><div class="item-subtitle">Review your photos</div></div></a></div><div class="swipeout-actions-left"><a class="bg-lightblue action3" ng-click="vm.submitPhotos()">Send</a></div><div class="swipeout-actions-right"><a ng-click="vm.clearPhotos()" class="swipeout-delete action4">Delete</a></div></li>';
-
+			//var viewAlbumTemplate = '<li class="swipeout"><div class="swipeout-content"><a ng-href="album-review.html" class="item-content"><div class="item-media"><img ng-src="{{vm.thumbnail}}" width="50"></div><div class="item-inner"><div class="item-title-row"><div class="item-title">Photo Album</div><div class="item-after">({{vm.selectedPhotos.length}})</div></div><div class="item-subtitle">Review your photos</div></div></a></div><div class="swipeout-actions-left"><a class="bg-lightblue action3" ng-click="vm.submitPhotos()">Send</a></div><div class="swipeout-actions-right"><a ng-click="vm.clearPhotos()" class="swipeout-delete action4">Delete</a></div></li>';
+			var viewAlbumTemplate = '<li class="swipeout"><div class="swipeout-content"><a ng-href="album-review.html" class="item-content"><div class="item-media"><img ng-src="{{vm.thumbnail}}" width="50"></div><div class="item-inner"><div class="item-title-row"><div class="item-title">Photo Album</div><div class="item-after">({{vm.selectedPhotos.length}})</div></div><div class="item-subtitle">Review your photos</div></div></a></div><div class="swipeout-actions-left"><a class="bg-green action1" ng-click="vm.submitPhotos()">Send</a><a href="photo-album.html" class="bg-lightblue action2">Add</a></div><div class="swipeout-actions-right"><a ng-click="vm.clearPhotos()" class="swipeout-delete action3">Delete</a></div></li>';
 			$$('#photo-html-placeholder').append(viewAlbumTemplate);
 
 			var newContent = angular.element(document.getElementById('photo-html-placeholder'));
