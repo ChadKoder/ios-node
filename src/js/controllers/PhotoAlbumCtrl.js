@@ -5,5 +5,5 @@ PhotoDash.angular.controller('PhotoAlbumCtrl', ['$scope', '$rootScope', function
 	
        vm.goBack = function(){
 			mainView.router.back({url: 'photos.html', force: true});
-    };
+		};
 }]);

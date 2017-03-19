@@ -40,6 +40,8 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 		vm.selectedVideos = [];
 		videoAlbumExists = false;
 		selectionService.clearVideos();
+		//document.getElementById("uploadCaptureInputFile").value = "";
+		document.querySelector('input#video-input').value = '';
 	};
 
 	$$('#video-input').on('change', function(e){

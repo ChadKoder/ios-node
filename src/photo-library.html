@@ -1,0 +1,17 @@
+<div style="display: inline; position: relative;" 
+		ng-repeat="item in thumbnails | orderBy: '-creationDate' | limitTo: thumbnailLimit track by item.id">
+	<img ng-click="markSelected(item)" 
+			width="75" 
+			style="display: inline; position: relative;" 
+			id="{{item.id}}" 
+			ng-src="{{item.thumbnailURL}}" />
+	<i ng-if="isSelected(item.id)" 
+		class="f7-icons color-green" 
+		style="position: absolute; top: 0; right: 4px; display:inline; font-size: 14px;">
+			check_round_fill
+	</i>
+</div>
+<div class="infinite-scroll-preloader">
+	<div class="preloader">
+	</div>
+</div>

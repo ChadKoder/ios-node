@@ -16,8 +16,8 @@ PhotoDash.angular.directive('photoLibrary', ['$q', '$rootScope', '$compile', 'se
            scope.isSelected = function(id){
 				return _.contains(scope.selectedItems, id);
            };
-											   
-           scope.markSelected = function(libraryItem){
+		
+			scope.markSelected = function(libraryItem){
 		   		var alreadySelected = _.contains(scope.selectedItems, libraryItem.id);
 				
 				if (alreadySelected){
@@ -46,16 +46,14 @@ PhotoDash.angular.directive('photoLibrary', ['$q', '$rootScope', '$compile', 'se
 			var getFullLibrary = function(){
 				cordova.plugins.photoLibrary.requestAuthorization(function () {
 					cordova.plugins.photoLibrary.getLibrary(function (result) {
-						console.log('DIRECTIVE -- getFullLibrary setting fullLibrary to total of: ' + result.library.length);
-                        scope.thumbnails = result.library;
-                        scope.totalPhotos = result.library.length;
-						 
+						scope.thumbnails = result.library;
+						scope.totalPhotos = result.library.length;
 						scope.selectedItems = _.pluck(selectionService.getPhotos(), 'id');
 						scope.totalSelected = scope.selectedItems.length;
 						 
-			PhotoDash.fw7.app.hidePreloader();
-			
-			scope.$apply();
+						PhotoDash.fw7.app.hidePreloader();
+						
+						scope.$apply();
 			
 					}, function(err){
 						console.log('getFullLibrary: error - ' + err);
@@ -82,6 +80,10 @@ PhotoDash.angular.directive('photoLibrary', ['$q', '$rootScope', '$compile', 'se
 				console.log('my directvie -- $destroy -- cleanup!');
 				cleanup();
 			});
+			
+			scope.getContentUrl = function(){
+				return 'photo-library.html';
+			};
 			
 			
            getFullLibrary();
@@ -110,7 +112,8 @@ PhotoDash.angular.directive('photoLibrary', ['$q', '$rootScope', '$compile', 'se
                 
                 }, 200);
 			});
-		},   
-        template: '<div style="display: inline; position: relative;" ng-repeat="item in thumbnails | orderBy: \'-creationDate\' | limitTo: thumbnailLimit track by item.id"><img ng-click="markSelected(item)" width="75" style="display: inline; position: relative;" id="{{item.id}}" ng-src="{{item.thumbnailURL}}" />	<i ng-if="isSelected(item.id)" class="f7-icons color-green" style="position: absolute; top: 0; right: 4px; display:inline; font-size: 14px;">check_round_fill</i></div><div class="infinite-scroll-preloader">	<div class="preloader"></div></div>'
+		},
+		//templateUrl: 'photo-library.html'        
+		template: '<div ng-include="getContentUrl()"></div>'
 	}
 }]);

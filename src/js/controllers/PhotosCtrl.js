@@ -1,12 +1,13 @@
-PhotoDash.angular.controller('PhotosCtrl', ['$q', '$scope', '$rootScope','$compile', '$http', 'selectionService', 
-function($q, $scope, $rootScope, $compile, $http, selectionService) {
+PhotoDash.angular.controller('PhotosCtrl', ['$q', '$scope', '$rootScope','$compile', '$http', 'selectionService', 'authService', 
+function($q, $scope, $rootScope, $compile, $http, selectionService, authService) {
 	var vm = this;
 	vm.totalPhotos = 0;
-	vm.username = 'chad';
-	vm.password = 'pass';
+	vm.username = '';
+	vm.password = '';
 	vm.thumbnail = null;
 	vm.albumName = null;
 	vm.selectedPhotos = [];
+	
 	var currIndex = 0;
 	
 	var selectedItems = [];
@@ -22,8 +23,7 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 	};
 	
 	vm.createFilesAndSubmit = function(){
-	var encodedAuth = btoa(vm.username + ':' + vm.password);
-		$http.defaults.headers.common.Authorization = 'Basic ' + encodedAuth;
+		$http.defaults.headers.common.Authorization = authService.getAuthHeader(vm.username, vm.password);
 	
 		selectedItems = selectionService.getPhotos();
 		
@@ -43,13 +43,11 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 						form.append('file', photo, selectedItems[currIndex].fileName);
 												
 						$http.post('http://192.168.1.109:8888' + '/files', form, {
-						   transformRequest: angular.identity,
-						   headers: { 'Content-Type': undefined }
-						   }).then(function(result) {
-								
-								 
-								 sendCtr++;
-								 
+							transformRequest: angular.identity,
+							headers: { 'Content-Type': undefined }
+						}).then(function(result) {
+							sendCtr++;
+						 
 							if (currIndex <= selectedItems.length){
 							  setTimeout(function(i) {
 							   createAndSendPhotos(i + 1); }, 700, currIndex);
@@ -64,33 +62,27 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 								}
 						   }
 								 
-								 
-								 
-								   }, function (err) {
-								   alert('err: ' + JSON.stringify(err));
-								   var errorStatus = err.status.toString().trim();
-								   
-								   vm.hidePreloader();
-								   
-								   switch (errorStatus) {
-									   case '401':
-										   PhotoDash.fw7.app.alert('username/password failed to authenticate!');
-										   vm.username = '';
-										   vm.password = '';
-										   break;
-									   case '-1':
-										   PhotoDash.fw7.app.alert('Server not available');
-										   break;
-									   default:
-										   PhotoDash.fw7.app.alert('An unknown error occurred!');
-										   break;
+						}, function (err) {
+								alert('err: ' + JSON.stringify(err));
+								var errorStatus = err.status.toString().trim();
+								
+								vm.hidePreloader();
+								
+								switch (errorStatus) {
+									case '401':
+									   PhotoDash.fw7.app.alert('username/password failed to authenticate!');
+									   vm.username = '';
+									   vm.password = '';
+									   break;
+								   case '-1':
+									   PhotoDash.fw7.app.alert('Server not available');
+									   break;
+								   default:
+									   PhotoDash.fw7.app.alert('An unknown error occurred!');
+									   break;
 								   }
-			   });
-			   
-			   
-			
+						});
 				});
-			
 		};
 
 		createAndSendPhotos(0);

@@ -1,84 +1,82 @@
-﻿<div data-page="settings" class="page">
-    <div id="settings" ng-controller="SettingsCtrl">
-        <div class="page-content">
-            
-            
-            
-            <!-- Left Panel with Reveal effect -->
-            <div ng-controller="SettingsCtrl as vm">
-                <div class="content-block">
-                    <!-- Click on link with "close-panel" class will close panel
-                     <p><a href="#" class="close-panel">Close me</a></p>
-                     Click on link with "open-panel" and data-panel="right" attribute will open Right panel
-                     <p><a href="#" data-panel="right" class="open-panel">Open Right Panel</a></p> -->
-                    
-                    <form id="settings-form" class="list-block">
-                        <div class="content-block-title">Settings</div>
-                        
-                        <ul>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner row">
-                                        <div class="item-title">IP Address</div>
-                                        <div class="item-input">
-                                            <input type="text" ng-model="vm.ipAddress" placeholder="Enter IP Address">
-                                                </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner row">
-                                        <div class="item-title">User Name</div>
-                                        <div class="item-input">
-                                            <input type="text" ng-model="vm.username" placeholder="Enter User Name">
-                                                </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner row">
-                                        <div class="item-title">Password</div>
-                                        <div class="item-input">
-                                            <input type="password" ng-model="vm.password" placeholder="Enter Password">
-                                                </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner row">
-                                        <div class="item-title">Upload Location</div>
-                                        <div class="item-input">
-                                            <input type="text" ng-model="vm.uploadDir" placeholder="Enter Upload Location">
-                                                </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-inner row">
-                                        <div class="item-title">Album Name</div>
-                                        <div class="item-input">
-                                            <input type="text" ng-model="vm.albumName" placeholder="Enter Album Name">
-                                                </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div ng-click="vm.saveSettings()" class="button button-big button-fill color-blue">Save</div>
-                            </li>
-                        </ul>
-                        
-                    </form>
-                    
-                    
-                </div>
-            </div>
-            
-            
-            
-        </div>
-    </div>
+﻿<div class="popup popup-settings" style="background-color: #222426; font-size: 12px;">
+	<!--<div ng-if="albumExists()" class="content-block">-->
+	<div class="content-block">
+		<div class="content-block-title">{{title}}</div>
+		<div class="list-block">
+		  <ul>
+			<li>
+			  <div class="item-content">
+				<div class="item-media"><i class="icon f7-icons">folder</i></div>
+				<div class="item-inner">
+				  <!--<div class="item-title label">Album:</div>-->
+				  <div class="item-input">
+					<input ng-model="userSettings.albumName" type="text" placeholder="Album Name" required>
+				  </div>
+				</div>
+			  </div>
+			</li>
+			 <li>
+			  <div class="item-content">
+				<div class="item-media"><i class="icon f7-icons">person</i></div>
+				<div class="item-inner">
+				  <!--<div class="item-title label">User:</div>-->
+				  <div class="item-input">
+					<input ng-model="userSettings.username" type="text" placeholder="User Name" required>
+				  </div>
+				</div>
+			  </div>
+			</li>
+			<li>
+			  <div class="item-content">
+				<div class="item-media"><i class="icon f7-icons">lock</i></div>
+				<div class="item-inner">
+				  <!--<div class="item-title label">Password:</div>-->
+				  <div class="item-input">
+					<input ng-model="userSettings.password" type="password" placeholder="Password" required>
+				  </div>
+				</div>
+			  </div>
+			</li>
+			<li>
+			  <div class="item-content">
+				<div class="item-media"><i class="icon f7-icons">world</i></div>
+				<div class="item-inner">
+				  <!--<div class="item-title label">IP Address:</div>-->
+				  <div class="item-input">
+					<input ng-model="userSettings.ipAddress" type="text" placeholder="IP Address" required>
+				  </div>
+				</div>
+			  </div>
+			</li>
+		  </ul>
+		</div>
+	
+		<p>
+			<a ng-click="openLibrary()" class="button button-fill button-big color-green"><i class="f7-icons">images<sup>add</sup></i>
+			Photos
+			</a>
+		</p>
+		<p><a class="close-popup button button-fill button-big color-gray">
+			Cancel
+		</a></p>
+	</div>
 </div>
+		  
+		  
+		  
+		<div class="list-block media-list">
+			<ul>
+				<li>
+					<div class="item-content open-popup">
+						<div class="item-media">
+							<i class="f7-icons">add</i>
+						</div>
+						<div class="item-inner">
+							<div class="item-title-row">
+								<div class="item-title">Create New Album</div>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
