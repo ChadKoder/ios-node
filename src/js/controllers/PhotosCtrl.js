@@ -23,7 +23,7 @@ function($q, $scope, $rootScope, $compile, $http, selectionService, authService)
 	};
 	
 	vm.createFilesAndSubmit = function(){
-		$http.defaults.headers.common.Authorization = authService.getAuthHeader(vm.username, vm.password);
+		$http.defaults.headers.common.Authorization = authService.getAuthHeader(vm.settings.username, vm.settings.password);
 	
 		selectedItems = selectionService.getPhotos();
 		

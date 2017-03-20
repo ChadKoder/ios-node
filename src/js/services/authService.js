@@ -1,12 +1,10 @@
 PhotoDash.angular.factory('authService', function () {
        var service = this;
-			
-		var createAuthHeader = function(encodedAuth){
-			return 'Basic ' + encodedAuth;
-		};
 		
 		var getAuthHeader = function(username, password){
-			return createAuthHeader(btoa(username + ':' + password));
+			var encoded = btoa(username + ':' + password);
+			var rs = 'Basic ' + encoded;
+			return rs;
 		};
 		
 		var showPreloader = function(msg){
@@ -23,13 +21,16 @@ PhotoDash.angular.factory('authService', function () {
 				return null;
 			}
 			
-			console.log('DIR GOT Creds ---> ' + ut);
 			var credStr = atob(ut);
+			console.log('DIR GOT Creds ---> ' + credStr);
 			return credStr.split(':');
 		};
 
 		var saveCreds = function(username, password){
-			window.localStorage.setItem('ut', JSON.stringify(btoa(username + ':' + password)));
+			var utString = username + ':' + password;
+			console.log('utString : ' + utString);
+			
+			window.localStorage.setItem('ut', JSON.stringify(btoa(utString)));
 			console.log('*** CREDS SAVED!!');
 		};
 	   
