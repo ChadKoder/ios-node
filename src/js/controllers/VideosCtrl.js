@@ -33,8 +33,34 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 				$scope.$apply();
 			}
 	};
+	
+	/*var fileSelect = document.getElementById("fileSelect");
+	var fileEl = document.getElementById("fileEl");
+	
+	fileSelect.addEventListener("click", function (e){
+		if (fileEl){
+			fileEl.click();
+		}
+		
+		e.preventDefault();
+		
+	}, false);*/
+	
+	
 
 	vm.init();
+	
+	
+	
+	vm.clickVideoInput = function(){
+		//var fileSelect = document.getElementById("fileSelect");
+		var fileEl = document.getElementById("fileEl");
+		
+		if (fileEl){
+			fileEl.click();
+		}
+		
+	};
 	
 	vm.clearVideos = function(){
 		vm.selectedVideos = [];
@@ -44,7 +70,7 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 		document.querySelector('input#video-input').value = '';
 	};
 
-	$$('#video-input').on('change', function(e){
+	$$('#fileEl').on('change', function(e){
 		var videoFile = document.querySelector('input#video-input').files[0];
 		
 		var item = {

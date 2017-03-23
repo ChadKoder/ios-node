@@ -2,13 +2,9 @@
     <div class="navbar">
         <div class="navbar-inner">
             <div class="left">
-                <!--<a href="#" class="link" ng-click="vm.goBack()">
-                    <i class="icon icon-back"></i>
-                    <span>Done</span>
-                </a>--->
 				<a href="photos.html" class="back">Done</a>
             </div>
-            <div class="center" ng-if="vm.totalPhotos > 0">{{vm.totalPhotos | number: 0}}</div>
+            <div class="center"><div ng-if="vm.totalPhotos > 0" ng-bind="(vm.totalPhotos | number)"></div></div>
             <div class="right">
                 <a href="#" class="link">
                     <i class="icon icon-camera" style="font-size: 16px;">
@@ -18,7 +14,6 @@
             </div>
         </div>
     </div>
-	
       <div class="page-content infinite-scroll">
 			<photo-library total-photos="vm.totalPhotos" total-selected="vm.totalSelected" full-library="vm.myLibrary"></photo-library>
     </div>

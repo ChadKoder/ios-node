@@ -1,6 +1,6 @@
 PhotoDash.angular.controller('PhotoAlbumCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
     var vm = this;
-    vm.totalPhotos = 0;
+    vm.totalPhotos = '';
 	vm.totalSelected = 0;
 	
        vm.goBack = function(){

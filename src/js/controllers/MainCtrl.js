@@ -15,7 +15,7 @@ PhotoDash.angular.controller('MainCtrl', ['$scope', '$compile', '$rootScope', fu
                  });
 
     $$(document).on('pageAfterAnimation', function(e) {
-        //console.log('pageAfterAnimation called<--**********');
+        console.log('pageAfterAnimation called<--**********');
                  // Send broadcast if a page is left
                  var fromPage = e.detail.page.fromPage;
 				 var url = e.detail.page.url;
@@ -37,7 +37,7 @@ PhotoDash.angular.controller('MainCtrl', ['$scope', '$compile', '$rootScope', fu
 				 
 				 
 				 $$(document).on('page:back', function(e){
-				 console.log('e.details.page.name ===> ' + JSON.stringify(e));
+				 console.log('ON PAGE:BACK <----- e.details.page.name ===> ' + JSON.stringify(e));
 					console.log('*****PAGE: BACK!!!!!********');
 				 });
                                          

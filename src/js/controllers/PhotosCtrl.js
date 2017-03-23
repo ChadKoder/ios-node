@@ -22,6 +22,11 @@ function($q, $scope, $rootScope, $compile, $http, selectionService, authService)
 		PhotoDash.fw7.app.hidePreloader();
 	};
 	
+	vm.openPhotoLibrary = function(){
+		console.log('opening photo lib from phots ctrl....');
+		mainView.router.loadPage('photo-album.html');
+	};
+	
 	vm.createFilesAndSubmit = function(){
 		$http.defaults.headers.common.Authorization = authService.getAuthHeader(vm.settings.username, vm.settings.password);
 	

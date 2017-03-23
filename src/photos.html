@@ -1,7 +1,11 @@
-<div id="photos" data-page="photos" class="page">
-    <div class="page-content" ng-controller="PhotosCtrl as vm">
-		<album-settings user-settings="vm.settings" title="'Photo Album Settings'"></album-settings>
-		
+<div id="photos" data-page="photos" class="page navbar-through">
+	<div class="navbar">
+        <div class="navbar-inner">            
+            <div class="center">Photos</div>          
+        </div>
+    </div>
+    <div ng-controller="PhotosCtrl as vm" style="padding-bottom: 3p;">
+		<album-settings style="top: 2px;" user-settings="vm.settings" title="'Photo Album Settings'" execute-action="vm.openPhotoLibrary()"></album-settings>
         <div class="list-block media-list">
             <ul id="photo-html-placeholder">
             </ul>

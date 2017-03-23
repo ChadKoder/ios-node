@@ -4,12 +4,13 @@ PhotoDash.angular.directive('albumSettings', ['$q', '$rootScope', '$compile', 's
 		restrict: 'E',
 		scope: {
             userSettings: '=',
-			title: '='
+			title: '=',
+			executeAction: '&?'
 		},
 		link: function (scope, element, attrs, ctrl) {
 			scope.userSettings = settingsService.get();
 			
-			scope.openLibrary = function(){
+			scope.next = function(){
 				
 				if (!scope.userSettings){
 					PhotoDash.fw7.app.alert('Required info is missing!');
@@ -24,7 +25,11 @@ PhotoDash.angular.directive('albumSettings', ['$q', '$rootScope', '$compile', 's
 				settingsService.save(scope.userSettings);
 				
 				PhotoDash.fw7.app.closeModal('popup-settings', true);
-				mainView.router.loadPage('photo-album.html');
+				//mainView.router.loadPage('photo-album.html');
+				
+				if (scope.executeAction !== undefined){
+					scope.executeAction();
+				}
 			};
 		
 		},

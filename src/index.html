@@ -33,56 +33,70 @@
 							<script type="text/javascript" src="js/directives.js"></script>
                             </head>
     <body class="layout-dark" ng-controller="MainCtrl">
-        <div class="statusbar-overlay"></div>
+        <!--<div class="statusbar-overlay"></div> -->
         <div class="views">
             <div class="view view-main">
                 <div class="pages">
                     <div id="index-page" data-page="index" class="page">                        
-                        <div class="page-content">                            
-                            <div class="list-block media-list">
-                                <ul>
-                                    
-                                    <li>
-                                        <a href="photos.html" class="item-content item-link">
-                                            <div class="item-media">
-                                                <i class="f7-icons">photos</i>
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-title-row">
-                                                    <div class="item-title">Photos</div>
-                                                </div>
-                                                <div class="item-text">Upload photos to your PC</div>
-                                            </div>
-                                        </a>
-                                    </li>
-									<li>
-                                        <a href="videos.html" class="item-content item-link">
-                                            <div class="item-media">
-                                                <i class="f7-icons">videocam</i>
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-title-row">
-                                                    <div class="item-title">Videos</div>
-                                                </div>
-                                                <div class="item-text">Upload videos to your PC</div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a ng-href="contacts.html" class="item-link item-content">
-                                            <div class="item-media">
-                                                <i class="f7-icons">persons</i>
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-title-row">
-                                                    <div class="item-title">Contacts</div>
-                                                </div>
-                                                <div class="item-text">Upload contacts to your PC</div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div class="page-content">
+							<div class="navbar-through">
+								<div class="navbar">
+									<div class="navbar-inner">
+										<div class="center">Photo Dash</div>
+										   <!--<div class="right">
+												<a href="#" class="link">
+													<i class="icon icon-camera" style="font-size: 16px;">
+														<span style="font-size: 12px;" class="badge bg-green">{{vm.totalSelected}}</span>
+													</i>
+												</a>
+											</div>-->
+									</div>
+								</div>
+								<div class="list-block media-list">
+									<ul>
+										
+										<li>
+											<a href="photos.html" class="item-content item-link">
+												<div class="item-media">
+													<i class="f7-icons">images</i>
+												</div>
+												<div class="item-inner">
+													<div class="item-title-row">
+														<div class="item-title">Photos</div>
+													</div>
+													<div class="item-text">Create or review photo albums</div>
+												</div>
+											</a>
+										</li>
+										<li>
+											<a href="videos.html" class="item-content item-link">
+												<div class="item-media">
+													<i class="f7-icons">videocam</i>
+												</div>
+												<div class="item-inner">
+													<div class="item-title-row">
+														<div class="item-title">Videos</div>
+													</div>
+													<div class="item-text">Create or review video albums</div>
+												</div>
+											</a>
+										</li>
+										<li>
+											<a ng-href="contacts.html" class="item-link item-content">
+												<div class="item-media">
+													<i class="f7-icons">persons</i>
+												</div>
+												<div class="item-inner">
+													<div class="item-title-row">
+														<div class="item-title">Contacts</div>
+													</div>
+													<div class="item-text">Upload or restore contacts</div>
+												</div>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
                         </div>
                     </div>
                 </div>
