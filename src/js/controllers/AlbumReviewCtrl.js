@@ -3,7 +3,9 @@ PhotoDash.angular.controller('AlbumReviewCtrl', ['$scope', '$rootScope', '$compi
 	vm.thumbnailLimit = 60;
 	
    vm.init = function(){
-		vm.thumbnails = selectionService.getPhotos();
+		//vm.thumbnails = selectionService.getPhotos();
+		var activeAlbum = selectionService.getActiveAlbum();
+		vm.thumbnails = activeAlbum.libraryItems;
 		$scope.$apply();  
    };
    

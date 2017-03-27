@@ -21,6 +21,7 @@ PhotoDash.angular.factory('selectionService',['_', function (_) {
 			
 			if (currentAlbum){
 				currentAlbum.libraryItems.push(libraryItem);
+				activeAlbum = currentAlbum;
 			} else {
 				var album = {
 					albumName: currentAlbumName,

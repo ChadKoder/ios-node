@@ -221,7 +221,12 @@ PhotoDash.angular.directive('albumReview', ['$q', '$rootScope', '$compile', 'sel
            };   
 			
 			var getFullLibrary = function(){
-				scope.album = selectionService.getPhotos();
+				//scope.album = selectionService.getPhotos();
+				console.log('GET FULL LBIRARY ****************************');
+				scope.album = selectionService.getActiveAlbum();
+				console.log('album --- > ' + scope.album);
+				console.log('**** GOT LibraryItems. -0--- total --> ' + scope.album.libraryItems);
+				
                 scope.$apply();
 			   
 			};
@@ -251,6 +256,6 @@ PhotoDash.angular.directive('albumReview', ['$q', '$rootScope', '$compile', 'sel
               //  }, 100);
 			});
 		},   
-        template: '<div style="display: inline; position: relative;" ng-repeat="item in album | orderBy: \'-creationDate\' | limitTo: thumbnailLimit track by item.id"><img ng-click="showSlideshow(item.id)" width="75" style="display: inline; position: relative;" id="{{item.id}}" ng-src="{{item.thumbnailURL}}" /></div><div class="infinite-scroll-preloader">	<div class="preloader"></div></div>'
+        template: '<div style="display: inline; position: relative;" ng-repeat="item in album.libraryItems | orderBy: \'-creationDate\' | limitTo: thumbnailLimit track by item.id"><img ng-click="showSlideshow(item.id)" width="75" style="display: inline; position: relative;" id="{{item.id}}" ng-src="{{item.thumbnailURL}}" /></div><div class="infinite-scroll-preloader">	<div class="preloader"></div></div>'
 	}
 }]);
