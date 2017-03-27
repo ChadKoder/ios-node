@@ -126,12 +126,20 @@ function($q, $scope, $rootScope, $compile, $http, selectionService, authService)
 		}
 	};*/
 	
+	vm.selectAlbum = function(albumName){
+		selectionService.setActiveAlbum(albumName);
+		
+		setTimeout(function(){
+			mainView.router.loadPage('album-review.html'); 
+		}, 200);
+	};
+	
 	var ulElExists = false;
 	
 	vm.init = function(){ 
 		vm.albums = selectionService.getPhotoAlbums();
 		console.log('**** PhotosCtrl vm.init() called');
-		console.log('totoal albums --> ' + vm.albums.length);
+		console.log('total albums --> ' + vm.albums.length);
 		
 		if (!ulElExists &&  vm.albums.length > 0){
 			//add UL element
@@ -158,7 +166,7 @@ function($q, $scope, $rootScope, $compile, $http, selectionService, authService)
 					+ '<a href="photo-album.html" class="bg-lightblue action2">Add</a></div><div class="swipeout-actions-right">'
 					+ '<a ng-click="vm.clearPhotos('+ vm.albums[i].albumName + ')" class="swipeout-delete action3">Delete</a></div></li>';
 					*/
-				var viewAlbumTemplate = '<li class="swipeout"><div class="swipeout-content"><a ng-href="album-review.html" class="item-content item-link"><div class="item-media"><img src="' + vm.albums[i].libraryItems[0].thumbnailURL + '" width="50" /></div><div class="item-inner" style="width: 100%;"><div class="item-title-row"><div class="item-title"><div ng-bind="vm.albums[' + i + '].albumName"></div></div><div class="item-after">(<div ng-bind="vm.albums[' + i + '].libraryItems.length"></div>)</div></div></div></a></div><div class="swipeout-actions-left"><a class="bg-green action1" ng-click="vm.submitPhotos(\'' + vm.albums[i].albumName + '\')">Send</a><a href="photo-album.html" class="bg-lightblue action2">Add</a></div><div class="swipeout-actions-right"><a ng-click="vm.clearPhotos('+ vm.albums[i].albumName + ')" class="swipeout-delete action3">Delete</a></div></li>';
+				var viewAlbumTemplate = '<li class="swipeout"><div class="swipeout-content"><a ng-click="vm.selectAlbum(\'' + vm.albums[i].albumName + '\')" class="item-content item-link"><div class="item-media"><img src="' + vm.albums[i].libraryItems[0].thumbnailURL + '" width="50" /></div><div class="item-inner" style="width: 100%;"><div class="item-title-row"><div class="item-title"><div ng-bind="vm.albums[' + i + '].albumName"></div></div><div class="item-after">(<div ng-bind="vm.albums[' + i + '].libraryItems.length"></div>)</div></div></div></a></div><div class="swipeout-actions-left"><a class="bg-green action1" ng-click="vm.submitPhotos(\'' + vm.albums[i].albumName + '\')">Send</a><a href="photo-album.html" class="bg-lightblue action2">Add</a></div><div class="swipeout-actions-right"><a ng-click="vm.clearPhotos('+ vm.albums[i].albumName + ')" class="swipeout-delete action3">Delete</a></div></li>';
 					
 				$$('#photo-html-placeholder').append(viewAlbumTemplate);
 

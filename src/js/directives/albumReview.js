@@ -220,7 +220,7 @@ PhotoDash.angular.directive('albumReview', ['$q', '$rootScope', '$compile', 'sel
 
            };   
 			
-			var getFullLibrary = function(){
+			var init = function(){
 				//scope.album = selectionService.getPhotos();
 				console.log('GET FULL LBIRARY ****************************');
 				scope.album = selectionService.getActiveAlbum();
@@ -231,7 +231,7 @@ PhotoDash.angular.directive('albumReview', ['$q', '$rootScope', '$compile', 'sel
 			   
 			};
 			
-           getFullLibrary();
+           init();
 		   
            var loading = false;
 		   
