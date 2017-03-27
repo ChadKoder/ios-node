@@ -19,6 +19,10 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 		PhotoDash.fw7.app.hidePreloader();
 	};
 	
+	$scope.handleFiles = function(files){
+		PhotoDash.fw7.app.alert('GOT FILES : ' + files.length);
+	};
+	
 	vm.init = function(){ 
 		vm.selectedVideos = selectionService.getVideos();
 		
@@ -34,29 +38,11 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 			}
 	};
 	
-	/*var fileSelect = document.getElementById("fileSelect");
-	var fileEl = document.getElementById("fileEl");
-	
-	fileSelect.addEventListener("click", function (e){
-		if (fileEl){
-			fileEl.click();
-		}
-		
-		e.preventDefault();
-		
-	}, false);*/
-	
-	
-
-	vm.init();
-	
-	
-	
 	vm.clickVideoInput = function(){
-		//var fileSelect = document.getElementById("fileSelect");
-		var fileEl = document.getElementById("fileEl");
+		var fileEl = document.getElementById("video-input");
 		
 		if (fileEl){
+			console.log('VIDEO INPUT CLICKING -- fro sure????');
 			fileEl.click();
 		}
 		
@@ -66,19 +52,18 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 		vm.selectedVideos = [];
 		videoAlbumExists = false;
 		selectionService.clearVideos();
-		//document.getElementById("uploadCaptureInputFile").value = "";
 		document.querySelector('input#video-input').value = '';
 	};
-
-	$$('#fileEl').on('change', function(e){
-		var videoFile = document.querySelector('input#video-input').files[0];
+	
+	
+	var handleFiles = function() {
+		var videoFile = this.files[0];
 		
 		var item = {
 		   'blob': videoFile,
 		   'fileName': videoFile.name
 		}
 		
-		//vm.selectedVideos.push(item);
 		selectionService.addVideo(item);
 		
 			if (vm.selectedVideos.length > 0 && !videoAlbumExists){
@@ -89,11 +74,13 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 				var newContent = angular.element(document.getElementById('video-html-placeholder'));
 
 				$compile(newContent)($scope);
-				//$scope.$apply();
 			}
 		
 		$scope.$apply();
-	});	
+	};
+	
+	var inputElement = document.getElementById("video-input");
+	inputElement.addEventListener("change", handleFiles, false);
 	
 	vm.submitVideos = function(){
 		if (!vm.username || !vm.password) {
@@ -145,4 +132,6 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 				   }
 		   });
 	};
+	
+	vm.init();
 }]);

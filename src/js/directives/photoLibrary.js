@@ -5,7 +5,8 @@ PhotoDash.angular.directive('photoLibrary', ['$q', '$rootScope', '$compile', 'se
 		scope: {
 			fullLibrary: '=',
             totalPhotos: '=',
-            totalSelected: '='
+            totalSelected: '=',
+			albumName: '='
 		},
 		link: function (scope, element, attrs, ctrl) {
 			var itemsPerLoad = 48;
@@ -48,8 +49,8 @@ PhotoDash.angular.directive('photoLibrary', ['$q', '$rootScope', '$compile', 'se
 					cordova.plugins.photoLibrary.getLibrary(function (result) {
 						scope.thumbnails = result.library;
 						scope.totalPhotos = result.library.length;
-						scope.selectedItems = _.pluck(selectionService.getPhotos(), 'id');
-						scope.totalSelected = scope.selectedItems.length;
+						//scope.selectedItems = _.pluck(selectionService.getPhotos(), 'id');
+						//scope.totalSelected = scope.selectedItems.length;
 						 
 						PhotoDash.fw7.app.hidePreloader();
 						

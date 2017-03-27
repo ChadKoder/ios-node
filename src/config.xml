@@ -24,6 +24,9 @@
     <preference name="FadeSplashScreen" value="true" />
     <preference name="FadeSplashScreenDuration" value="750" />
     <preference name="SuppressesLongPressGesture" value="true" />
+	 <preference name="StatusBarOverlaysWebView" value="true" />
+	 <preference name="StatusBarBackgroundColor" value="#131313" />
+	 <preference name="StatusBarStyle" value="lightcontent" />
     <platform name="android">
         <allow-intent href="market:*" />
     </platform>
@@ -42,4 +45,5 @@
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="Photo Dash wants access to your photo library for backup purposes" />
     </plugin>
     <plugin name="cordova-plugin-file" spec="~4.3.1" />
+	<plugin name="cordova-plugin-statusbar" spec="~2.2.2" />
 </widget>

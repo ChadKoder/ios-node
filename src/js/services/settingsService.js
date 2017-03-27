@@ -1,10 +1,8 @@
-PhotoDash.angular.factory('settingsService', ['authService', 
-	function (authService) {
+PhotoDash.angular.factory('settingsService', ['authService', 'selectionService',
+	function (authService, selectionService) {
        var service = this;
 		
 		var get = function(){
-			var creds = authService.getUserCreds();
-			console.log('settingsService -- userCred: ' + creds);
 			/***TODO: save full settings minus creds?
 			**** as an array to save multiple albums?
 			***/
@@ -14,6 +12,9 @@ PhotoDash.angular.factory('settingsService', ['authService',
 		var save = function(settings){
 			authService.saveUserCreds(settings.username, settings.password);
 			window.localStorage.setItem('settings', JSON.stringify(settings));
+			//currentAlbum = settings.albumName;
+			console.log('*** settingsService **** CAlling selectionService.setActiveAlbum : aname -- ' + settings.albumName);
+			selectionService.setActiveAlbum(settings.albumName);
 			console.log('settings saved...');
 		};
 		

@@ -1,5 +1,5 @@
-PhotoDash.angular.directive('albumSettings', ['$q', '$rootScope', '$compile', 'settingsService', '_',
- function ($q, $rootScope, $compile, settingsService, _) {
+PhotoDash.angular.directive('albumSettings', ['$q', '$rootScope', '$compile', 'settingsService', '_', 'selectionService',
+ function ($q, $rootScope, $compile, settingsService, _, selectionService) {
 	return {
 		restrict: 'E',
 		scope: {
@@ -17,7 +17,12 @@ PhotoDash.angular.directive('albumSettings', ['$q', '$rootScope', '$compile', 's
 					return;
 				}
 				
-				if (!scope.userSettings.username || !scope.userSettings.password || !scope.userSettings.albumName) {
+				if (selectionService.doesAlbumExist(scope.userSettings.albumName)){
+					console.log('***** ALBUM EXISTS. RETURNING!!!! CANT CONITNUE.....');
+					return;
+				} 
+				
+				if (!scope.userSettings.username || !scope.userSettings.password || !scope.userSettings.albumName || !scope.userSettings.uploadDir) {
 					PhotoDash.fw7.app.alert('Required info is missing!');
 					return;
 				}
@@ -25,7 +30,6 @@ PhotoDash.angular.directive('albumSettings', ['$q', '$rootScope', '$compile', 's
 				settingsService.save(scope.userSettings);
 				
 				PhotoDash.fw7.app.closeModal('popup-settings', true);
-				//mainView.router.loadPage('photo-album.html');
 				
 				if (scope.executeAction !== undefined){
 					scope.executeAction();

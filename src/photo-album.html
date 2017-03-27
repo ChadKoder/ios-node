@@ -1,4 +1,4 @@
-<div id="photo-album" data-page="photo-album" class="page no-swipeback navbar-through" ng-controller="PhotoAlbumCtrl as vm">
+<div id="photo-album" data-page="photo-album" class="page no-swipeback navbar-through with-subnavbar" ng-controller="PhotoAlbumCtrl as vm">
     <div class="navbar">
         <div class="navbar-inner">
             <div class="left">
@@ -15,6 +15,6 @@
         </div>
     </div>
       <div class="page-content infinite-scroll">
-			<photo-library total-photos="vm.totalPhotos" total-selected="vm.totalSelected" full-library="vm.myLibrary"></photo-library>
+			<photo-library total-photos="vm.totalPhotos" total-selected="vm.totalSelected" full-library="vm.myLibrary" album-name="vm.settings.albumName"></photo-library>
     </div>
 </div>

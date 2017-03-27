@@ -1,55 +1,48 @@
 <!DOCTYPE html>
 <html ng-app="PhotoDash">    
     <head>
-        <meta http-equiv="Content-Security-Policy"
-            content="default-src 'self'  data: blob: gap: cdvphotolibrary: https://ssl.gstatic.com 'unsafe-eval';
-            style-src 'self' 'unsafe-inline';
-            connect-src 'self' http://192.168.1.109:3000 http://192.168.1.109:8888;
-            media-src 'self';
-            img-src 'self' http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/file-video-icon.png data: cdvphotolibrary:;">
-            
-            <meta charset="utf-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-                    <meta name="apple-mobile-web-app-capable" content="yes">
-                        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-                            
-                            <title>Photo Dash</title>
-                            
-                            <link rel="stylesheet" href="./css/framework7.ios.min.css" />
-                            <link rel="stylesheet" href="./css/framework7.ios.colors.min.css" />
-                            <link rel="stylesheet" href="./css/framework7-icons.css" />
-                            <link rel="stylesheet" href="./css/photoswipe.css" />
-                            
-                            <script src="./js/photoswipe.min.js" type="text/javascript"></script>
-                            <script src="./js/photoswipe-ui-default.min.js" type="text/javascript"></script>
-                            <script type="text/javascript" src="./js/framework7.min.js"></script>
-                           
-                            <script type="text/javascript" src="cordova.js"></script>
-							<script type="text/javascript" src="js/requirements.js"></script>
-							 <script type="text/javascript" src="js/framework7.angular.hook.js"></script>
-                            <script type="text/javascript" src="js/config.js"></script>
-							<script type="text/javascript" src="js/services.js"></script>
-							<script type="text/javascript" src="js/controllers.js"></script>
-							<script type="text/javascript" src="js/directives.js"></script>
-                            </head>
+		<meta http-equiv="Content-Security-Policy"
+			content="default-src 'self'  data: blob: gap: cdvphotolibrary: https://ssl.gstatic.com 'unsafe-eval';
+			style-src 'self' 'unsafe-inline';
+			connect-src 'self' http://192.168.1.109:3000 http://192.168.1.109:8888;
+			media-src 'self';
+			img-src 'self' http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/file-video-icon.png data: cdvphotolibrary:;">
+			
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+							
+		<title>Photo Dash</title>
+		<!-- Stylesheets -->
+		<link rel="stylesheet" href="./css/framework7.ios.min.css" />
+		<link rel="stylesheet" href="./css/framework7.ios.colors.min.css" />
+		<link rel="stylesheet" href="./css/framework7-icons.css" />
+		<link rel="stylesheet" href="./css/photoswipe.css" />
+		<!-- JS files -->
+		<script src="./js/photoswipe.min.js" type="text/javascript"></script>
+		<script src="./js/photoswipe-ui-default.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="./js/framework7.min.js"></script>
+	   
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="js/requirements.js"></script>
+		 <script type="text/javascript" src="js/framework7.angular.hook.js"></script>
+		<script type="text/javascript" src="js/config.js"></script>
+		<script type="text/javascript" src="js/services.js"></script>
+		<script type="text/javascript" src="js/controllers.js"></script>
+		<script type="text/javascript" src="js/directives.js"></script>
+	</head>
     <body class="layout-dark" ng-controller="MainCtrl">
-        <!--<div class="statusbar-overlay"></div> -->
+        <div class="statusbar-overlay" style="background: #131313; color: white;"></div> 
         <div class="views">
             <div class="view view-main">
                 <div class="pages">
                     <div id="index-page" data-page="index" class="page">                        
-                        <div class="page-content">
+                        <div>
 							<div class="navbar-through">
 								<div class="navbar">
 									<div class="navbar-inner">
 										<div class="center">Photo Dash</div>
-										   <!--<div class="right">
-												<a href="#" class="link">
-													<i class="icon icon-camera" style="font-size: 16px;">
-														<span style="font-size: 12px;" class="badge bg-green">{{vm.totalSelected}}</span>
-													</i>
-												</a>
-											</div>-->
 									</div>
 								</div>
 								<div class="list-block media-list">

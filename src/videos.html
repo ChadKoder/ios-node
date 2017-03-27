@@ -1,33 +1,20 @@
-<div id="videos" data-page="videos" class="page navbar-through">
-<div class="navbar">
-        <div class="navbar-inner">            
-            <div class="center">Videos</div>          
-        </div>
-    </div>
-    <div ng-controller="VideosCtrl as vm" style="padding-bottom: 3px;">
-	<album-settings style="top: 5px;" user-settings="vm.settings" title="'Video Album Settings'" execute-action="vm.clickVideoInput()"></album-settings>
-	
-	<input style="display: none;" id="fileEl" type="file" style="padding-top: 200px; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; position: absolute !important;"  accept="video/*"/>
-	<!--<a href="#" id="fileSelect">select a video</a>-->
-	
-	   <!--
-	   <div >
-			<input id="video-input" type="file" style="padding-top: 200px; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; position: absolute !important;"  accept="video/*"/>
-		</div>-->
-		<!-- <p>
-			 <div class="button button-fill button-big" style="position: relative;">
-				<i class="f7-icons">videocam_round<sup>add</sup></i>
-				<input id="video-input" type="file" style="padding-top: 200px; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; position: absolute !important;"  accept="video/*"/>
-				Video
+<div id="videos" data-page="videos" class="page navbar-through" ng-controller="VideosCtrl as vm">
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="center">Videos</div>
+			<div class="subnavbar" style="width: 100%;">
+				<album-settings user-settings="vm.settings" title="'Photo Album Settings'" execute-action="vm.openPhotoLibrary()"></album-settings>
 			</div>
-		</p> -->
+		</div>
+	</div>
 		
-		
-		
-        <div class="list-block media-list">
-            <ul id="video-html-placeholder">
-            </ul>
-        </div>
-    </div>    
+	<div class="page-content">
+		<input style="display: none;" id="video-input" type="file" accept="video/*"/>
+		<div class="list-block media-list">
+			<ul id="video-html-placeholder">
+			</ul>
+		</div>
+	
+	</div>
 </div>
 
