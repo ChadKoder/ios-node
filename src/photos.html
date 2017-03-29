@@ -1,8 +1,8 @@
-<div id="photos" data-page="photos" class="page navbar-through with-subnavbar" ng-controller="PhotosCtrl as vm">
+<div id="photos" data-page="photos" class="page with-subnavbar" ng-controller="PhotosCtrl as vm">
 	<div class="navbar">
 		<div class="navbar-inner">
 			<div class="center">Photos</div>
-			  <div class="subnavbar" style="width: 100%;">
+			  <div class="subnavbar">
 				<album-settings style="width: 100%;" user-settings="vm.settings" title="'Photo Album Settings'" execute-action="vm.openPhotoLibrary()"></album-settings>
 			</div>
 		</div>
@@ -14,7 +14,91 @@
 				</ul>
 			</div>-->
 			
-			<div id="ul-placeholder" class="list-block"></div>
+			<!--<div id="ul-placeholder" class="list-block"></div>-->
+			
+		<!--<div class="list-block">
+			<ul id="photo-html-placeholder" ng-if="vm.albums.length > 0" ng-repeat="album in vm.albums" >
+				<li class="swipeout">
+					<div class="swipeout-content">
+						<a ng-click="vm.selectAlbum(album.albumName)" class="item-content item-link">
+							<div class="item-media">
+								<img src="{{album.libraryItems[0].thumbnailURL}}" width="50" />
+							</div>
+							<div class="item-inner">
+								<div class="item-title-row">
+									<div class="item-title">
+										<div ng-bind="album.albumName"/>
+									</div>
+									<div class="item-after">(<div ng-bind="album.libraryItems.length"/>)</div>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="swipeout-actions-left">
+						<a class="bg-green action1" ng-click="vm.submitPhotos(album.albumName)">Send</a>
+						<a href="photo-album.html" class="bg-lightblue action2">Add</a>
+					</div>
+					<div class="swipeout-actions-right">
+						<a ng-click="vm.clearPhotos(album.albumName)" class="swipeout-delete action3">Delete</a>
+					</div>
+				</li>
+			</ul>
+		</div>-->
+			
+			<!--<div class="list-block">
+			  <ul ng-repeat="album in vm.albums">
+				<li class="swipeout">
+				  <div class="swipeout-content item-content">
+					<div class="item-media"><img src="{{album.libraryItems[0].thumbnailURL}}" width="50" /></div>
+					<div class="item-inner"><div ng-bind="album.albumName"/>(<div ng-bind="album.libraryItems.length"/>)</div>
+				  </div>
+				  <div class="swipeout-actions-left">
+						<a class="bg-green action1" ng-click="vm.submitPhotos(album.albumName)">Send</a>
+						<a href="photo-album.html" class="bg-lightblue action2">Add</a>
+					</div>
+				  <div class="swipeout-actions-right">
+					<a ng-click="vm.clearPhotos(album.albumName)" class="swipeout-delete action3">Delete</a>
+				  </div>
+				</li>
+				
+				-->
+				<div class="list-block">
+				  <ul ng-repeat="album in vm.albums">
+					<li class="swipeout">
+						<div class="swipeout-content"><a href="#" ng-click="vm.selectAlbum(album.albumName)" class="item-link item-content">
+							 <div class="item-media"><img src="{{album.libraryItems[0].thumbnailURL}}" width="50" /></div>
+							<div class="item-inner">
+							  <div class="item-title-row">
+								<div class="item-title"><div ng-bind="album.albumName"></div></div>
+								<div class="item-after">(<div ng-bind="album.libraryItems.length"></div>)</div>
+							  </div>
+							  <!--<div class="item-subtitle">New messages from John Doe</div>-->
+							  <div class="item-text">Review Album</div>
+							</div></a></div>
+						<div class="swipeout-actions-left">
+							<a href="#" class="bg-green action1" ng-click="vm.submitPhotos(album.albumName)">Send</a>
+							<a href="photo-album.html" class="bg-lightblue action2">Add</a>
+						</div>
+						<div class="swipeout-actions-right">
+							<a href="#" ng-click="vm.clearPhotos(album.albumName)" class="swipeout-delete action3">Delete</a>
+						</div>
+				   </li>
+					</ul>
+				</div>
+				<!--<li class="swipeout">
+				  <div class="swipeout-content item-content">
+					<div class="item-media">a2 {{$index}}</div>
+					<div class="item-inner">a2{{$index}}</div>
+				  </div>
+				  <div class="swipeout-actions-right">
+					<a href="#" class="action1 bg-orange">Action 1</a>
+					<a href="#" class="action2">Action 2</a>
+				  </div>
+				</li>-->
+				
+			  </ul>
+			</div>
+			
 			
 				<!--<ul>
 				<li class="swipeout">

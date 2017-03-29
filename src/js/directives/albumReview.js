@@ -9,11 +9,7 @@ PhotoDash.angular.directive('albumReview', ['$q', '$rootScope', '$compile', 'sel
 			var itemsPerLoad = 40;
 			scope.thumbnailLimit = 60;
             scope.selectedItems = [];
-			
-			scope.testClick = function(){
-			   PhotoDash.fw7.app.alert('test click!');
-			};
-         
+			         
                var getOptions = function(items){
                    var options = {
                        //   arrowEl: true,
@@ -221,7 +217,6 @@ PhotoDash.angular.directive('albumReview', ['$q', '$rootScope', '$compile', 'sel
            };   
 			
 			var init = function(){
-				//scope.album = selectionService.getPhotos();
 				console.log('GET FULL LBIRARY ****************************');
 				scope.album = selectionService.getActiveAlbum();
 				console.log('album --- > ' + scope.album);
