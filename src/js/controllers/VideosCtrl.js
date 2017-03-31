@@ -2,7 +2,7 @@ PhotoDash.angular.controller('VideosCtrl', ['$q', '$scope', '$rootScope','$compi
 function($q, $scope, $rootScope, $compile, $http, selectionService) {
 	var vm = this;
 	vm.totalVideos = 0;
-	vm.selectedVideos = [];
+	vm.albums = [];
 	
 	vm.username = 'chad';
 	vm.password = 'pass';
@@ -24,6 +24,8 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 	};
 	
 	vm.init = function(){ 
+	vm.albums = selectionService.getVideoAlbums();
+	/*
 		vm.selectedVideos = selectionService.getVideos();
 		
 		if (vm.selectedVideos.length > 0){
@@ -35,38 +37,42 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 
 				$compile(newContent)($scope);
 				$scope.$apply();
-			}
+			}*/
 	};
 	
-	vm.clickVideoInput = function(){
+	vm.clickVideoInput = function(albumName){
 		var fileEl = document.getElementById("video-input");
 		
 		if (fileEl){
-			console.log('VIDEO INPUT CLICKING -- fro sure????');
-			fileEl.click();
+			if (albumName){
+				selectionService.setActiveVideoAlbum(albumName);
+			}
+			
+			fileEl.click();			
 		}
 		
 	};
 	
-	vm.clearVideos = function(){
-		vm.selectedVideos = [];
-		videoAlbumExists = false;
-		selectionService.clearVideos();
+	vm.clearVideos = function(albumName){ 
+		//vm.selectedVideos = [];
+		//videoAlbumExists = false;
+		vm.albums = selectionService.removeVideoAlbum(albumName);
 		document.querySelector('input#video-input').value = '';
 	};
 	
 	
 	var handleFiles = function() {
+		console.log('GOT VIDEO FILE <--------');
 		var videoFile = this.files[0];
 		
-		var item = {
+		/*var item = {
 		   'blob': videoFile,
 		   'fileName': videoFile.name
-		}
+		}*/
 		
-		selectionService.addVideo(item);
-		
-			if (vm.selectedVideos.length > 0 && !videoAlbumExists){
+		selectionService.addVideo(videoFile);
+		PhotoDash.fw7.app.closeModal('#popupsettings', true);
+			/*if (vm.albums.length > 0 && !videoAlbumExists){
 				videoAlbumExists = true;
 				var viewAlbumTemplate ='<li class="swipeout"><div class="swipeout-content"><a href="#" ng-click="vm.launchVideoBrowser()" class="item-content"><div class="item-media"><img ng-src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/file-video-icon.png" width="50"></div><div class="item-inner"><div class="item-title-row"><div class="item-title">Video Album</div><div class="item-after">({{vm.selectedVideos.length}})</div></div><div class="item-subtitle">Review your videos</div></div></a></div><div class="swipeout-actions-left"><a id="video-send-btn" ng-click="vm.submitVideos()" class="bg-green action1">Send</a></div><div class="swipeout-actions-right"><a ng-click="vm.clearVideos()" class="swipeout-delete action2">Delete</a></div></li>';
 
@@ -74,7 +80,7 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 				var newContent = angular.element(document.getElementById('video-html-placeholder'));
 
 				$compile(newContent)($scope);
-			}
+			}*/
 		
 		$scope.$apply();
 	};
@@ -82,7 +88,11 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 	var inputElement = document.getElementById("video-input");
 	inputElement.addEventListener("change", handleFiles, false);
 	
-	vm.submitVideos = function(){
+	vm.submitVideos = function(albumName){
+		var selectedAlbum = _.find(vm.albums, function(album){
+			return album.albumName === albumName;
+		});
+		
 		if (!vm.username || !vm.password) {
 			PhotoDash.fw7.app.alert('username and password are required.');
 			return;
@@ -94,13 +104,16 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 		var formData = new FormData();
 		formData.enctype = "multipart/form-data";
 		
-		angular.forEach(vm.selectedVideos, function (obj) {
+		console.log('submitting video album name: ' + selectedAlbum.albumName + 'total: ' + selectedAlbum.libraryItems.length);
+		angular.forEach(selectedAlbum.libraryItems, function (obj) {
+			console.log('appending fileName: ' + obj.fileName);
 			formData.append('file', obj.blob, obj.fileName);
 		});
-		
+
+		var url = 'http://192.168.1.109:8888/files?albumName=' + selectedAlbum.albumName + '&uploadDir=' + vm.settings.uploadDir;
 		$http.defaults.headers.common.Authorization = 'Basic ' + encodedAuth;
 	
-		$http.post('http://192.168.1.109:8888' + '/files', formData, {
+		$http.post(url, formData, {
 		   transformRequest: angular.identity,
 		   headers: { 'Content-Type': undefined }
 		   }).then(function(result) {

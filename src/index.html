@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html ng-app="PhotoDash">    
     <head>
+	
+	<!--
+	<meta http-equiv="Content-Security-Policy"
+	content="default-src 'self' data: gap: ms-appdata: https://ssl.gstatic.com 'unsafe-eval';
+	style-src 'self' 'unsafe-inline'; media-src *">
+	-->
+	
 		<meta http-equiv="Content-Security-Policy"
-			content="default-src 'self'  data: blob: gap: cdvphotolibrary: https://ssl.gstatic.com 'unsafe-eval';
-			style-src 'self' 'unsafe-inline';
+			content="default-src 'self' data: blob: gap: file:///: cdvphotolibrary: https://ssl.gstatic.com 'unsafe-eval';
+			style-src 'self' 'unsafe-inline'; media-src *;
 			connect-src 'self' http://192.168.1.109:3000 http://192.168.1.109:8888;
 			media-src 'self';
 			img-src 'self' http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/file-video-icon.png data: cdvphotolibrary:;">

@@ -2,6 +2,11 @@ PhotoDash.angular.factory('settingsService', ['authService', 'selectionService',
 	function (authService, selectionService) {
        var service = this;
 		
+		var saveSettings = function(settings){
+			authService.saveUserCreds(settings.username, settings.password);
+			window.localStorage.setItem('settings', JSON.stringify(settings));
+		};
+		
 		var get = function(){
 			/***TODO: save full settings minus creds?
 			**** as an array to save multiple albums?
@@ -9,17 +14,24 @@ PhotoDash.angular.factory('settingsService', ['authService', 'selectionService',
 			return JSON.parse(window.localStorage.getItem('settings'));
 		};
 		
-		var save = function(settings){
-			authService.saveUserCreds(settings.username, settings.password);
-			window.localStorage.setItem('settings', JSON.stringify(settings));
-			//currentAlbum = settings.albumName;
-			console.log('*** settingsService **** CAlling selectionService.setActiveAlbum : aname -- ' + settings.albumName);
-			selectionService.setActiveAlbum(settings.albumName);
+		var savePhotoSettings = function(settings){
+			saveSettings(settings);
+			selectionService.setActivePhotoAlbum(settings.albumName);
 			console.log('settings saved...');
+		};
+		
+		var getVideoAlbumSettings = function(){
+			
+		};
+		
+		var saveVideoSettings = function(settings){
+			saveSettings(settings);
+			selectionService.setActiveVideoAlbum(settings.albumName);
 		};
 		
 		return {
 			get: get,
-			save: save
+			savePhotoAlbumSettings: savePhotoSettings,
+			saveVideoAlbumSettings: saveVideoSettings
 		}
  }]);

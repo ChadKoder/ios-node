@@ -2,19 +2,48 @@
 	<div class="navbar">
 		<div class="navbar-inner">
 			<div class="center">Videos</div>
-			<div class="subnavbar" style="width: 100%;">
-				<album-settings user-settings="vm.settings" title="'Photo Album Settings'" execute-action="vm.openPhotoLibrary()"></album-settings>
+			<div class="subnavbar">
+				<album-settings style="width: 100%;" user-settings="vm.settings" album-type="'video'" title="'Video Album Settings'" execute-action="vm.clickVideoInput()"></album-settings>
 			</div>
 		</div>
 	</div>
 		
-	<div class="page-content">
+	<div class="page-content" style="padding-top: 85px;">
+	<input style="display: none;" id="video-input" type="file" accept="video/*"/>
+		
+		<div class="list-block">
+			<ul ng-repeat="album in vm.albums">
+				<li class="swipeout">
+					<div class="swipeout-content item-content" ng-click="vm.selectAlbum(album.albumName)">
+						<div class="item-media"><img src="{{album.libraryItems[0]}}" width="50" /></div>
+						<div class="item-inner">
+							<div class="item-title"><div ng-bind="album.albumName"></div></div>
+							<div class="item-after">
+								(<div ng-bind="album.libraryItems.length"></div>)
+							</div>
+						</div>
+					</div>
+					<div class="swipeout-actions-left">
+						<a href="#" class="bg-green action1" ng-click="vm.submitVideos(album.albumName)">Send</a>
+						<a ng-click="vm.clickVideoInput(album.albumName);" class="bg-lightblue action2">Add</a>
+					</div>
+					<div class="swipeout-actions-right">
+						<a href="#" ng-click="vm.clearVideos(album.albumName)" class="swipeout-delete action3">Delete</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+	
+		
+	<!--<div class="page-content">
 		<input style="display: none;" id="video-input" type="file" accept="video/*"/>
 		<div class="list-block media-list">
 			<ul id="video-html-placeholder">
 			</ul>
 		</div>
 	
-	</div>
+	</div>-->
 </div>
 

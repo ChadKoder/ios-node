@@ -22,9 +22,78 @@ function($q, $scope, $rootScope, $compile, $http, selectionService, authService)
 		PhotoDash.fw7.app.hidePreloader();
 	};
 	
+	var getPicture = function(){
+		PhotoDash.fw7.app.alert('Take Photo is not implemented!');
+		return;
+		navigator.camera.getPicture(onSuccess, onFail, { quality: 100,
+			destinationType: Camera.DestinationType.FILE_URI });
+
+		function onSuccess(imageURI) {
+			var min = 1000;
+			var max = 999999;
+			var today = new Date();
+			
+			var randomId = Math.floor(Math.random() * (max - min)) + min;
+			var libraryItem = {
+				id: randomId,
+				photoURL: imageURI,
+				thumbnailURL: imageURI,
+				fileName: 'user_image_' + randomId,
+				creationDate: today.getDate()
+				//width: '234',
+				//height: 'asfdas'
+			};
+			/***TODO: get active album name...***/
+			var album = {
+				albumName: 'manualAlbum',
+				libraryItems: [libraryItem]
+			};
+			
+			vm.albums.push(album);
+			//PhotoDash.fw7.app.alert('imageURI: ' + imageURI);
+		}
+
+		function onFail(message) {
+			PhotoDash.fw7.app.alert('Failed because: ' + message);
+		}
+	};
+	
 	vm.openPhotoLibrary = function(){
 		console.log('opening photo lib from phots ctrl....');
-		mainView.router.loadPage('photo-album.html');
+		
+		var cameraButtons = [{
+			text: 'Take Photo',
+			isCapturePhoto: true,
+			color: 'black',
+			onClick: function(){
+				PhotoDash.fw7.app.closeModal('#popupsettings', true);
+				//PhotoDash.fw7.app.alert('Temp take a photo click!');
+				getPicture();
+			}
+		},
+		{
+			text: 'Photo Library',
+			isLibrary: true,
+			color: 'black',
+			onClick: function(){
+				PhotoDash.fw7.app.closeModal('#popupsettings', true);
+				mainView.router.loadPage('photo-album.html');
+				//PhotoDash.fw7.app.alert('Temp select from library click!');
+			}
+		}];
+		
+		var cancelButton = [{
+			text: 'Cancel',
+			bold: true,
+			isCancel: true,
+			onClick: function(){
+				console.log('cancelled photo action');
+				//PhotoDash.fw7.app.closeModal('#popupsettings', true);
+			}
+		}];
+		
+		PhotoDash.fw7.app.actions([cameraButtons, cancelButton]);
+		//mainView.router.loadPage('photo-album.html');
 	};
 	
 	vm.createFilesAndSubmit = function(albumName){
@@ -99,10 +168,10 @@ function($q, $scope, $rootScope, $compile, $http, selectionService, authService)
 		createAndSendPhotos(0);
 	};
 	
-	vm.clearPhotos = function(){
+	vm.clearPhotos = function(albumName){
 	  //photoAlbumExists = false;
-	    vm.selectedPhotos = [];
-	    selectionService.clearPhotos();
+	   
+	    vm.albums = selectionService.removePhotoAlbum(albumName);
 	};
 
 	vm.submitPhotos = function(albumName){
@@ -127,7 +196,7 @@ function($q, $scope, $rootScope, $compile, $http, selectionService, authService)
 	};*/
 	
 	vm.selectAlbum = function(albumName){
-		selectionService.setActiveAlbum(albumName);
+		selectionService.setActivePhotoAlbum(albumName);
 		
 		setTimeout(function(){
 			mainView.router.loadPage('album-review.html'); 

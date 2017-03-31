@@ -44,37 +44,46 @@ PhotoDash.angular.directive('photoLibrary', ['$q', '$rootScope', '$compile', 'se
 				console.log('FINISHED CLEANUP....');
 			};
 			
-			var getFullLibrary = function(){
-				cordova.plugins.photoLibrary.requestAuthorization(function () {
-					cordova.plugins.photoLibrary.getLibrary(function (result) {
+			var requestAuthorization = function(){
+				cordova.plugins.photoLibrary.requestAuthorization(
+				  function () {
+					//User allowed access
+					getPhotoLibrary();
+				  },
+				  function (err) {
+					// User denied access
+					console.log('User denied access to photo library.');
+				  }, 
+				  {
+					read: true,
+					write: true
+				  });
+			};
+			
+			var getPhotoLibrary = function(){
+				cordova.plugins.photoLibrary.getLibrary(function (result) {
 						scope.thumbnails = result.library;
 						scope.totalPhotos = result.library.length;
 						//scope.selectedItems = _.pluck(selectionService.getPhotos(), 'id');
 						//scope.totalSelected = scope.selectedItems.length;
-						 
 						PhotoDash.fw7.app.hidePreloader();
-						
 						scope.$apply();
-			
+						
 					}, function(err){
-						console.log('getFullLibrary: error - ' + err);
+						if (err.startsWith('Permission')) {
+							requestAuthorization();
+						} else {
+							console.log('getFullLibrary failed with error: ' + err);
+						}
 					},{
 					
 						thumbnailWidth: 80,
                         thumbnailHeight: 80
 					});
-
-				},function () {
-					// User denied the access
-					PhotoDash.fw7.app.hidePreloader();
-
-				}, // if options not provided, defaults to {read: true}.
-				{
-					read: true,
-					write: true
-				});
-             
-			   
+			};
+			
+			var init = function(){
+				getPhotoLibrary();
 			};
 			
 			scope.$on('$destroy', function(){
@@ -87,7 +96,7 @@ PhotoDash.angular.directive('photoLibrary', ['$q', '$rootScope', '$compile', 'se
 			};
 			
 			
-           getFullLibrary();
+           init();
 		   
            var loading = false;
 		   

@@ -1,7 +1,9 @@
 PhotoDash.angular.factory('selectionService',['_', function (_) {
        var photoAlbums = [];
 	   var selectedVideos = [];
-	   var activeAlbum = [];
+	   var videoAlbums = [];
+	   var activePhotoAlbum = [];
+	   var activeVideoAlbum = [];
        var service = this;
        
        service.showPreloader = function(msg){
@@ -13,7 +15,7 @@ PhotoDash.angular.factory('selectionService',['_', function (_) {
        };
 
        var addPhoto = function(libraryItem){
-			 var currentAlbumName = activeAlbum.albumName;
+			 var currentAlbumName = activePhotoAlbum.albumName;
 			 console.log('*** ADDING PHOTO  to current album name -- ' + currentAlbumName);
 			var currentAlbum = _.find(photoAlbums, function(obj){ 
 				return obj.albumName === currentAlbumName;
@@ -21,7 +23,7 @@ PhotoDash.angular.factory('selectionService',['_', function (_) {
 			
 			if (currentAlbum){
 				currentAlbum.libraryItems.push(libraryItem);
-				activeAlbum = currentAlbum;
+				activePhotoAlbum = currentAlbum;
 			} else {
 				var album = {
 					albumName: currentAlbumName,
@@ -33,7 +35,36 @@ PhotoDash.angular.factory('selectionService',['_', function (_) {
        };
 	   
 	   var addVideo = function(videoItem){
-			selectedVideos.push(videoItem);
+		   var item = {
+			   'blob': videoItem,
+			   'fileName': videoItem.name
+			}
+			//selectedVideos.push(videoItem);
+			 var currentAlbumName = activeVideoAlbum.albumName;
+			 console.log('*** ADDING PHOTO  to current album name -- ' + currentAlbumName);
+			var currentAlbum = _.find(videoAlbums, function(obj){ 
+				return obj.albumName === currentAlbumName;
+			});
+			
+			var randomId = Math.floor(Math.random() * (max - min)) + min;
+			var min = 1000;
+			var max = 999999;
+			var today = new Date();
+			
+			if (currentAlbum){
+				console.log('ADDING VIDEO TO CURRENT ALBUM: ' + currentAlbumName);
+				currentAlbum.libraryItems.push(item);
+				activeVideoAlbum = currentAlbum;
+			} else {
+				
+				console.log('creating new video album : ' + currentAlbumName);
+				var album = {
+					albumName: currentAlbumName,
+					libraryItems: [item]
+				};
+				
+				videoAlbums.push(album);
+			}
 	   };
 	   
        var remove = function(id){
@@ -42,34 +73,56 @@ PhotoDash.angular.factory('selectionService',['_', function (_) {
 		   });
        };
        
-       var clearPhotos = function(){
-           photoAlbums = [];
+       var removePhotoAlbum = function(albumName){
+           photoAlbums = _.reject(photoAlbums, function(album){
+			  return album.albumName === albumName; 
+		   });
+		   
+		   return photoAlbums;
        };
 	   
-	   var clearVideos = function(){
-		 selectedVideos = [];
+	   var removeVideoAlbum = function(albumName){
+		 videoAlbums = _.reject(videoAlbums, function(album){
+			  return album.albumName === albumName; 
+		   });
+		   
+		   return videoAlbums;
 	   };
        
-	   var getVideos = function(){
-			return selectedVideos;
+	   var getVideoAlbums = function(){
+			return videoAlbums;
 	   }
 	   
 	   var getPhotoAlbums = function(){
 			return photoAlbums;
 	   };
 	   
-		var setActiveAlbum = function(albumName){
-			activeAlbum = _.find(photoAlbums, function(album){
+		var setActivePhotoAlbum = function(albumName){
+			activePhotoAlbum = _.find(photoAlbums, function(album){
 				return album.albumName === albumName;
 			});
 			
-			if (!activeAlbum){
-				activeAlbum = { albumName: albumName, libraryItems: [] };
+			if (!activePhotoAlbum){
+				activePhotoAlbum = { albumName: albumName, libraryItems: [] };
 			}
 		};
 		
-		var getActiveAlbum = function(){
-			return activeAlbum;
+		var setActiveVideoAlbum = function(albumName){
+			activeVideoAlbum = _.find(videoAlbums, function(album){
+				return album.albumName === albumName;
+			});
+			
+			if (!activeVideoAlbum){
+				activeVideoAlbum = { albumName: albumName, libraryItems: [] };
+			}
+		};
+		
+		var getActiveVideoAlbum = function(){
+			return activeVideoAlbum;
+		};
+		
+		var getActivePhotoAlbum = function(){
+			return activePhotoAlbum;
 		};
 		
 		var doesAlbumExist = function(albumName){
@@ -81,12 +134,14 @@ PhotoDash.angular.factory('selectionService',['_', function (_) {
            addPhoto: addPhoto,
 		   addVideo: addVideo,
            remove: remove,
-           clearPhotos: clearPhotos,
-		   clearVideos: clearVideos,
-		   getVideos: getVideos,
+           removePhotoAlbum: removePhotoAlbum,
+		   removeVideoAlbum: removeVideoAlbum,
+		   getVideoAlbums: getVideoAlbums,
 		   getPhotoAlbums: getPhotoAlbums,
-		   setActiveAlbum: setActiveAlbum,
-		   getActiveAlbum: getActiveAlbum,
+		   setActivePhotoAlbum: setActivePhotoAlbum,
+		   getActivePhotoAlbum: getActivePhotoAlbum,
+		   setActiveVideoAlbum: setActiveVideoAlbum,
+		   getActiveVideoAlbum: getActiveVideoAlbum,
 		   doesAlbumExist: doesAlbumExist
         }
 

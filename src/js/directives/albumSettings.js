@@ -5,10 +5,17 @@ PhotoDash.angular.directive('albumSettings', ['$q', '$rootScope', '$compile', 's
 		scope: {
             userSettings: '=',
 			title: '=',
+			albumType: '=',
 			executeAction: '&?'
 		},
 		link: function (scope, element, attrs, ctrl) {
 			scope.userSettings = settingsService.get();
+			
+			scope.openPopup = function(){
+				console.log('Attempting to open popup..');
+				//  var template = $templateCache.get('popup-settings.html');
+				//PhotoDash.fw7.app.popup('popup-settings.html', true, true);
+			};
 			
 			scope.next = function(){
 				
@@ -18,7 +25,8 @@ PhotoDash.angular.directive('albumSettings', ['$q', '$rootScope', '$compile', 's
 				}
 				
 				if (selectionService.doesAlbumExist(scope.userSettings.albumName)){
-					console.log('***** ALBUM EXISTS. RETURNING!!!! CANT CONITNUE.....');
+					/***TODO: focus on first element that's missing?***/
+					PhotoDash.fw7.app.alert('Album already exists!');
 					return;
 				} 
 				
@@ -27,9 +35,17 @@ PhotoDash.angular.directive('albumSettings', ['$q', '$rootScope', '$compile', 's
 					return;
 				}
 				
-				settingsService.save(scope.userSettings);
+				if (scope.albumType){
+					if (scope.albumType === 'photo'){
+						settingsService.savePhotoAlbumSettings(scope.userSettings);
+					}
+					
+					if (scope.albumType === 'video'){
+						settingsService.saveVideoAlbumSettings(scope.userSettings);
+					}
+				}
 				
-				PhotoDash.fw7.app.closeModal('popup-settings', true);
+				//PhotoDash.fw7.app.closeModal('#popupsettings', true);
 				
 				if (scope.executeAction !== undefined){
 					scope.executeAction();
