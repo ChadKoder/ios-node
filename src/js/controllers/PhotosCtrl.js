@@ -7,8 +7,13 @@ function($q, $scope, $rootScope, $compile, $http, selectionService, authService)
 	vm.albumName = null;
 	vm.selectedPhotos = [];
 	vm.albums = [];
-	
+	var loading = false;
 	var currIndex = 0;
+	
+	var itemsPerLoad = 48;
+			$scope.thumbnailLimit = 84;
+            $scope.selectedItems = [];
+            $scope.totalSelected = 0;
 	
 	var selectedItems = [];
 	var photoAlbumForm = new FormData();
@@ -18,8 +23,35 @@ function($q, $scope, $rootScope, $compile, $http, selectionService, authService)
 		PhotoDash.fw7.app.showPreloader(msg);
 	};
 
+	
+	$scope.isSelected = function(id){
+				return _.contains($scope.selectedItems, id);
+   };
+		
+	$scope.markSelected = function(libraryItem){
+		var alreadySelected = _.contains($scope.selectedItems, libraryItem.id);
+		
+		if (alreadySelected){
+			$scope.selectedItems = _.reject($scope.selectedItems, function (itemId){
+				return itemId === libraryItem.id;
+			});
+			
+			selectionService.remove(libraryItem.id);
+			$scope.totalSelected--;
+			
+		} else {
+			$scope.selectedItems.push(libraryItem.id);
+			selectionService.addPhoto(libraryItem);
+			 $scope.totalSelected++;
+		}
+	};
+			
 	vm.hidePreloader = function(){
 		PhotoDash.fw7.app.hidePreloader();
+	};
+	
+	$scope.closePopup = function(){
+		PhotoDash.fw7.app.closeModal('#popuplibrary', true);
 	};
 	
 	var getPicture = function(){
@@ -29,20 +61,6 @@ function($q, $scope, $rootScope, $compile, $http, selectionService, authService)
 			destinationType: Camera.DestinationType.FILE_URI });
 
 		function onSuccess(imageURI) {
-			var min = 1000;
-			var max = 999999;
-			var today = new Date();
-			
-			var randomId = Math.floor(Math.random() * (max - min)) + min;
-			var libraryItem = {
-				id: randomId,
-				photoURL: imageURI,
-				thumbnailURL: imageURI,
-				fileName: 'user_image_' + randomId,
-				creationDate: today.getDate()
-				//width: '234',
-				//height: 'asfdas'
-			};
 			/***TODO: get active album name...***/
 			var album = {
 				albumName: 'manualAlbum',
@@ -58,9 +76,49 @@ function($q, $scope, $rootScope, $compile, $http, selectionService, authService)
 		}
 	};
 	
+	
+	var requestAuthorization = function(){
+				cordova.plugins.photoLibrary.requestAuthorization(
+				  function () {
+					//User allowed access
+					getPhotoLibrary();
+				  },
+				  function (err) {
+					// User denied access
+					console.log('User denied access to photo library.');
+				  }, 
+				  {
+					read: true,
+					write: true
+				  });
+			};
+			
+			var getPhotoLibrary = function(){
+				console.log('getting photot album ***NEW*******');
+				cordova.plugins.photoLibrary.getLibrary(function (result) {
+						$scope.thumbnails = result.library;
+						console.log('got photo library ***NEW***');
+						$scope.totalPhotos = result.library.length;
+						//$scope.selectedItems = _.pluck(selectionService.getPhotos(), 'id');
+						//$scope.totalSelected = $scope.selectedItems.length;
+						PhotoDash.fw7.app.hidePreloader();
+						$scope.$apply();
+						
+					}, function(err){
+						if (err.startsWith('Permission')) {
+							requestAuthorization();
+						} else {
+							console.log('getFullLibrary failed with error: ' + err);
+						}
+					},{
+					
+						thumbnailWidth: 80,
+                        thumbnailHeight: 80
+					});
+			};
+			
+			
 	vm.openPhotoLibrary = function(){
-		console.log('opening photo lib from phots ctrl....');
-		
 		var cameraButtons = [{
 			text: 'Take Photo',
 			isCapturePhoto: true,
@@ -77,8 +135,21 @@ function($q, $scope, $rootScope, $compile, $http, selectionService, authService)
 			color: 'black',
 			onClick: function(){
 				PhotoDash.fw7.app.closeModal('#popupsettings', true);
-				mainView.router.loadPage('photo-album.html');
-				//PhotoDash.fw7.app.alert('Temp select from library click!');
+				//var libraryPopupTemplate = '<div id="popuplibrary" class="popup popup-library" style="background-color: #222426; font-size: 12px;">		<div ng-controller="PhotoAlbumCtrl as vm" class="content-block">			<div style="display: inline; position: relative;" 					ng-repeat="item in thumbnails | orderBy: \'-creationDate\' | limitTo: thumbnailLimit track by item.id">				<img ng-click="markSelected(item)" 						width="75" 						style="display: inline; position: relative;" 						id="{{item.id}}" 						ng-src="{{item.thumbnailURL}}" />				<i ng-if="isSelected(item.id)" 					class="f7-icons color-blue" 					style="position: absolute; top: -4px; right: 4px; display:inline; font-size: 20px; background-color: white; border-radius: 100%;">						check_round_fill				</i>			</div>			<div class="infinite-scroll-preloader">				<div class="preloader">				</div>			</div>		</div>	</div>';
+				//var libraryPopupTemplate = '<div id="popuplibrary" class="popup popup-library" style="background-color: #222426; font-size: 12px;"><div class="navbar">	<div class="navbar-inner">		<div class="left">			<a ng-click="closeLibrary()" class="back">Done</a>		</div>		<div class="center">Photo Library</div>	</div></div>	<div ng-controller="PhotoAlbumCtrl as vm" class="content-block">		<div style="display: inline; position: relative;" 					ng-repeat="item in thumbnails | orderBy: \'-creationDate\' | limitTo: thumbnailLimit track by item.id">			<img ng-click="markSelected(item)" 						width="75" 						style="display: inline; position: relative;" 						id="{{item.id}}" 						ng-src="{{item.thumbnailURL}}" />			<i ng-if="isSelected(item.id)" 					class="f7-icons color-blue" 					style="position: absolute; top: -4px; right: 4px; display:inline; font-size: 20px; background-color: white; border-radius: 100%;">						check_round_fill				</i>		</div>		<div class="infinite-scroll-preloader">			<div class="preloader">				</div>		</div>	</div></div>';
+				
+				//$$('#open-library-template').append(libraryPopupTemplate);
+				//var newContent = angular.element(document.getElementById('open-library-template'));
+			//$compile(newContent)($scope);
+			//$scope.$apply();
+				
+				getPhotoLibrary();
+				
+				
+				//setTimeout(function(){
+				PhotoDash.fw7.app.popup('.popup-library', true, true);
+				//}, 700);
+			
 			}
 		}];
 		
@@ -121,7 +192,7 @@ function($q, $scope, $rootScope, $compile, $http, selectionService, authService)
 						form.append('file', photo, selectedItems[currIndex].fileName);
 						
 						var url = 'http://192.168.1.109:8888/files?albumName=' + selectedAlbum.albumName + '&uploadDir=' + vm.settings.uploadDir;
-						console.log('************URL ====> ' + url);
+						
 						$http.post(url, form, {
 							transformRequest: angular.identity,
 							headers: { 'Content-Type': undefined }
@@ -168,10 +239,11 @@ function($q, $scope, $rootScope, $compile, $http, selectionService, authService)
 		createAndSendPhotos(0);
 	};
 	
-	vm.clearPhotos = function(albumName){
-	  //photoAlbumExists = false;
-	   
-	    vm.albums = selectionService.removePhotoAlbum(albumName);
+	vm.clearPhotos = function(albumName){ 
+	   PhotoDash.fw7.app.swipeoutDelete('#' + albumName, function(){
+			vm.albums = selectionService.removePhotoAlbum(albumName);
+	   });
+	    
 	};
 
 	vm.submitPhotos = function(albumName){
@@ -196,7 +268,12 @@ function($q, $scope, $rootScope, $compile, $http, selectionService, authService)
 	};*/
 	
 	vm.selectAlbum = function(albumName){
+		
 		selectionService.setActivePhotoAlbum(albumName);
+		//var activeAlbum = selectionService.getActivePhotoAlbum();
+		//$scope.thumbnails = activeAlbum.libraryItems;
+		//PhotoDash.fw7.app.popup('.popup-library');
+		
 		
 		setTimeout(function(){
 			mainView.router.loadPage('album-review.html'); 
@@ -237,4 +314,28 @@ function($q, $scope, $rootScope, $compile, $http, selectionService, authService)
 	};
 
 	vm.init();
+	
+	
+	$$('.infinite-scroll').on('infinite', function () {
+              console.log('INFINITE SCROLLING....................................');
+				if (loading) return;
+				loading = true;
+                
+				if ($scope.thumbnailLimit >= $scope.thumbnails.length) {
+					// Nothing more to load, detach infinite scroll events to prevent unnecessary loadings
+					PhotoDash.fw7.app.detachInfiniteScroll($$('.infinite-scroll'));
+					// Remove preloader
+					$$('.infinite-scroll-preloader').remove();
+					return;
+				}
+			
+			setTimeout(function(){
+				$scope.thumbnailLimit += itemsPerLoad;
+              //  $root$scope.$emit('lazyImg:refresh');
+				//$scope.$apply();
+				loading = false;
+				$scope.$apply();
+                
+                }, 200);
+			});
 }]);

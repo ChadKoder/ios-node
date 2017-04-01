@@ -56,8 +56,25 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 	vm.clearVideos = function(albumName){ 
 		//vm.selectedVideos = [];
 		//videoAlbumExists = false;
-		vm.albums = selectionService.removeVideoAlbum(albumName);
-		document.querySelector('input#video-input').value = '';
+		PhotoDash.fw7.app.swipeoutDelete('#' + albumName, function(){
+			
+			
+			
+			vm.albums = selectionService.removeVideoAlbum(albumName);
+			document.getElementById('video-input').remove();
+		
+			var inputTemplate ='<input style="display: none;" id="video-input" type="file" accept="video/*"/>';
+
+				$$('#video-page-content').append(inputTemplate);
+				var newContent = angular.element(document.getElementById('video-page-content'));
+
+				$compile(newContent)($scope);
+				//$scope.$apply();
+	   });
+		 
+		//document.querySelector('input#video-input').value = '';
+		//document.getElementById('video-input').value = null;
+		 
 	};
 	
 	

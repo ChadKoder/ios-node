@@ -8,12 +8,12 @@
 		</div>
 	</div>
 		
-	<div class="page-content" style="padding-top: 85px;">
+	<div id="video-page-content" class="page-content" style="padding-top: 85px;">
 	<input style="display: none;" id="video-input" type="file" accept="video/*"/>
 		
 		<div class="list-block">
 			<ul ng-repeat="album in vm.albums">
-				<li class="swipeout">
+				<li id="{{album.albumName}}" class="swipeout">
 					<div class="swipeout-content item-content" ng-click="vm.selectAlbum(album.albumName)">
 						<div class="item-media"><img src="{{album.libraryItems[0]}}" width="50" /></div>
 						<div class="item-inner">

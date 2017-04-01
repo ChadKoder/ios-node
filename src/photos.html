@@ -1,36 +1,72 @@
 <div id="photos" data-page="photos" class="page with-subnavbar" ng-controller="PhotosCtrl as vm">
 	<div class="navbar">
 		<div class="navbar-inner">
+			<!--<div class="left">
+				<a href="index.html" class="back">Done</a>
+			</div>-->
 			<div class="center">Photos</div>
 			<div class="subnavbar">
 				<album-settings style="width: 100%;" album-type="'photo'" user-settings="vm.settings" title="'Photo Album Settings'" execute-action="vm.openPhotoLibrary()"></album-settings>
 			</div>
 		</div>
 	</div>
+	
+	
+	
+	
 	<div class="page-content" style="padding-top: 85px;">
-		<div class="list-block">
-			<ul ng-repeat="album in vm.albums">
-				<li class="swipeout">
-					<div class="swipeout-content item-content" ng-click="vm.selectAlbum(album.albumName)">
-						<div class="item-media"><img src="{{album.libraryItems[0].thumbnailURL}}" width="50" /></div>
-						<div class="item-inner">
-							<div class="item-title"><div ng-bind="album.albumName"></div></div>
-							<div class="item-after">
-								(<div ng-bind="album.libraryItems.length"></div>)
+	
+		<div id="popuplibrary" class="popup popup-library modal-in" style="background-color: #222426; font-size: 12px;">
+			<div class="view navbar-fixed">
+				<!--<div ng-click="closePopup()" class="button button-fill color-green">Close</div>-->
+				<div class="pages">
+					<div class="page">
+						<div class="navbar">
+							<div class="navbar-inner">
+								<div class="left">
+									<a href="#" data-popup=".popup-library" class="close-popup">Done</a>
+								</div>
+								<div class="center">Photo Library</div>
+							</div>
+						</div>
+						<div class="page-content infinite-scroll">
+							<div style="display: inline; position: relative;" ng-repeat="item in thumbnails | orderBy: '-creationDate' | limitTo: thumbnailLimit track by item.id">
+								<img ng-click="markSelected(item)" 	width="75" 	style="display: inline; position: relative;" id="{{item.id}}" 	ng-src="{{item.thumbnailURL}}" />
+								<i ng-if="isSelected(item.id)" 	class="f7-icons color-blue" style="position: absolute; top: -4px; right: 4px; display:inline; font-size: 20px; background-color: white; border-radius: 100%;">check_round_fill</i>
+							</div>
+							<div class="infinite-scroll-preloader">
+								<div class="preloader"></div>
 							</div>
 						</div>
 					</div>
-					<div class="swipeout-actions-left">
-						<a href="#" class="bg-green action1" ng-click="vm.submitPhotos(album.albumName)">Send</a>
-						<a href="photo-album.html" class="bg-lightblue action2">Add</a>
-					</div>
-					<div class="swipeout-actions-right">
-						<a href="#" ng-click="vm.clearPhotos(album.albumName)" class="swipeout-delete action3">Delete</a>
-					</div>
-				</li>
-			</ul>
+				</div>
+			</div>
 		</div>
-	</div>
+		
+			<div class="list-block">
+				<ul ng-repeat="album in vm.albums">
+					<li id="{{album.albumName}}" class="swipeout">
+						<div class="swipeout-content item-content" ng-click="vm.selectAlbum(album.albumName)">
+							<div class="item-media"><img src="{{album.libraryItems[0].thumbnailURL}}" width="50" /></div>
+							<div class="item-inner">
+								<div class="item-title"><div ng-bind="album.albumName"></div></div>
+								<div class="item-after">
+									(<div ng-bind="album.libraryItems.length"></div>)
+								</div>
+							</div>
+						</div>
+						<div class="swipeout-actions-left">
+							<a href="#" class="bg-green action1" ng-click="vm.submitPhotos(album.albumName)">Send</a>
+							<a href="photo-album.html" class="bg-lightblue action2">Add</a>
+						</div>
+						<div class="swipeout-actions-right">
+							<a href="#" ng-click="vm.clearPhotos(album.albumName)" class="swipeout-delete action3">Delete</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		 
+		</div>
 </div>
 
 

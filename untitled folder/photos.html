@@ -1,0 +1,60 @@
+<div id="photos" data-page="photos" class="page with-subnavbar" ng-controller="PhotosCtrl as vm">
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="left">
+				<a href="photos.html" class="back">Done</a>
+			</div>
+			<div class="center">Photos</div>
+			<div class="subnavbar">
+				<album-settings style="width: 100%;" album-type="'photo'" user-settings="vm.settings" title="'Photo Album Settings'" execute-action="vm.openPhotoLibrary()"></album-settings>
+			</div>
+		</div>
+	</div>
+	
+	<!--<div class="navbar">
+		<div class="navbar-inner">
+			<div class="left">
+				<a href="photos.html" class="back">Done</a>
+			</div>
+			<div class="center"><div ng-if="vm.totalPhotos > 0" ng-bind="(vm.totalPhotos | number)"></div></div>
+			<div class="right">
+				<a href="#" class="link">
+					<i class="icon icon-camera" style="font-size: 16px;">
+						<span style="font-size: 12px;" class="badge bg-green">{{vm.totalSelected}}</span>
+					</i>
+				</a>
+			</div>
+		</div>
+	</div>-->
+	
+	
+	
+	<div class="page-content" style="padding-top: 85px;">
+	<div id="open-library-template"></div>
+	
+		<div class="list-block">
+			<ul ng-repeat="album in vm.albums">
+				<li class="swipeout">
+					<div class="swipeout-content item-content" ng-click="vm.selectAlbum(album.albumName)">
+						<div class="item-media"><img src="{{album.libraryItems[0].thumbnailURL}}" width="50" /></div>
+						<div class="item-inner">
+							<div class="item-title"><div ng-bind="album.albumName"></div></div>
+							<div class="item-after">
+								(<div ng-bind="album.libraryItems.length"></div>)
+							</div>
+						</div>
+					</div>
+					<div class="swipeout-actions-left">
+						<a href="#" class="bg-green action1" ng-click="vm.submitPhotos(album.albumName)">Send</a>
+						<a href="photo-album.html" class="bg-lightblue action2">Add</a>
+					</div>
+					<div class="swipeout-actions-right">
+						<a href="#" ng-click="vm.clearPhotos(album.albumName)" class="swipeout-delete action3">Delete</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+
