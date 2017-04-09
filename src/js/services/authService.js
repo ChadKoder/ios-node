@@ -22,16 +22,13 @@ PhotoDash.angular.factory('authService', function () {
 			}
 			
 			var credStr = atob(ut);
-			console.log('DIR GOT Creds ---> ' + credStr);
 			return credStr.split(':');
 		};
 
 		var saveCreds = function(username, password){
 			var utString = username + ':' + password;
-			console.log('utString : ' + utString);
 			
 			window.localStorage.setItem('ut', JSON.stringify(btoa(utString)));
-			console.log('*** CREDS SAVED!!');
 		};
 	   
       return {

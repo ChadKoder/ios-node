@@ -1,8 +1,9 @@
-PhotoDash.angular.controller('VideosCtrl', ['$q', '$scope', '$rootScope','$compile', '$http', 'selectionService', 
-function($q, $scope, $rootScope, $compile, $http, selectionService) {
+PhotoDash.angular.controller('VideosCtrl', ['$q', '$scope', '$rootScope', '$http', 
+function($q, $scope, $rootScope, $http) {
 	var vm = this;
 	vm.totalVideos = 0;
 	vm.albums = [];
+	vm.videoFile = null;
 	
 	vm.username = 'chad';
 	vm.password = 'pass';
@@ -24,7 +25,7 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 	};
 	
 	vm.init = function(){ 
-	vm.albums = selectionService.getVideoAlbums();
+	vm.albums = null;// selectionService.getVideoAlbums();
 	/*
 		vm.selectedVideos = selectionService.getVideos();
 		
@@ -45,7 +46,7 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 		
 		if (fileEl){
 			if (albumName){
-				selectionService.setActiveVideoAlbum(albumName);
+				//selectionService.setActiveVideoAlbum(albumName);
 			}
 			
 			fileEl.click();			
@@ -60,47 +61,89 @@ function($q, $scope, $rootScope, $compile, $http, selectionService) {
 			
 			
 			
-			vm.albums = selectionService.removeVideoAlbum(albumName);
-			document.getElementById('video-input').remove();
-		
-			var inputTemplate ='<input style="display: none;" id="video-input" type="file" accept="video/*"/>';
-
-				$$('#video-page-content').append(inputTemplate);
-				var newContent = angular.element(document.getElementById('video-page-content'));
-
-				$compile(newContent)($scope);
-				//$scope.$apply();
+			vm.albums = null;//selectionService.removeVideoAlbum(albumName);
+			console.log('CLEARED VIDEOS ****** ALBUMS NOW TOTAL: ' + vm.albums.length);
+			
+			//var inputEl = document.getElementById('video-input');
+			//inputEl.parentNode.removeChild(inputEl);
 	   });
 		 
 		//document.querySelector('input#video-input').value = '';
 		//document.getElementById('video-input').value = null;
 		 
 	};
+	var createThumbnailSuccess = function(result) {
+    // result is the path to the jpeg image on the device
+    console.log('createThumbnailSuccess, result: ' + result);
+	};
 	
+	var createThumbnailError = function(err) {
+    // result is the path to the jpeg image on the device
+    console.log('creat thumb ERROR, result: ' + err);
+	};
 	
 	var handleFiles = function() {
-		console.log('GOT VIDEO FILE <--------');
+		console.log('handilng video file..');
 		var videoFile = this.files[0];
+		//selectionService.addVideo(videoFile);
 		
-		/*var item = {
-		   'blob': videoFile,
-		   'fileName': videoFile.name
-		}*/
+		setTimeout(function(){
+			var album =null;// selectionService.getActiveVideoAlbum();
+			
+			angular.element("input[type='file']").val(null);
+			this.files = null;
+			PhotoDash.fw7.app.closeModal('#popupsettings', true);
+			PhotoDash.fw7.app.swipeoutClose('#' + album.albumName, function(){
+				console.log('swipe out closed....');
+			});
+			$scope.$apply();
+			
+		}, 500);
 		
-		selectionService.addVideo(videoFile);
-		PhotoDash.fw7.app.closeModal('#popupsettings', true);
-			/*if (vm.albums.length > 0 && !videoAlbumExists){
-				videoAlbumExists = true;
-				var viewAlbumTemplate ='<li class="swipeout"><div class="swipeout-content"><a href="#" ng-click="vm.launchVideoBrowser()" class="item-content"><div class="item-media"><img ng-src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/file-video-icon.png" width="50"></div><div class="item-inner"><div class="item-title-row"><div class="item-title">Video Album</div><div class="item-after">({{vm.selectedVideos.length}})</div></div><div class="item-subtitle">Review your videos</div></div></a></div><div class="swipeout-actions-left"><a id="video-send-btn" ng-click="vm.submitVideos()" class="bg-green action1">Send</a></div><div class="swipeout-actions-right"><a ng-click="vm.clearVideos()" class="swipeout-delete action2">Delete</a></div></li>';
-
-				$$('#video-html-placeholder').append(viewAlbumTemplate);
-				var newContent = angular.element(document.getElementById('video-html-placeholder'));
-
-				$compile(newContent)($scope);
-			}*/
-		
-		$scope.$apply();
+			
 	};
+	
+	vm.selectAlbum = function (albumName){
+		selectionService.setActiveVideoAlbum(albumName);
+		//var activeAlbum = selectionService.getActivePhotoAlbum();
+		//$scope.thumbnails = activeAlbum.libraryItems;
+		//PhotoDash.fw7.app.popup('.popup-library');
+		
+		
+		setTimeout(function(){
+			
+			var activeAlbum = selectionService.getActiveVideoAlbum();
+			var videos = [];
+			
+			for (var i = 0; i < activeAlbum.libraryItems.length; i++){
+				 var videoURL = window.URL.createObjectURL(activeAlbum.libraryItems[i].blob);
+				 // var caption = (i + 1) + ' / ' + activeAlbum.libraryItems.length;
+				var item = {
+					html: '<video style="width: 50%; height: 50%;" src="' + videoURL + '"></video>'
+					//html: '<video controls style="padding-top: 40px;"><source src="' + videoURL + '" type="video/mp4"></video>',
+					//caption: caption
+				};
+				
+				videos.push(item);
+			}
+			
+			var videoBrowser = PhotoDash.fw7.app.photoBrowser({
+				photos: videos,
+				type: 'popup',
+				theme: 'dark', 
+				swipeToClose: true,
+				toolbar: true,
+				navbar: true
+			});
+			
+			videoBrowser.open();
+			
+		}, 200);
+		
+		
+		 
+	};
+	
 	
 	var inputElement = document.getElementById("video-input");
 	inputElement.addEventListener("change", handleFiles, false);

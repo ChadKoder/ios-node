@@ -1,4 +1,4 @@
-PhotoDash.angular.controller('MainCtrl', ['$scope', '$compile', '$rootScope', function($scope, $compile, $rootScope) {
+PhotoDash.angular.controller('MainCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
 	var vm = this;
 
     $$(document).on('pageAfterAnimation', function(e) {

@@ -1,4 +1,4 @@
-PhotoDash.angular.controller('ContactsCtrl', ['$scope', '$compile', '$rootScope', '$http', function($scope, $compile, $rootScope, $http) {
+PhotoDash.angular.controller('ContactsCtrl', ['$scope', '$rootScope', '$http', function($scope, $rootScope, $http) {
 	var vm = this;
 	var app = PhotoDash.fw7.app;
 	

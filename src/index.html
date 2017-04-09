@@ -9,10 +9,10 @@
 	-->
 	
 		<meta http-equiv="Content-Security-Policy"
-			content="default-src 'self' data: blob: gap: file:///: cdvphotolibrary: https://ssl.gstatic.com 'unsafe-eval';
-			style-src 'self' 'unsafe-inline'; media-src *;
+			content="default-src 'self' data: blob: gap: file: cdvphotolibrary: https://ssl.gstatic.com 'unsafe-eval';
+			style-src 'self' 'unsafe-inline';
 			connect-src 'self' http://192.168.1.109:3000 http://192.168.1.109:8888;
-			media-src 'self';
+			media-src 'self' file: data: blob:;
 			img-src 'self' http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/file-video-icon.png data: cdvphotolibrary:;">
 			
 		<meta charset="utf-8">
@@ -30,6 +30,7 @@
 		<script src="./js/photoswipe.min.js" type="text/javascript"></script>
 		<script src="./js/photoswipe-ui-default.min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="./js/framework7.min.js"></script>
+		<script src="./js/canvas-to-blob.min.js"></script>
 	   
 		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="js/requirements.js"></script>

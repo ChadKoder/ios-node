@@ -1,4 +1,4 @@
-PhotoDash.angular.controller('VideoAlbumCtrl', ['$scope', '$compile', '$rootScope','fileService', '$http', function($scope, $compile, $rootScope, fileService, $http) {
+PhotoDash.angular.controller('VideoAlbumCtrl', ['$scope', '$rootScope','fileService', '$http', function($scope, $rootScope, fileService, $http) {
 	var vm = this;
 	//var videos = [];
 

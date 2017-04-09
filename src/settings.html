@@ -1,16 +1,4 @@
-﻿<div class="list-block media-list">
-	<div class="item-content open-popup" data-popup=".popup-settings" style="background-color: #313030">
-		<div class="item-media">
-			<i class="f7-icons">add</i>
-		</div>
-		<div class="item-inner">
-			<div class="item-title-row">
-				<div class="item-title">Create New Album</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div id="popupsettings" class="popup popup-settings" style="background-color: #222426; font-size: 12px;">
+﻿<div class="popup popup-settings modal-in" style="background-color: #222426; font-size: 12px;">
 	<div class="content-block">
 		<div class="content-block-title">{{title}}</div>
 		<div class="list-block">
@@ -72,7 +60,7 @@
 			Photos
 			</a>
 		</p>
-		<p><a class="close-popup button button-fill button-big color-gray">
+		<p><a ng-click="closeSettings()" class="button button-fill button-big color-gray">
 			Cancel
 		</a></p>
 	</div>

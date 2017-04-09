@@ -1,0 +1,25 @@
+<div class="popup popup-library modal-in" style="background-color: #222426; font-size: 12px;">
+	<div class="view navbar-fixed">
+		<div class="pages">
+			<div class="page">
+				<div class="navbar">
+					<div class="navbar-inner">
+						<div class="left">
+							<a href="#" ng-click="closeLibrary()">Done</a>
+						</div>
+						<div class="center"><div ng-bind="library.length | number"></div></div>
+					</div>
+				</div>
+				<div class="page-content infinite-scroll">
+					<div style="display: inline; position: relative;" ng-repeat="item in library | orderBy: '-creationDate' | limitTo: thumbnailLimit track by item.id">
+						<img ng-click="markSelected(item)" 	width="75" 	style="display: inline; position: relative;" id="{{item.id}}" 	ng-src="{{item.thumbnailURL}}" />
+						<i ng-if="isSelected(item.id)" 	class="f7-icons color-blue" style="position: absolute; top: -4px; right: 4px; display:inline; font-size: 20px; background-color: white; border-radius: 100%;">check_round_fill</i>
+					</div>
+					<div class="infinite-scroll-preloader">
+						<div class="preloader"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

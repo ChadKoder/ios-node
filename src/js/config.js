@@ -11,8 +11,8 @@ $$(document).on('DOMContentLoaded', function() {
 	PhotoDash.fw7 = {
 		app: new Framework7({
 			pushState: false,
-			cache: false,
-			uniqueHistory: true,
+			cache: true,
+			//uniqueHistory: true,
 			//imagesLazyLoadSequential: true,
 			//imagesLazyLoadPlaceholder: 'Test?',
 			animateNavBackIcon: true,

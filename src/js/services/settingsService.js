@@ -1,5 +1,5 @@
-PhotoDash.angular.factory('settingsService', ['authService', 'selectionService',
-	function (authService, selectionService) {
+PhotoDash.angular.factory('settingsService', ['authService',
+	function (authService) {
        var service = this;
 		
 		var saveSettings = function(settings){
@@ -16,8 +16,8 @@ PhotoDash.angular.factory('settingsService', ['authService', 'selectionService',
 		
 		var savePhotoSettings = function(settings){
 			saveSettings(settings);
-			selectionService.setActivePhotoAlbum(settings.albumName);
-			console.log('settings saved...');
+			//selectionService.setActivePhotoAlbum(settings.albumName);
+//			console.log('settings saved...');
 		};
 		
 		var getVideoAlbumSettings = function(){
@@ -26,7 +26,7 @@ PhotoDash.angular.factory('settingsService', ['authService', 'selectionService',
 		
 		var saveVideoSettings = function(settings){
 			saveSettings(settings);
-			selectionService.setActiveVideoAlbum(settings.albumName);
+			//selectionService.setActiveVideoAlbum(settings.albumName);
 		};
 		
 		return {

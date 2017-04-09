@@ -327,6 +327,12 @@ module.exports = function(grunt) {
 							cwd: 'src',
 							src: ['*.html'],
 							dest: './ios/www/'
+						},
+						{
+							expand: true,
+							cwd: 'lib/JavaScript-Canvas-to-Blob',
+							src: ['canvas-to-blob.min.js', 'canvas-to-blob.min.js.map'],
+							dest: './ios/www/js/'
 						}
                     ]
                 }
