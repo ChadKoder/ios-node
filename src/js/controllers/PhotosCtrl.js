@@ -135,11 +135,12 @@ function($scope, $rootScope, $http,  photoAlbumService, authService) {
 	
 	
 	vm.createFilesAndSubmit = function(albumName){
-	/*	$http.defaults.headers.common.Authorization = authService.getAuthHeader(vm.settings.username, vm.settings.password);
-//		var albums = selectionService.getPhotoAlbums();
-		var selectedAlbum = _.find(albums, function(album){
-			return album.name === albumName;
-		});
+		$http.defaults.headers.common.Authorization = authService.getAuthHeader(vm.settings.username, vm.settings.password);
+
+		var selectedAlbum = photoAlbumService.getPhotoAlbum(albumName);
+		
+		console.log('attempting to submit items for album: ' + selectedAlbum.name);
+		console.log('total in album: ' + selectedAlbum.libraryItems.length);
 		
 		var selectedItems = selectedAlbum.libraryItems;
 
@@ -151,7 +152,7 @@ function($scope, $rootScope, $http,  photoAlbumService, authService) {
 						form.enctype = 'multipart/form-data';
 						form.append('file', photo, selectedItems[currIndex].fileName);
 						
-						var url = 'http://192.168.1.109:8888/files?albumName=' + selectedAlbum.albumName + '&uploadDir=' + vm.settings.uploadDir;
+						var url = 'http://192.168.1.109:8888/files?albumName=' + selectedAlbum.name + '&uploadDir=' + vm.settings.uploadDir;
 						
 						$http.post(url, form, {
 							transformRequest: angular.identity,
@@ -196,7 +197,7 @@ function($scope, $rootScope, $http,  photoAlbumService, authService) {
 				});
 		};
 
-		createAndSendPhotos(0);*/
+		createAndSendPhotos(0);
 	};
 	
 	vm.clearPhotos = function(albumName){ 

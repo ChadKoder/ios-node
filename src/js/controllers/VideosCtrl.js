@@ -1,6 +1,8 @@
-PhotoDash.angular.controller('VideosCtrl', ['$q', '$scope', '$rootScope', '$http', 
-function($q, $scope, $rootScope, $http) {
+PhotoDash.angular.controller('VideosCtrl', ['$q', '$scope', '$rootScope', '$http', 'videoAlbumService', '_',
+function($q, $scope, $rootScope, $http, videoAlbumService, _) {
 	var vm = this;
+	
+	var activeAlbumName = '';
 	vm.totalVideos = 0;
 	vm.albums = [];
 	vm.videoFile = null;
@@ -8,7 +10,7 @@ function($q, $scope, $rootScope, $http) {
 	vm.username = 'chad';
 	vm.password = 'pass';
 	vm.thumbnail = null;
-	
+		
 	var currIndex = 0;
 	var videoAlbumExists = false;
 	
@@ -19,14 +21,16 @@ function($q, $scope, $rootScope, $http) {
 	vm.hidePreloader = function(){
 		PhotoDash.fw7.app.hidePreloader();
 	};
-	
-	$scope.handleFiles = function(files){
-		PhotoDash.fw7.app.alert('GOT FILES : ' + files.length);
+		
+	vm.openSettings = function(){
+		setTimeout(function(){
+			PhotoDash.fw7.app.popup('.popup-settings', true, true);
+		}, 800);
 	};
-	
+		
 	vm.init = function(){ 
-	vm.albums = null;// selectionService.getVideoAlbums();
-	/*
+		//vm.albums = null;// selectionService.getVideoAlbums();
+		/*
 		vm.selectedVideos = selectionService.getVideos();
 		
 		if (vm.selectedVideos.length > 0){
@@ -42,6 +46,13 @@ function($q, $scope, $rootScope, $http) {
 	};
 	
 	vm.clickVideoInput = function(albumName){
+		
+		if (albumName){
+			activeAlbumName = albumName;
+		} else {
+			activeAlbum = vm.settings.albumName;
+		}		
+		
 		var fileEl = document.getElementById("video-input");
 		
 		if (fileEl){
@@ -50,8 +61,7 @@ function($q, $scope, $rootScope, $http) {
 			}
 			
 			fileEl.click();			
-		}
-		
+		}		
 	};
 	
 	vm.clearVideos = function(albumName){ 
@@ -61,8 +71,7 @@ function($q, $scope, $rootScope, $http) {
 			
 			
 			
-			vm.albums = null;//selectionService.removeVideoAlbum(albumName);
-			console.log('CLEARED VIDEOS ****** ALBUMS NOW TOTAL: ' + vm.albums.length);
+			vm.albums = [];
 			
 			//var inputEl = document.getElementById('video-input');
 			//inputEl.parentNode.removeChild(inputEl);
@@ -85,17 +94,28 @@ function($q, $scope, $rootScope, $http) {
 	var handleFiles = function() {
 		console.log('handilng video file..');
 		var videoFile = this.files[0];
-		//selectionService.addVideo(videoFile);
 		
+		var existingAlbum = _.findWhere(vm.albums, { name: activeAlbumName });
+		
+		if (existingAlbum){
+			
+		} else {
+			videoAlbumService.createAlbum(activeAlbumName, videoFile, function(newAlbum){
+				vm.albums.push(newAlbum);
+			});
+		}
+				
 		setTimeout(function(){
-			var album =null;// selectionService.getActiveVideoAlbum();
+			//var album =null;
 			
 			angular.element("input[type='file']").val(null);
 			this.files = null;
-			PhotoDash.fw7.app.closeModal('#popupsettings', true);
-			PhotoDash.fw7.app.swipeoutClose('#' + album.albumName, function(){
-				console.log('swipe out closed....');
-			});
+			
+			
+			PhotoDash.fw7.app.closeModal();
+			//PhotoDash.fw7.app.swipeoutClose('#' + album.name, function(){
+			//	console.log('swipe out closed....');
+			//});
 			$scope.$apply();
 			
 		}, 500);
@@ -104,7 +124,7 @@ function($q, $scope, $rootScope, $http) {
 	};
 	
 	vm.selectAlbum = function (albumName){
-		selectionService.setActiveVideoAlbum(albumName);
+		//selectionService.setActiveVideoAlbum(albumName);
 		//var activeAlbum = selectionService.getActivePhotoAlbum();
 		//$scope.thumbnails = activeAlbum.libraryItems;
 		//PhotoDash.fw7.app.popup('.popup-library');
@@ -112,11 +132,12 @@ function($q, $scope, $rootScope, $http) {
 		
 		setTimeout(function(){
 			
-			var activeAlbum = selectionService.getActiveVideoAlbum();
+			//var activeAlbum = selectionService.getActiveVideoAlbum();
+			var activeAlbum = _.findWhere(vm.albums, { name: albumName });
 			var videos = [];
 			
 			for (var i = 0; i < activeAlbum.libraryItems.length; i++){
-				 var videoURL = window.URL.createObjectURL(activeAlbum.libraryItems[i].blob);
+				 var videoURL = window.URL.createObjectURL(activeAlbum.libraryItems[i].file);
 				 // var caption = (i + 1) + ' / ' + activeAlbum.libraryItems.length;
 				var item = {
 					html: '<video style="width: 50%; height: 50%;" src="' + videoURL + '"></video>'
@@ -139,9 +160,6 @@ function($q, $scope, $rootScope, $http) {
 			videoBrowser.open();
 			
 		}, 200);
-		
-		
-		 
 	};
 	
 	
@@ -150,7 +168,7 @@ function($q, $scope, $rootScope, $http) {
 	
 	vm.submitVideos = function(albumName){
 		var selectedAlbum = _.find(vm.albums, function(album){
-			return album.albumName === albumName;
+			return album.name === albumName;
 		});
 		
 		if (!vm.username || !vm.password) {
@@ -164,13 +182,13 @@ function($q, $scope, $rootScope, $http) {
 		var formData = new FormData();
 		formData.enctype = "multipart/form-data";
 		
-		console.log('submitting video album name: ' + selectedAlbum.albumName + 'total: ' + selectedAlbum.libraryItems.length);
+		console.log('submitting video album name: ' + selectedAlbum.name + 'total: ' + selectedAlbum.libraryItems.length);
 		angular.forEach(selectedAlbum.libraryItems, function (obj) {
 			console.log('appending fileName: ' + obj.fileName);
 			formData.append('file', obj.blob, obj.fileName);
 		});
 
-		var url = 'http://192.168.1.109:8888/files?albumName=' + selectedAlbum.albumName + '&uploadDir=' + vm.settings.uploadDir;
+		var url = 'http://192.168.1.109:8888/files?albumName=' + selectedAlbum.name + '&uploadDir=' + vm.settings.uploadDir;
 		$http.defaults.headers.common.Authorization = 'Basic ' + encodedAuth;
 	
 		$http.post(url, formData, {

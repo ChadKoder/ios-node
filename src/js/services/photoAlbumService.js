@@ -22,6 +22,10 @@ PhotoDash.angular.factory('photoAlbumService',['_', function (_) {
 			return photoAlbums;
 	};
 	
+	var getPhotoAlbum = function(name){
+		return _.findWhere(photoAlbums, { name: name });
+	};
+	
 	var updateAlbum = function(albumName, libraryItems){
 		var album = _.findWhere(photoAlbums, { name: albumName });
 		
@@ -37,6 +41,7 @@ PhotoDash.angular.factory('photoAlbumService',['_', function (_) {
 		createAlbum: createAlbum,
 		updateAlbum: updateAlbum,
 		removeAlbum: removeAlbum,
-		getPhotoAlbums: getPhotoAlbums
+		getPhotoAlbums: getPhotoAlbums,
+		getPhotoAlbum: getPhotoAlbum
 	}
  }]);

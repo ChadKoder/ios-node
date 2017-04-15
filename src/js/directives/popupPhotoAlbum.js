@@ -8,11 +8,15 @@ function (_) {
             replace: true,
 			link: function (scope, el, attrs, ctrl){
 				scope.limit = 200;
-				var psItems = [];
-				//scope.items = {};
-				
-				var getElement = function(id){
-					var imageEls = document.getElementById('popup-photo-album').getElementsByTagName('img');
+								
+				var getElement = function(albumName, id){
+					
+					return document.getElementById(albumName + id);
+					
+					/*var imageEls = document.getElementById(albumName).getElementsByTagName('img');
+				   
+				   console.log('TOTAL imageEls within ABLUM NAME -->' + albumName + '<-- IS ===' + imageEls.length);
+				   
 				   
 				   for (var i = 0; i < imageEls.length; i++){
 					   var imageEl = imageEls[i];
@@ -22,7 +26,7 @@ function (_) {
 							return imageEl;
 						   break;
 					   }
-				   }
+				   }*/
 			   };
 				
 				var getOptions = function(items){
@@ -89,21 +93,88 @@ function (_) {
                        return returnObj;
                        
                        //return { x: rect.left, y: rect.top + pageYScroll, w: rect.width };
-                       }//,
-                       //showAnimationDuration: 1
+                       },
+					   getDoubleTapZoom: function(isMouseClick, item) {
+
+							// isMouseClick          - true if mouse, false if double-tap
+							// item                  - slide object that is zoomed, usually current
+							// item.initialZoomLevel - initial scale ratio of image
+							//                         e.g. if viewport is 700px and image is 1400px,
+							//                              initialZoomLevel will be 0.5
+
+							if(isMouseClick) {
+
+								// is mouse click on image or zoom icon
+
+								// zoom to original
+								return 1;
+
+								// e.g. for 1400px image:
+								// 0.5 - zooms to 700px
+								// 2   - zooms to 2800px
+
+							} else {
+
+								// is double-tap
+
+								// zoom to original if initial zoom is less than 0.7x,
+								// otherwise to 1.5x, to make sure that double-tap gesture always zooms image
+								return item.initialZoomLevel < 0.7 ? 1 : 1.5;
+							}
+						}
                    };
                    
 				return options;
                };				
 				
 				scope.viewSlideshow = function(id){
+					var psItems = [];
 					var pswpElement = document.querySelectorAll('.pswp')[0];
+					var currIndex = 0;
 					
-					if (psItems.length === 0){
 						//Load photoswipe items from libraryItems
 						var currIndex = 0;
 						var currEl;
 						
+						for (var i = 0; i < scope.items.libraryItems.length; i++){
+						   var currLibraryItem = scope.items.libraryItems[i];
+						   var el = getElement(scope.items.name, currLibraryItem.id);
+						   
+						   var item = {
+							   src: currLibraryItem.photoURL,
+							   msrc: currLibraryItem.photoURL,
+							   pid: currLibraryItem.id + 'psitem',
+							   el: el,
+							   w: currLibraryItem.width,
+							   h: currLibraryItem.height
+						   };
+						   
+						   psItems.push(item);
+					   }
+									   
+				   for (var g = 0; g < psItems.length; g++){
+					   if (psItems[g].pid === id + 'psitem'){						
+						   currIndex = g;
+						   break;
+					   }
+				   }
+               
+				   var options = getOptions(psItems);
+				   options.index = currIndex;
+				   
+				   var gallery = new PhotoSwipe(pswpElement, false, psItems, options);
+				
+				   gallery.init();
+						
+				};
+				
+				
+				$$('.popup-services').on('popup:open', function () {		
+					console.log('POPUP ALBUM IS OPEN');
+				});
+				
+				/*$$('.popup-services').on('popup:open', function () {				  
+				  	//Load photoswipe items from libraryItems
 						for (var i = 0; i < scope.items.libraryItems.length; i++){
 						   var currLibraryItem = scope.items.libraryItems[i];
 						   var el = getElement(currLibraryItem.id);
@@ -119,26 +190,9 @@ function (_) {
 						   
 						   psItems.push(item);
 					   }
-					
-					}
-					
-					
-				   
-				   for (var g = 0; g < psItems.length; g++){
-					   if (psItems[g].pid === id){						
-						   currIndex = g;
-						   break;
-					   }
-				   }
-               
-				   var options = getOptions(psItems);
-				   options.index = currIndex;
-				   
-				   var gallery = new PhotoSwipe(pswpElement, false, psItems, options);
-				
-				   gallery.init();
-						
-				};
+					    
+				  
+				});*/
 				
 				
 				
