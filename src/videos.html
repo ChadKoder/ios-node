@@ -1,9 +1,11 @@
 <div id="videos" data-page="videos" class="page with-subnavbar" ng-controller="VideosCtrl as vm">
 	<div class="navbar">
 		<div class="navbar-inner">
+			<!--<div class="left">
+				<a href="index.html" class="back">Done</a>
+			</div>-->
 			<div class="center">Videos</div>
-			<div class="subnavbar">
-				<div ng-click="vm.openSettings()" class="subnavbar">
+			<div ng-click="vm.openSettings()" class="subnavbar">
 				 
 					<!--<div style="background-color: #313030">-->
 					 
@@ -15,48 +17,38 @@
 								<div class="item-title">Create New Album</div>
 							</div>
 						</div>
-					   <album-settings popup-name="vm.popupSettingsName" album-type="'video'" user-settings="vm.settings" title="'Video Album Settings'" execute-action="vm.clickVideoInput()"></album-settings>			
-				</div>				
+					   <album-settings popup-name="'popup-settings'" album-type="'video'" user-settings="vm.settings" title="'Video Album Settings'" execute-action="vm.clickVideoInput()"></album-settings>			
 			</div>
 		</div>
 	</div>
-		
-	<div id="video-page-content" class="page-content" style="padding-top: 85px;">
+	<div class="page-content" style="padding-top: 85px;">
 	<input style="display: none;" id="video-input" type="file" accept="video/*"/>
-				
-		<div class="list-block">
-			<ul ng-repeat="album in vm.albums">
-				<li id="{{album.name}}" class="swipeout">
-					<div class="swipeout-content item-content" ng-click="vm.selectAlbum(album.name)">
-						<div class="item-media"><img src="./resume.png" width="50" /></div>
-						<div class="item-inner">
-							<div class="item-title"><div ng-bind="album.name"></div></div>
-							<div class="item-after">
-								(<div ng-bind="album.libraryItems.length"></div>)
+			<div class="list-block">
+				<ul ng-repeat="album in vm.albums">
+					<li id="{{album.name}}" class="swipeout">
+						<div class="swipeout-content item-content" ng-click="vm.selectAlbum(album.name)">
+							<div class="item-media"><img src="./resume.png" width="50" /></div>
+							<div class="item-inner">
+								<div class="item-title"><div ng-bind="album.name"></div></div>
+								<div class="item-after">
+									(<div ng-bind="album.libraryItems.length"></div>)
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="swipeout-actions-left">
-						<a href="#" class="bg-green action1" ng-click="vm.submitVideos(album.name)">Send</a>
-						<a ng-click="vm.clickVideoInput(album.name);" class="bg-lightblue action2">Add</a>
-					</div>
-					<div class="swipeout-actions-right">
-						<a href="#" ng-click="vm.clearVideos(album.name)" class="swipeout-delete action3">Delete</a>
-					</div>
-				</li>
-			</ul>
+						<div class="swipeout-actions-left">
+							<a href="#" class="bg-green action1" ng-click="vm.submit(album.name)">Send</a>
+							<a ng-click="vm.clickVideoInput(album.name)" class="bg-lightblue action2">Add</a>
+						</div>
+						<div class="swipeout-actions-right">
+							<a href="#" ng-click="vm.removeAlbum(album.name)" class="swipeout-delete action3">Delete</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		 
 		</div>
-	</div>
-</div>
-	
 		
-	<!--<div class="page-content">
-		<input style="display: none;" id="video-input" type="file" accept="video/*"/>
-		<div class="list-block media-list">
-			<ul id="video-html-placeholder">
-			</ul>
-		</div>
-	
-	</div>-->
+		
 </div>
+
 

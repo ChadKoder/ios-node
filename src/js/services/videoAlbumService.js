@@ -1,58 +1,61 @@
 PhotoDash.angular.factory('videoAlbumService',['_', function (_) {
-	var videoAlbums = [];
+	var albums = [];
+	
+	var createLibraryItem = function(file){
+		var randomId = Math.random().toString(36).substr(2, 16);
+				
+			return libraryItem = {
+			id: randomId,
+			file: file,
+			fileName: file.name
+		};		
+	};
 	
 	var createAlbum = function(albumName, file, callback){
 		var randomId = Math.random().toString(36).substr(2, 16);
 				
-		var libraryItem = {
-			id: randomId,
-			file: file,
-			fileName: file.name,
-			creationDate: new Date().toLocaleString()			
-		};		
+		var libraryItem = createLibraryItem(file);
 		
 		var newAlbum = {
 			name: albumName,
 			libraryItems: [libraryItem]
 		};
 		
-		videoAlbums.push(newAlbum);
+		albums.push(newAlbum);
 		
 		if (callback){
-				callback(newAlbum);
+			callback(newAlbum);
 		}		
 	};
 
 	var removeAlbum = function(albumName){
-		var album = _.findWhere(videoAlbums, {name: albumName});
+		var album = _.findWhere(albums, {name: albumName});
 		
-		videoAlbums = _.without(videoAlbums, album);
+		albums = _.without(albums, album);
 	};
 	
-	var getVideoAlbums = function(){
-			return videoAlbums;
+	var getAlbums = function(){
+			return albums;
 	};
 	
-	var getVideoAlbum = function(name){
-		return _.findWhere(videoAlbums, { name: name });
+	var getAlbum = function(name){
+		return _.findWhere(albums, { name: name });
 	};
 	
-	var updateAlbum = function(albumName, libraryItems){
-		var album = _.findWhere(videoAlbums, { name: albumName });
-		
+	var addItem = function(albumName, file){
+		var album = _.findWhere(albums, { name: albumName });
+		var libraryItem = createLibraryItem(file);
+				
 		if (album){
-			for (var i = 0; i < libraryItems.length; i++){
-					album.libraryItems.push(libraryItems[i]);
-			
-			}
+			album.libraryItems.push(libraryItem);
 		}		
 	};
 		
 	return {
 		createAlbum: createAlbum,
-		updateAlbum: updateAlbum,
 		removeAlbum: removeAlbum,
-		getVideoAlbums: getVideoAlbums,
-		getVideoAlbum: getVideoAlbum
+		getAlbums: getAlbums,
+		getAlbum: getAlbum,
+		addItem: addItem
 	}
  }]);

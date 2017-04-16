@@ -1,5 +1,5 @@
 PhotoDash.angular.factory('photoAlbumService',['_', function (_) {
-	var photoAlbums = [];
+	var albums = [];
 	
 	var createAlbum = function(albumName, libraryItems){
 		
@@ -8,31 +8,30 @@ PhotoDash.angular.factory('photoAlbumService',['_', function (_) {
 			libraryItems: libraryItems
 		};
 		
-		photoAlbums.push(newAlbum);
+		albums.push(newAlbum);
 		
 	};
 
 	var removeAlbum = function(albumName){
-		var album = _.findWhere(photoAlbums, {name: albumName});
+		var album = _.findWhere(albums, {name: albumName});
 		
-		photoAlbums = _.without(photoAlbums, album);
+		photoAlbums = _.without(albums, album);
 	};
 	
-	var getPhotoAlbums = function(){
-			return photoAlbums;
+	var getAlbums = function(){
+			return albums;
 	};
 	
-	var getPhotoAlbum = function(name){
-		return _.findWhere(photoAlbums, { name: name });
+	var getAlbum = function(name){
+		return _.findWhere(albums, { name: name });
 	};
 	
 	var updateAlbum = function(albumName, libraryItems){
-		var album = _.findWhere(photoAlbums, { name: albumName });
+		var album = _.findWhere(albums, { name: albumName });
 		
 		if (album){
 			for (var i = 0; i < libraryItems.length; i++){
-					album.libraryItems.push(libraryItems[i]);
-			
+					album.libraryItems.push(libraryItems[i]);			
 			}
 		}		
 	};
@@ -41,7 +40,7 @@ PhotoDash.angular.factory('photoAlbumService',['_', function (_) {
 		createAlbum: createAlbum,
 		updateAlbum: updateAlbum,
 		removeAlbum: removeAlbum,
-		getPhotoAlbums: getPhotoAlbums,
-		getPhotoAlbum: getPhotoAlbum
+		getAlbums: getAlbums,
+		getAlbum: getAlbum
 	}
  }]);

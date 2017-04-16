@@ -3,17 +3,11 @@ function($q, $scope, $rootScope, $http, videoAlbumService, _) {
 	var vm = this;
 	
 	var activeAlbumName = '';
-	vm.totalVideos = 0;
 	vm.albums = [];
-	vm.videoFile = null;
 	
 	vm.username = 'chad';
 	vm.password = 'pass';
-	vm.thumbnail = null;
-		
-	var currIndex = 0;
-	var videoAlbumExists = false;
-	
+				
 	vm.showPreloader = function(msg){
 		PhotoDash.fw7.app.showPreloader(msg);
 	};
@@ -28,25 +22,7 @@ function($q, $scope, $rootScope, $http, videoAlbumService, _) {
 		}, 800);
 	};
 		
-	vm.init = function(){ 
-		//vm.albums = null;// selectionService.getVideoAlbums();
-		/*
-		vm.selectedVideos = selectionService.getVideos();
-		
-		if (vm.selectedVideos.length > 0){
-				videoAlbumExists = true;
-				var viewAlbumTemplate ='<li class="swipeout"><div class="swipeout-content"><a href="#" ng-click="vm.launchVideoBrowser()" class="item-content"><div class="item-media"><img ng-src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/file-video-icon.png" width="50"></div><div class="item-inner"><div class="item-title-row"><div class="item-title">Video Album</div><div class="item-after">({{vm.selectedVideos.length}})</div></div><div class="item-subtitle">Review your videos</div></div></a></div><div class="swipeout-actions-left"><a id="video-send-btn" ng-click="vm.submitVideos()" class="bg-green action1">Send</a></div><div class="swipeout-actions-right"><a ng-click="vm.clearVideos()" class="swipeout-delete action2">Delete</a></div></li>';
-
-				$$('#video-html-placeholder').append(viewAlbumTemplate);
-				var newContent = angular.element(document.getElementById('video-html-placeholder'));
-
-				$compile(newContent)($scope);
-				$scope.$apply();
-			}*/
-	};
-	
-	vm.clickVideoInput = function(albumName){
-		
+	vm.clickVideoInput = function(albumName){		
 		if (albumName){
 			activeAlbumName = albumName;
 		} else {
@@ -64,22 +40,11 @@ function($q, $scope, $rootScope, $http, videoAlbumService, _) {
 		}		
 	};
 	
-	vm.clearVideos = function(albumName){ 
-		//vm.selectedVideos = [];
-		//videoAlbumExists = false;
-		PhotoDash.fw7.app.swipeoutDelete('#' + albumName, function(){
-			
-			
-			
-			vm.albums = [];
-			
-			//var inputEl = document.getElementById('video-input');
-			//inputEl.parentNode.removeChild(inputEl);
+	vm.removeAlbum = function(albumName){ 
+		PhotoDash.fw7.app.swipeoutDelete('#' + albumName, function(){			
+			var removeMe = _.findWhere(vm.albums, { name: albumName });			
+			vm.albums = _.without(vm.albums, removeMe);
 	   });
-		 
-		//document.querySelector('input#video-input').value = '';
-		//document.getElementById('video-input').value = null;
-		 
 	};
 	var createThumbnailSuccess = function(result) {
     // result is the path to the jpeg image on the device
@@ -93,14 +58,14 @@ function($q, $scope, $rootScope, $http, videoAlbumService, _) {
 	
 	var handleFiles = function() {
 		console.log('handilng video file..');
-		var videoFile = this.files[0];
+		var file = this.files[0];
 		
 		var existingAlbum = _.findWhere(vm.albums, { name: activeAlbumName });
 		
 		if (existingAlbum){
-			
+			videoAlbumService.addItem(existingAlbum.name, file);
 		} else {
-			videoAlbumService.createAlbum(activeAlbumName, videoFile, function(newAlbum){
+			videoAlbumService.createAlbum(activeAlbumName, file, function(newAlbum){
 				vm.albums.push(newAlbum);
 			});
 		}
@@ -122,6 +87,14 @@ function($q, $scope, $rootScope, $http, videoAlbumService, _) {
 		
 			
 	};
+	
+	vm.removeAlbum = function(albumName){ 
+	   PhotoDash.fw7.app.swipeoutDelete('#' + albumName, function(){			
+			videoAlbumService.removeAlbum(albumName);
+	   });
+	    
+	};
+
 	
 	vm.selectAlbum = function (albumName){
 		//selectionService.setActiveVideoAlbum(albumName);
@@ -166,7 +139,7 @@ function($q, $scope, $rootScope, $http, videoAlbumService, _) {
 	var inputElement = document.getElementById("video-input");
 	inputElement.addEventListener("change", handleFiles, false);
 	
-	vm.submitVideos = function(albumName){
+	vm.submit = function(albumName){
 		var selectedAlbum = _.find(vm.albums, function(album){
 			return album.name === albumName;
 		});
@@ -224,5 +197,9 @@ function($q, $scope, $rootScope, $http, videoAlbumService, _) {
 		   });
 	};
 	
-	vm.init();
+	var init = function(){
+		vm.albums = videoAlbumService.getAlbums();
+	};
+	
+	
 }]);
