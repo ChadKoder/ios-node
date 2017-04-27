@@ -65,6 +65,7 @@ function($scope, $rootScope, $http,  photoAlbumService, authService) {
 	};*/
 	
 	vm.openSettings = function(){
+		console.log('attempting to open settings popup...');
 		setTimeout(function(){
 			PhotoDash.fw7.app.popup('.' + vm.popupSettingsName, true, true);
 		}, 800);
@@ -137,7 +138,7 @@ function($scope, $rootScope, $http,  photoAlbumService, authService) {
 	vm.createFilesAndSubmit = function(albumName){
 		$http.defaults.headers.common.Authorization = authService.getAuthHeader(vm.settings.username, vm.settings.password);
 
-		var selectedAlbum = photoAlbumService.getPhotoAlbum(albumName);
+		var selectedAlbum = photoAlbumService.getAlbum(albumName);
 		
 		console.log('attempting to submit items for album: ' + selectedAlbum.name);
 		console.log('total in album: ' + selectedAlbum.libraryItems.length);
@@ -213,7 +214,7 @@ function($scope, $rootScope, $http,  photoAlbumService, authService) {
 	};
 	
 	vm.init = function(){ 
-		vm.albums = photoAlbumService.getPhotoAlbums();
+		vm.albums = photoAlbumService.getAlbums();
 	};
 
 	vm.init();

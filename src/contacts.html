@@ -13,8 +13,10 @@
 		<div ng-controller="ContactsCtrl as vm">
 			<div class="content-block-title">Total -> {{ vm.contacts.length || 0}}</div>
 			<p class="buttons-row theme-lightblue">
-				<div ng-click="vm.getContacts()" class="button button-fill button-big">get contacts from device (temp)</div>
+			
 				<div ng-click="vm.uploadContacts()" class="button button-fill button-big">Upload contacts to your PC</div>
+				<div ng-click="vm.deleteContacts()" class="button button-fill button-big">Delete All Contacts</div>
+				<div ng-click="vm.restoreContactsFromServer()" class="button button-fill button-big">Restore Contacts from PC</div>
 			</p>
 		</div>
     </div>
